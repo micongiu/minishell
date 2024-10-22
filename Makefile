@@ -52,3 +52,9 @@ re: fclean all
 	@$(MAKE)
 
 .PHONY: all clean fclean re
+
+git:
+	git add *
+	git commit -m "-"
+	git push
+

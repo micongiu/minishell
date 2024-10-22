@@ -56,5 +56,5 @@ re: fclean all
 git:
 	git add *
 	git commit -m "-"
-	git push --set-upstream origin anmedyns
+	git push
 

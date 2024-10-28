@@ -1,8 +1,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-
+CFLAGS = -Wall -Wextra -Werror 
 SRCS = ./src/main.c
 SRC_DIRS = ./src
 OBJS = ${SRCS:.c=.o}
@@ -29,7 +28,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(MAKE) -C ft_printf/
 	@$(MAKE) -C ./libft/
-	@$(CC) $(CFLAGS) $(OBJS) $(PRINTF) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(PRINTF) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(RED)EVERYTHING COMPILE!$(COLOUR_END)"
 
 %.o: %.c

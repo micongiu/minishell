@@ -9,31 +9,34 @@ int init_readline(int argc , char **argv)
 	char *c;
 	c = readline(av);
 	printf("%s\n", c);
+	free(c);
 }
 
 void	signal_handle(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_status = 130;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
+		rl_replace_line("", 1);
+		ft_putendl_fd("", STDOUT_FILENO);
+		if (rl_on_new_line() == -1)
+			exit (EXIT_FAILURE);
+		rl_redisplay();
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	while (1)
-	{
+    char *line;
 
+    while ((line = readline("> ")) != NULL)
+	{
 		signal(SIGINT, signal_handle);
 		signal(SIGQUIT, SIG_IGN);
-		//readline
-		if(init_readline(argc, argv));
-			printf("error init_readline\n");
-		//parser
-		//exec(exit)
-		//exit
-	}
+        printf("You entered: %s\n", line);
+        add_history(line);
+        free(line);
+    }
+	clear_history();
+    printf("End of input\n");
+    return 0;
 }

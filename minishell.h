@@ -19,11 +19,11 @@
 
 typedef struct s_rline
 {
-	char *command;
-	int token_num;
+	char *input;
+	char **mat_input;
 }	t_rline;
 
-int	main(int argc, char **argv);
+int	main(int argc, char **argv,char **env);
 int init_readline(int argc , char **argv);
 
 #endif

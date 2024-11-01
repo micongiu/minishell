@@ -17,6 +17,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+//servono per il tokenizer , anziche contare quanti token sono , noi ci teniamo larghi tanto sti cazzi daje
+#define MAX_TOKENS 100
+#define MAX_TOKEN_LEN 50
+
+
 typedef struct s_rline
 {
 	char *input;
@@ -24,6 +29,6 @@ typedef struct s_rline
 }	t_rline;
 
 int	main(int argc, char **argv,char **env);
-int init_readline(int argc , char **argv);
+
 
 #endif

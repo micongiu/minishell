@@ -1,14 +1,30 @@
 #include "../minishell.h"
 
-int init_readline(int argc , char **argv)
+int is_space(char c)
 {
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+}
+// prendo l'input e lo memorizo in una matrice , skippando gli eventuali spazi , manca la casistica delle virgolette 
+char **the_tokenizer(char *input)
+{
+	char **tokens = malloc(MAX_TOKENS * sizeof (char *));
+	int token_count = 0;
 	int i = 0;
-	const char *av = *argv;
-	char *c;
-
-	c = readline(av);
-	printf("%s\n", c);
-	free(c);
+	while(input[i] != '\0')
+	{
+		while(is_space(input[i]))
+			i++;
+		if(input[i] == '\0')
+			break;
+		tokens[token_count] = malloc(MAX_TOKEN_LEN * sizeof (char));
+		int j = 0;
+		while(input[i] != '\0' && !is_space(input[i]))
+			tokens[token_count][j++] = input[i++];
+		tokens[token_count][j] = '\0';
+		token_count++;
+	}
+	tokens[token_count] = NULL;
+	return (tokens);
 }
 
 void	signal_handle(int signal)
@@ -27,7 +43,8 @@ void	signal_handle(int signal)
 int	main(int argc, char **argv,char **env)
 {
 	t_rline *line;
-
+	int i = 0;
+	int j = 0;
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
@@ -45,7 +62,12 @@ int	main(int argc, char **argv,char **env)
 			break ;
 		}
 		add_history(line->input);
-		line->mat_input = ft_split(line->input, ' ');
+		line->mat_input = the_tokenizer(line->input);
+
+	while(line->mat_input[i] != NULL)
+	{
+		printf("%s\n", line->mat_input[i]);
+		i++;
 	}
-	return(0);
+	}
 }

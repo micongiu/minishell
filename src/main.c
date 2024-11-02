@@ -4,7 +4,7 @@ int is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
 }
-// prendo l'input e lo memorizo in una matrice , skippando gli eventuali spazi , manca la casistica delle virgolette 
+// prendo l'input e lo memorizo in una matrice , skippando gli eventuali spazi , manca la casistica delle virgolette
 char **the_tokenizer(char *input)
 {
 	char **tokens = malloc(MAX_TOKENS * sizeof (char *));
@@ -18,8 +18,25 @@ char **the_tokenizer(char *input)
 			break;
 		tokens[token_count] = malloc(MAX_TOKEN_LEN * sizeof (char));
 		int j = 0;
+
 		while(input[i] != '\0' && !is_space(input[i]))
+		{
+			if(input[i++] == '"')
+			{
+				while(input[i] != '"' && input[i] != '\0')
+				{
+					if(input[++i] == '"')
+					{
+						tokens[token_count][j++] = input[i];
+						tokens[token_count][j++] = '\0';
+						break;
+					}
+					tokens[token_count][j++] = input[++i];
+				}
+			}
+			j = 0;
 			tokens[token_count][j++] = input[i++];
+		}
 		tokens[token_count][j] = '\0';
 		token_count++;
 	}

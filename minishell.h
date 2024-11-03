@@ -21,6 +21,12 @@
 #define MAX_TOKEN_LEN 50
 
 
+typedef struct s_env_var {
+	char *name;
+	char *value;
+	struct s_env_var *next;
+}	t_env_var;
+
 typedef struct s_rline
 {
 	char *input;

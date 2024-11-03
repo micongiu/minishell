@@ -1,4 +1,8 @@
 aggiornamenti 1/11  21:48 = abbiamo la matrice che evita gli spazi , molto clean, bisogna verificare gli apici singoli e le virgolette
 
 
-aggiornamento 2/11  17:27 = tokenizer di cristo , cose da modificare : gestione anche degli apici singoli , memorizare anche le virgolette / apici , stare attenti durante la divisione di funzioni ( porcaccio il )
+aggiornamenti 2/11  17:27 = tokenizer di cristo , cose da modificare : gestione anche degli apici singoli , memorizare anche le virgolette / apici , stare attenti durante la divisione di funzioni ( porcaccio il )
+
+aggiornamenti 3/11  13:51 = stavo per implementare nel Tokenizer il fatto che se l'utente dovesse passare dentro una stringa delimitata da doppi apici ( " " ) il ( $ ) , noi avremmo dovuto sostituirlo con la variabile
+							d'ambiente correlata ad essa , ma uno studente mi ha fatto notare che  in futuro l'utente ha la possibilitá di modificare le ENV , quindi é piú ragionevole farci una copia di esse e
+							salvarcele in una lista . Piú easy da maneggiare.

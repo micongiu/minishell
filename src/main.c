@@ -78,11 +78,21 @@ void	signal_handle(int signal)
 int	main(int argc, char **argv,char **env)
 {
 	t_rline *line;
+	t_env_var *env_list = NULL;
 	int i = 0;
 	int j = 0;
+	char **environ;
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
+
+	env_storage(env, &env_list);  // problema ====== come gli passo la mia lista env_list;
+
+	while (env_list)
+	{
+		printf("%s=%s\n", env_list->name, env_list->value);
+		env_list = env_list->next;
+	}
 	while (1)
 	{
 		signal(SIGINT, signal_handle);

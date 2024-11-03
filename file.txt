@@ -6,3 +6,5 @@ aggiornamenti 2/11  17:27 = tokenizer di cristo , cose da modificare : gestione 
 aggiornamenti 3/11  13:51 = stavo per implementare nel Tokenizer il fatto che se l'utente dovesse passare dentro una stringa delimitata da doppi apici ( " " ) il ( $ ) , noi avremmo dovuto sostituirlo con la variabile
 							d'ambiente correlata ad essa , ma uno studente mi ha fatto notare che  in futuro l'utente ha la possibilitá di modificare le ENV , quindi é piú ragionevole farci una copia di esse e
 							salvarcele in una lista . Piú easy da maneggiare.
+
+aggiornamenti 3/11  17:33 = fatta la { env_lis } , tutte le variabili d'anbiente hanno il proprio nodo , PORCO DEO , prossima task : individuare nell'input dell' utente il  ( $ ) dentro i doppi apici ( " " )

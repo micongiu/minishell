@@ -86,7 +86,7 @@ int	main(int argc, char **argv,char **env)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
 
-	env_storage(env, &env_list);  // problema ====== come gli passo la mia lista env_list;
+	env_storage(env, &env_list);
 
 	while (env_list)
 	{

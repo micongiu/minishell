@@ -74,11 +74,22 @@ void	signal_handle(int signal)
 		rl_redisplay();
 	}
 }
+void free_env_list(t_env_var *head)
+{
+	t_env_var *tmp;
+	while(head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(head->name);
+		free(head->value);
+		free(tmp);
+	}
+}
 
 int	main(int argc, char **argv,char **env)
 {
 	t_rline *line;
-	t_env_var *env_list = NULL;
 	int i = 0;
 	int j = 0;
 	char **environ;
@@ -86,19 +97,20 @@ int	main(int argc, char **argv,char **env)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
 
-	env_storage(env, &env_list);
-
-	while (env_list)
-	{
-		printf("%s=%s\n", env_list->name, env_list->value);
-		env_list = env_list->next;
-	}
 	while (1)
 	{
+		t_env_var *env_list = NULL;
 		signal(SIGINT, signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
+		env_storage(env, &env_list);
 		line->input = readline("minishell->");
+
+		while (env_list)
+		{
+			printf("%s=%s\n", env_list->name, env_list->value);
+			env_list = env_list->next;
+		}
 		if (line->input == NULL)
 		{
 			free(line->input);
@@ -115,6 +127,8 @@ int	main(int argc, char **argv,char **env)
 			printf("%s\n", line->mat_input[i]);
 			i++;
 		}
+		free_env_list(env_list);
 	}
-}
 
+}
+// va in seg se gli tolgo il while(env_list)....

@@ -41,18 +41,6 @@ void init_env_list(t_env_var **env_list)
 	}
 }
 
-void free_env_list(t_env_var *env_list)
-{
-	t_env_var *temp;
-	while (env_list)
-	{
-		temp = env_list;
-		env_list = env_list->next;
-		free(temp->name);
-		free(temp->value);
-		free(temp);
-	}
-}
 
 void env_storage(char **environ, t_env_var **list)
 {

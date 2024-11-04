@@ -23,7 +23,7 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p ./obj/libft
 	@$(CC) -g -c $< -o $@;
 
-all: $(NAME)
+all: $(NAME) clean
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./libft/
@@ -44,7 +44,7 @@ fclean: clean
 	@$(RM) -f $(LIBFT)
 	@echo "$(BLUE)EVERYTHING HAS FCLEAN!$(COLOUR_END)"
 
-re: fclean all
+re: fclean all clean
 	@$(MAKE)
 
 git:

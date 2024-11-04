@@ -7,8 +7,8 @@ t_env_var *create_env_node(char *name, char *value)
 	new_var = (t_env_var *)ft_calloc(1, sizeof(t_env_var));
 	if (!new_var)
 		return (NULL);
-	new_var->name = name;
-	new_var->value = value;
+	new_var->name = ft_strdup_lib(name);
+	new_var->value = ft_strdup_lib(value);
 	new_var->next = NULL;
 	return (new_var);
 }
@@ -53,6 +53,8 @@ void free_env_list(t_env_var **cur)
 	while (*cur != NULL)
 	{
 		tmp = (*cur)->next;
+		free((*cur)->name);
+		free((*cur)->value);
 		free(*cur);
 		*cur = tmp;
 	}

@@ -6,7 +6,7 @@ int is_space(char c)
 }
 char **the_tokenizer(char *input)
 {
-	char **tokens = malloc(MAX_TOKENS * sizeof (char *));
+	char **tokens = ft_calloc(MAX_TOKENS, sizeof (char *));
 	int token_count = 0;
 	int i = 0;
 	while(input[i] != '\0')
@@ -75,6 +75,58 @@ void	signal_handle(int signal)
 	}
 }
 
+void	ft_check_str(char *str, t_env_var *env)
+{
+	int	i;
+	int	j;
+	int	tmp;
+	int count;
+
+	i = 0;
+	j = -1;
+	tmp = 0;
+	count = 0;
+	while (str[tmp] != '$')
+		tmp++;
+	i = tmp;
+	while (str[++i] && env->name[++j])
+	{
+		if (str[i] == env->name[j])
+			count++;
+	}
+	j = -1;
+	tmp--;
+	if (count == ft_strlen_lib(env->name))
+	{
+		while (env->value[++j])
+			str[++tmp] = env->value[j];
+	}
+}
+
+void ft_ex_dollar(char **matrix, t_env_var *env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (env)
+	{
+		i = 0;
+		while (matrix[i])
+		{
+			j = 0;
+			while (matrix[i][j])
+			{
+				if (matrix[i][j] == '$')
+					ft_check_str(matrix[i], env);
+				j++;
+			}
+			i++;
+		}
+		env = env->next;
+	}
+}
+
 int	main(int argc, char **argv,char **env)
 {
 	t_rline *line;
@@ -92,7 +144,6 @@ int	main(int argc, char **argv,char **env)
 		free(line->input);
 		init_env_list(&env_list, env);
 		line->input = readline("minishell->");
-
 		if (line->input == NULL)
 		{
 			free(line->input);
@@ -104,6 +155,7 @@ int	main(int argc, char **argv,char **env)
 		}
 		add_history(line->input);
 		line->mat_input = the_tokenizer(line->input);
+		ft_ex_dollar(line->mat_input, env_list);
 
 		i = 0;
 		while(line->mat_input[i] != NULL)
@@ -115,4 +167,3 @@ int	main(int argc, char **argv,char **env)
 		free_env_list(&env_list);
 	}
 }
-// va in seg se gli tolgo il while(env_list)....

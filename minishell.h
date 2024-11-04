@@ -33,14 +33,10 @@ typedef struct s_rline
 	char **mat_input;
 }	t_rline;
 
-int	main(int argc, char **argv,char **env);
-void env_storage(char **environ, t_env_var **list);
-void free_env_list(t_env_var *env_list);
-void init_env_list(t_env_var **env_list);
-void add_env_var(t_env_var **env_list, t_env_var *new_var);
-t_env_var *create_env_node(const char *name, const char *value);
-char *my_strndup(const char *s, size_t n);
-int ft_strnlen(const char *str, char n);
-
+void		free_matrix(void **matrix);
+int			main(int argc, char **argv,char **env);
+void 		free_env_list(t_env_var **cur);
+void		init_env_list(t_env_var **env_list, char **env);
+void		add_env_var(t_env_var **env_list, t_env_var *new_var);
 
 #endif

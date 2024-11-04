@@ -6,7 +6,7 @@ int is_space(char c)
 }
 char **the_tokenizer(char *input)
 {
-	char **tokens = malloc(MAX_TOKENS * sizeof (char *));
+	char **tokens = ft_calloc(MAX_TOKENS, sizeof (char *));
 	int token_count = 0;
 	int i = 0;
 	while(input[i] != '\0')
@@ -74,16 +74,56 @@ void	signal_handle(int signal)
 		rl_redisplay();
 	}
 }
-void free_env_list(t_env_var *head)
+
+void	ft_check_str(char *str, t_env_var *env)
 {
-	t_env_var *tmp;
-	while(head != NULL)
+	int	i;
+	int	j;
+	int	tmp;
+	int count;
+
+	i = 0;
+	j = -1;
+	tmp = 0;
+	count = 0;
+	while (str[tmp] != '$')
+		tmp++;
+	i = tmp;
+	while (str[++i] && env->name[++j])
 	{
-		tmp = head;
-		head = head->next;
-		free(head->name);
-		free(head->value);
-		free(tmp);
+		if (str[i] == env->name[j])
+			count++;
+	}
+	j = -1;
+	tmp--;
+	if (count == ft_strlen_lib(env->name))
+	{
+		while (env->value[++j])
+			str[++tmp] = env->value[j];
+	}
+}
+
+void ft_ex_dollar(char **matrix, t_env_var *env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (env)
+	{
+		i = 0;
+		while (matrix[i])
+		{
+			j = 0;
+			while (matrix[i][j])
+			{
+				if (matrix[i][j] == '$')
+					ft_check_str(matrix[i], env);
+				j++;
+			}
+			i++;
+		}
+		env = env->next;
 	}
 }
 
@@ -96,30 +136,26 @@ int	main(int argc, char **argv,char **env)
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
-
 	while (1)
 	{
 		t_env_var *env_list = NULL;
 		signal(SIGINT, signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
-		env_storage(env, &env_list);
+		init_env_list(&env_list, env);
 		line->input = readline("minishell->");
-
-		while (env_list)
-		{
-			printf("%s=%s\n", env_list->name, env_list->value);
-			env_list = env_list->next;
-		}
 		if (line->input == NULL)
 		{
 			free(line->input);
+			free(line);
+			free_env_list(&env_list);
 			clear_history();
 			printf("End of input\n");
 			break ;
 		}
 		add_history(line->input);
 		line->mat_input = the_tokenizer(line->input);
+		ft_ex_dollar(line->mat_input, env_list);
 
 		i = 0;
 		while(line->mat_input[i] != NULL)
@@ -127,8 +163,7 @@ int	main(int argc, char **argv,char **env)
 			printf("%s\n", line->mat_input[i]);
 			i++;
 		}
-		free_env_list(env_list);
+		free_matrix((void **)line->mat_input);
+		free_env_list(&env_list);
 	}
-
 }
-// va in seg se gli tolgo il while(env_list)....

@@ -74,18 +74,6 @@ void	signal_handle(int signal)
 		rl_redisplay();
 	}
 }
-void free_env_list(t_env_var *head)
-{
-	t_env_var *tmp;
-	while(head != NULL)
-	{
-		tmp = head;
-		head = head->next;
-		free(head->name);
-		free(head->value);
-		free(tmp);
-	}
-}
 
 int	main(int argc, char **argv,char **env)
 {
@@ -96,24 +84,20 @@ int	main(int argc, char **argv,char **env)
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
-
 	while (1)
 	{
 		t_env_var *env_list = NULL;
 		signal(SIGINT, signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
-		env_storage(env, &env_list);
+		init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 
-		while (env_list)
-		{
-			printf("%s=%s\n", env_list->name, env_list->value);
-			env_list = env_list->next;
-		}
 		if (line->input == NULL)
 		{
 			free(line->input);
+			free(line);
+			free_env_list(&env_list);
 			clear_history();
 			printf("End of input\n");
 			break ;
@@ -127,8 +111,8 @@ int	main(int argc, char **argv,char **env)
 			printf("%s\n", line->mat_input[i]);
 			i++;
 		}
-		free_env_list(env_list);
+		free_matrix((void **)line->mat_input);
+		free_env_list(&env_list);
 	}
-
 }
 // va in seg se gli tolgo il while(env_list)....

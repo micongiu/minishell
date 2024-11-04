@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:57:20 by micongiu          #+#    #+#             */
-/*   Updated: 2024/05/13 17:04:09 by micongiu         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:14:18 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
-char	**ft_split(const char *s, char c);
+char	**ft_split(const char *s, char *separators);
 
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup_lib(const char *str);

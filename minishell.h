@@ -1,7 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "ft_printf/ft_printf.h"
 # include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
@@ -17,6 +16,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+//servono per il tokenizer , anziche contare quanti token sono , noi ci teniamo larghi tanto sti cazzi daje
+#define MAX_TOKENS 100
+#define MAX_TOKEN_LEN 50
+
+
+typedef struct s_env_var {
+	char *name;
+	char *value;
+	struct s_env_var *next;
+}	t_env_var;
+
 typedef struct s_rline
 {
 	char *input;
@@ -24,6 +34,13 @@ typedef struct s_rline
 }	t_rline;
 
 int	main(int argc, char **argv,char **env);
-int init_readline(int argc , char **argv);
+void env_storage(char **environ, t_env_var **list);
+void free_env_list(t_env_var *env_list);
+void init_env_list(t_env_var **env_list);
+void add_env_var(t_env_var **env_list, t_env_var *new_var);
+t_env_var *create_env_node(const char *name, const char *value);
+char *my_strndup(const char *s, size_t n);
+int ft_strnlen(const char *str, char n);
+
 
 #endif

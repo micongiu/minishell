@@ -3,74 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:53:54 by micongiu          #+#    #+#             */
-/*   Updated: 2024/05/16 11:43:52 by micongiu         ###   ########.fr       */
+/*   Updated: 2024/11/03 18:21:39 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
-int	count_words(const char *s, char c)
+int	is_separator(char ch, const char *sep)
 {
-	int	i;
-	int	count;
-
+	int i;
 	i = 0;
-	count = 0;
-	while (s[i])
+	while (sep[i])
 	{
-		while (s[i] && s[i] == c)
-			i ++;
-		if (s[i])
-			count ++;
-		while (s[i] && s[i] != c)
-			i ++;
-	}
-	return (count);
-}
-
-static void	free_matrix(char **matrix)
-{
-	size_t	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
+		if (ch == sep[i])
+			return (1);
 		i++;
 	}
-	free(matrix);
-	matrix = NULL;
+	return (0);
+}
+int count_words(const char *s, const char *separators)
+{
+	int count = 0;
+	int in_word = 0;
+
+	while (*s)
+	{
+		if (!is_separator(*s, separators) && !in_word)
+		{
+			in_word = 1;
+			count++;
+		}
+		else if (is_separator(*s, separators))
+		{
+			in_word = 0;
+		}
+		s++;
+	}
+	return count;
 }
 
-char	**ft_split(const char *s, char c)
+int ft_strnlen(const char *str, char n)
 {
-	size_t	k;
-	size_t	j;
-	int		pos;
-	char	**matrix;
+	size_t	a;
+	char p = n;
+	a = 0;
+	while (str[a] != p)
+		a++;
+	return (a);
+}
 
-	matrix = ft_calloc((count_words(s, c) + 1), sizeof(char *));
-	if (!s || !matrix)
-		return (free_matrix(matrix), NULL);
-	k = -1;
-	j = 0;
-	pos = -1;
-	while (++k <= ft_strlen_lib(s))
+char *my_strndup(const char *s, size_t n)
+{
+	size_t len = ft_strnlen(s, n);
+	char *new_str = malloc(len + 1);
+
+	if (new_str == NULL)
+		return NULL;
+	if(ft_strlcpy(new_str, s, len))
+		return(0);
+	new_str[len] = '\0';
+	return new_str;
+}
+
+char	**ft_split(const char *str, char *delimiter)
+{
+	char **result = malloc(2 * sizeof(char *));
+	if (!result)
+		return NULL;
+	char c = *delimiter;
+	char *delim_pos = ft_strrchr(str, c);
+	if (!delim_pos)
 	{
-		if (s[k] != c && pos < 0)
-			pos = k;
-		if ((s[k] == c || k == ft_strlen_lib(s)) && pos >= 0)
-		{
-			matrix[j++] = ft_substr_lib(s, pos, (k - pos));
-			pos = -1;
-		}
+		result[0] = ft_strdup_lib(str);
+		result[1] = NULL;
 	}
-	matrix[j] = NULL;
-	return (matrix);
+	else
+	{
+		int name_len = delim_pos - str;
+		result[0] = my_strndup(str, name_len);
+		result[1] = ft_strdup_lib(delim_pos + 1);
+	}
+	return result;
 }

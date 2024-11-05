@@ -1,67 +1,5 @@
 #include "../minishell.h"
 
-int is_space(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
-}
-char **the_tokenizer(char *input)
-{
-	char **tokens = ft_calloc(MAX_TOKENS, sizeof (char *));
-	int token_count = 0;
-	int i = 0;
-	while(input[i] != '\0')
-	{
-		while(is_space(input[i]))
-			i++;
-		if(input[i] == '\0')
-			break;
-		tokens[token_count] = malloc(MAX_TOKEN_LEN * sizeof (char));
-		int j = 0;
-		while(input[i] != '\0' && !is_space(input[i]))
-		{
-			if(input[i] == '"')
-			{
-				i++;
-				while(input[i] != '"' && input[i] != '\0')
-				{
-					// if(input[i] == '$')
-					// {
-
-					// }
-					tokens[token_count][j++] = input[i++];
-				}
-				i++;
-				if(input[i] != ' ' && input[i] != '\0')
-				{
-					while(input[i] != ' ' && input[i] != '\0')
-						tokens[token_count][j++] = input[i++];
-				}
-				if (input[i] != '\0')
-					tokens[token_count][j++] = '\0';
-			}
-			else if(input[i] == '\'')
-			{
-				i++;
-				while(input[i] != '\'' && input[i] != '\0')
-					tokens[token_count][j++] = input[i++];
-				i++;
-				if(input[i] != ' ' && input[i] != '\0')
-				{
-					while(input[i] != ' ' && input[i] != '\0')
-						tokens[token_count][j++] = input[i++];
-				}
-				if (input[i] != '\0')
-					tokens[token_count][j++] = '\0';
-			}
-			tokens[token_count][j++] = input[i++];
-		}
-		tokens[token_count][j] = '\0';
-		token_count++;
-	}
-	tokens[token_count] = NULL;
-	return (tokens);
-}
-
 void	signal_handle(int signal)
 {
 	if (signal == SIGINT)
@@ -154,11 +92,11 @@ int	main(int argc, char **argv,char **env)
 			break ;
 		}
 		add_history(line->input);
-		line->mat_input = the_tokenizer(line->input);
+		line->mat_input = ft_tokenizer(line->input, env_list);
 		ft_ex_dollar(line->mat_input, env_list);
 
 		i = 0;
-		while(line->mat_input[i] != NULL)
+		while (line->mat_input[i] != NULL)
 		{
 			printf("%s\n", line->mat_input[i]);
 			i++;

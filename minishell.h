@@ -21,22 +21,32 @@
 #define MAX_TOKEN_LEN 50
 
 
-typedef struct s_env_var {
-	char *name;
-	char *value;
+typedef struct s_env_var
+{
+	char			*name;
+	char			*value;
 	struct s_env_var *next;
 }	t_env_var;
 
 typedef struct s_rline
 {
-	char *input;
-	char **mat_input;
+	char	*input;
+	char	**mat_input;
 }	t_rline;
+
+
+typedef struct s_var_count
+{
+	int	i;
+	int	j;
+}	t_var_count;
 
 void		free_matrix(void **matrix);
 int			main(int argc, char **argv,char **env);
+char		**ft_tokenizer(char *input, t_env_var *env);
 void 		free_env_list(t_env_var **cur);
 void		init_env_list(t_env_var **env_list, char **env);
 void		add_env_var(t_env_var **env_list, t_env_var *new_var);
+int			is_space(char c);
 
 #endif

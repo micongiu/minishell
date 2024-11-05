@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = ./src/main.c ./src/utils_list.c ./src/ft_env.c
+SRCS = ./src/main.c ./src/utils_list.c ./src/ft_env.c ./src/ft_tokenizer.c
 SRC_DIRS = ./src
 OBJS = ${SRCS:.c=.o}
 

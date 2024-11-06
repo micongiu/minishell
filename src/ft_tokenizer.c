@@ -92,5 +92,6 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 		token_count++;
 	}
 	tokens[token_count] = NULL;
+	
 	return (tokens);
 }

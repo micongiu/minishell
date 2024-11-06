@@ -92,6 +92,14 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 		token_count++;
 	}
 	tokens[token_count] = NULL;
-	
+	//dopo aver memorizato l' ultimo token, skippa quello successivo (NULL) e libera tutti gli altri fino al MAX_TOKENS
+	while (++token_count <= MAX_TOKENS)
+	{
+		while (tokens[token_count])
+		{
+			free(tokens[token_count]);
+			tokens[token_count] = NULL;
+		}
+	}
 	return (tokens);
 }

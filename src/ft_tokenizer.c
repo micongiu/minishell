@@ -8,6 +8,9 @@ int	is_space(char c)
 t_var_count	token_double_quote(char *token, char *line,
 								t_env_var *env, t_var_count count)
 {
+	count.i++;
+	while(is_space(line[count.i]))
+		count.i++;
 	while (line[count.i] != '"' && line[count.i] != '\0')
 		token[count.j++] = line[count.i++];
 	count.i++;
@@ -30,6 +33,7 @@ t_var_count	token_double_quote(char *token, char *line,
 t_var_count	token_single_quote(char *token, char *line,
 								t_env_var *env, t_var_count count)
 {
+	count.i++;
 	while (line[count.i] != '\'' && line[count.i] != '\0')
 		token[count.j++] = line[count.i++];
 	count.i++;
@@ -80,6 +84,18 @@ int	ft_fake_tokenizer(char *input)
 
 	while (input[i] != '\0')
 	{
+		if (input[i] == '"')
+		{
+			i++;
+			while(input[i] != '"' && input[i] != '\0')
+				i++;
+		}
+		if (input[i] == '\'')
+		{
+			i++;
+			while(input[i] != '\'' && input[i] != '\0')
+				i++;
+		}
 		if (!isspace(input[i]) && !in_token)
 		{
 			in_token = 1;
@@ -103,6 +119,7 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	count.j = 0;
 	token_count = 0;
 	tokens = ft_calloc(ft_fake_tokenizer(input), sizeof (char *));
+	printf(" numero fake_token = %i", ft_fake_tokenizer(input));
 	while (input[count.i] != '\0')
 	{
 		while (is_space(input[count.i]))

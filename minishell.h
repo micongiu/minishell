@@ -17,7 +17,6 @@
 # include <readline/history.h>
 
 //servono per il tokenizer , anziche contare quanti token sono , noi ci teniamo larghi tanto sti cazzi daje
-#define MAX_TOKENS 100
 #define MAX_TOKEN_LEN 50
 
 
@@ -48,5 +47,6 @@ void 		free_env_list(t_env_var **cur);
 void		init_env_list(t_env_var **env_list, char **env);
 void		add_env_var(t_env_var **env_list, t_env_var *new_var);
 int			is_space(char c);
+int			ft_fake_tokenizer(char *input);
 
 #endif

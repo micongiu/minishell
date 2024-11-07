@@ -3,7 +3,7 @@
 t_env_var *create_env_node(char *name, char *value)
 {
 	t_env_var *new_var;
-	
+
 	new_var = (t_env_var *)ft_calloc(1, sizeof(t_env_var));
 	if (!new_var)
 		return (NULL);
@@ -41,8 +41,9 @@ void init_env_list(t_env_var **env_list, char **env)
 	{
 		name_value = ft_split(env[i], '=');
 		add_env_var(env_list, create_env_node(name_value[0], name_value[1]));
-		free_matrix((void **)name_value);
+		free_matrix((void *)name_value);
 		i++;
+	//	printf(" ciaoa a tutti \n" );
 	}
 }
 

@@ -92,6 +92,7 @@ int	main(int argc, char **argv,char **env)
 			break ;
 		}
 		add_history(line->input);
+
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		ft_ex_dollar(line->mat_input, env_list);
 

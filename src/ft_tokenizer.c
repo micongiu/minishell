@@ -8,6 +8,9 @@ int	is_space(char c)
 t_var_count	token_double_quote(char *token, char *line,
 								t_env_var *env, t_var_count count)
 {
+	count.i++;
+	while(is_space(line[count.i]))
+		count.i++;
 	while (line[count.i] != '"' && line[count.i] != '\0')
 		token[count.j++] = line[count.i++];
 	count.i++;
@@ -30,6 +33,7 @@ t_var_count	token_double_quote(char *token, char *line,
 t_var_count	token_single_quote(char *token, char *line,
 								t_env_var *env, t_var_count count)
 {
+	count.i++;
 	while (line[count.i] != '\'' && line[count.i] != '\0')
 		token[count.j++] = line[count.i++];
 	count.i++;
@@ -68,6 +72,42 @@ t_var_count	token_separation(char *token, char *line,
 	}
 	return (count);
 }
+int	ft_fake_tokenizer(char *input)
+{
+	int i;
+	int j;
+	int in_token;
+
+	j = 0;
+	i = 0;
+	in_token = 0;
+
+	while (input[i] != '\0')
+	{
+		if (input[i] == '"')
+		{
+			i++;
+			while(input[i] != '"' && input[i] != '\0')
+				i++;
+		}
+		if (input[i] == '\'')
+		{
+			i++;
+			while(input[i] != '\'' && input[i] != '\0')
+				i++;
+		}
+		if (!isspace(input[i]) && !in_token)
+		{
+			in_token = 1;
+			j++;
+		}
+		else if (isspace(input[i]) && in_token)
+			in_token = 0;
+		i++;
+	}
+	j++;
+	return (j);
+}
 
 char	**ft_tokenizer(char *input, t_env_var *env)
 {
@@ -78,7 +118,8 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	count.i = 0;
 	count.j = 0;
 	token_count = 0;
-	tokens = ft_calloc(MAX_TOKENS, sizeof (char *));
+	tokens = ft_calloc(ft_fake_tokenizer(input), sizeof (char *));
+	printf(" numero fake_token = %i", ft_fake_tokenizer(input));
 	while (input[count.i] != '\0')
 	{
 		while (is_space(input[count.i]))
@@ -92,5 +133,6 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 		token_count++;
 	}
 	tokens[token_count] = NULL;
+	printf(" PORCMAONNA\n");
 	return (tokens);
 }

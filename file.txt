@@ -10,3 +10,5 @@ aggiornamenti 3/11  13:51 = stavo per implementare nel Tokenizer il fatto che se
 !!modificato split !!--
 
 aggiornamenti 3/11  17:33 = fatta la { env_lis } , tutte le variabili d'anbiente hanno il proprio nodo , PORCO DEO , prossima task : individuare nell'input dell' utente il  ( $ ) dentro i doppi apici ( " " )
+
+aggiornamenti 7/11  14:36 = tolto MAX_tokens ,

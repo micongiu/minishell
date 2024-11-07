@@ -72,7 +72,48 @@ t_var_count	token_separation(char *token, char *line,
 	}
 	return (count);
 }
-int	ft_fake_tokenizer(char *input)
+
+int	ft_count_len(char *input, int i)
+{
+	while (input[i] != '\"' && input[i] != '\''  && input[i] != '\0')
+		i++;
+	if (input[i] == '\0')
+	{
+		i++;
+		return (i);
+	}
+	i++;
+	if (input[i] != ' ' && input[i] != '\0')
+	{
+		while (input[i] != ' ' && input[i] != '\0')
+		{
+			if (input[i] != '\"' && input[i] != '\'' && input[i] != '\0')
+				i++;
+			if (input[i] == '\0')
+				break ;
+			i++;
+		}
+	}
+	return (i);
+}
+
+int	ft_count(char *input, int i)
+{
+	while (input[i] != '\0' && !is_space (input[i]))
+	{
+		if (input[i] == '"' && input[i] == '\'')
+		{
+			i = ft_count_len(input, i);
+			return (i);
+		}
+		i++;
+	}
+	i++;
+	return (i);
+}
+
+
+int	ft_count_token(char *input)
 {
 	int i;
 	int j;
@@ -81,21 +122,18 @@ int	ft_fake_tokenizer(char *input)
 	j = 0;
 	i = 0;
 	in_token = 0;
-
 	while (input[i] != '\0')
 	{
-		if (input[i] == '"')
-		{
-			i++;
+		if (input[i++] == '"')
 			while(input[i] != '"' && input[i] != '\0')
 				i++;
-		}
-		if (input[i] == '\'')
-		{
-			i++;
+		if (input[i] == '\0')
+			break ;
+		if (input[i++] == '\'')
 			while(input[i] != '\'' && input[i] != '\0')
 				i++;
-		}
+		if (input[i] == '\0')
+			break ;
 		if (!isspace(input[i]) && !in_token)
 		{
 			in_token = 1;
@@ -103,6 +141,8 @@ int	ft_fake_tokenizer(char *input)
 		}
 		else if (isspace(input[i]) && in_token)
 			in_token = 0;
+		if (input[i] == '\0')
+			break ;
 		i++;
 	}
 	j++;
@@ -113,26 +153,27 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 {
 	char		**tokens;
 	int			token_count;
+	int			tmp;
 	t_var_count count;
 
 	count.i = 0;
 	count.j = 0;
+	tmp = 0;
 	token_count = 0;
-	tokens = ft_calloc(ft_fake_tokenizer(input), sizeof (char *));
-	printf(" numero fake_token = %i", ft_fake_tokenizer(input));
+	tokens = ft_calloc(ft_count_token(input) + 2, sizeof (char *));
 	while (input[count.i] != '\0')
 	{
 		while (is_space(input[count.i]))
 			count.i++;
 		if (input[count.i] == '\0')
 			break;
-		tokens[token_count] = ft_calloc(MAX_TOKEN_LEN, sizeof (char));
+		tmp = count.i;
+		tokens[token_count] = ft_calloc(ft_count_len(input, tmp), sizeof (char));
 		count.j = 0;
 		count = token_separation(tokens[token_count], input, env, count);
 		tokens[token_count][count.j] = '\0';
 		token_count++;
 	}
 	tokens[token_count] = NULL;
-	printf(" PORCMAONNA\n");
 	return (tokens);
 }

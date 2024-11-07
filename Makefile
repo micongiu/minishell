@@ -48,6 +48,7 @@ re: fclean all clean
 	@$(MAKE)
 
 git:
+	make fclean
 	git add *
 	git commit -m "update"
 	git push

@@ -48,5 +48,6 @@ void		init_env_list(t_env_var **env_list, char **env);
 void		add_env_var(t_env_var **env_list, t_env_var *new_var);
 int			is_space(char c);
 int			ft_fake_tokenizer(char *input);
+void		signal_handle(int signal);
 
 #endif

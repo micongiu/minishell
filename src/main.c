@@ -97,11 +97,11 @@ int	main(int argc, char **argv,char **env)
 		ft_ex_dollar(line->mat_input, env_list);
 
 		i = 0;
-		while (line->mat_input[i] != NULL)
-		{
-			printf("%s\n", line->mat_input[i]);
-			i++;
-		}
+		// while (line->mat_input[i] != NULL)
+		// {
+		// 	printf("%s\n", line->mat_input[i]);
+		// 	i++;
+		// }
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 	}

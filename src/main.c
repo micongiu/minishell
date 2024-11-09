@@ -94,14 +94,14 @@ int	main(int argc, char **argv,char **env)
 		add_history(line->input);
 
 		line->mat_input = ft_tokenizer(line->input, env_list);
-		// ft_ex_dollar(line->mat_input, env_list);
+		ft_ex_dollar(line->mat_input, env_list);
 
 		i = 0;
-		// while (line->mat_input[i] != NULL)
-		// {
-		// 	printf("%s\n", line->mat_input[i]);
-		// 	i++;
-		// }
+		while (line->mat_input[i] != NULL)
+		{
+			printf("%s\n", line->mat_input[i]);
+			i++;
+		}
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 	}

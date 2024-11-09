@@ -144,42 +144,37 @@ int	ft_count_token(char *input)
 {
 	int i;
 	int j;
-	int in_token;
 
-	j = 0;
 	i = 0;
-	in_token = 0;
-	while (input[i] != '\0')
+	j = 0;
+
+	while(input[i] != '\0')
 	{
-		if (input[i] == '"')
+		while(is_space(input[i]))
+			i++;
+		if(input[i] == '"')
 		{
 			i++;
-			while(input[i] != '"' && input[i] != '\0')
+			while(input[i] != '"')
 				i++;
-		}
-		if (input[i] == '\0')
-			break ;
-		if (input[i] == '\'')
-		{
-			i++;
-			while(input[i] != '\'' && input[i] != '\0')
-				i++;
-		}
-		if (input[i] == '\0')
-			break ;
-		i++;
-		if (!is_space(input[i]) && !in_token)
-		{
-			in_token = 1;
 			j++;
+			i++;
 		}
-		else if (is_space(input[i]) && in_token)
-			in_token = 0;
-		if (input[i] == '\0')
-			break ;
-		i++;
+		if(input[i] == '\'')
+		{
+			i++;
+			while(input[i] != '\'')
+				i++;
+			j++;
+			i++;
+		}
+		if(!is_space(input[i]))
+		{
+			j++;
+			while(!is_space(input[i]) && input[i] != '\0')
+				i++;
+		}
 	}
-	j++;
 	return (j);
 }
 
@@ -197,7 +192,7 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	if (ft_check_quote(input) == -1)
 		return (ft_putendl_fd("minishell->Error: Unclosed quotes", 1), NULL);
 	tokens = ft_calloc(ft_count_token(input), sizeof (char *));
-	// printf("%d\n", ft_count_token(input));
+	printf("%d\n", ft_count_token(input));
 	while (input[count.i] != '\0')
 	{
 		while (is_space(input[count.i]))

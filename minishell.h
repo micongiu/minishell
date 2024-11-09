@@ -16,10 +16,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//servono per il tokenizer , anziche contare quanti token sono , noi ci teniamo larghi tanto sti cazzi daje
-#define MAX_TOKEN_LEN 50
-
-
 typedef struct s_env_var
 {
 	char			*name;
@@ -46,8 +42,16 @@ char		**ft_tokenizer(char *input, t_env_var *env);
 void 		free_env_list(t_env_var **cur);
 void		init_env_list(t_env_var **env_list, char **env);
 void		add_env_var(t_env_var **env_list, t_env_var *new_var);
+
+// ft_tokenizer_utility.c
+
 int			is_space(char c);
-int			ft_fake_tokenizer(char *input);
-void		signal_handle(int signal);
+int			ft_check_quote(char *input);
+int			ft_count(char *input, int i);
+int			ft_count_token(char *input);
+
+// ft_signal_handle.c
+
+void		ft_signal_handle(int signal);
 
 #endif

@@ -1,18 +1,5 @@
 #include "../minishell.h"
 
-void	signal_handle(int signal)
-{
-	if (signal == SIGINT)
-	{
-		// g_status = 130
-		rl_replace_line("", 1);
-		ft_putendl_fd("", 1);
-		if (rl_on_new_line() == -1)
-			exit (EXIT_FAILURE);
-		rl_redisplay();
-	}
-}
-
 void	ft_check_str(char *str, t_env_var *env)
 {
 	int	i;
@@ -65,6 +52,7 @@ void ft_ex_dollar(char **matrix, t_env_var *env)
 	}
 }
 
+
 int	main(int argc, char **argv,char **env)
 {
 	t_rline *line;
@@ -77,7 +65,7 @@ int	main(int argc, char **argv,char **env)
 	while (1)
 	{
 		t_env_var *env_list = NULL;
-		signal(SIGINT, signal_handle);
+		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
 		init_env_list(&env_list, env);
@@ -92,16 +80,13 @@ int	main(int argc, char **argv,char **env)
 			break ;
 		}
 		add_history(line->input);
-
 		line->mat_input = ft_tokenizer(line->input, env_list);
-		ft_ex_dollar(line->mat_input, env_list);
-
 		i = 0;
-		// while (line->mat_input[i] != NULL)
-		// {
-		// 	printf("%s\n", line->mat_input[i]);
-		// 	i++;
-		// }
+		while (line->mat_input[i] != NULL)
+		{
+			printf("%s\n", line->mat_input[i]);
+			i++;
+		}
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 	}

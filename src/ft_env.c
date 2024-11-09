@@ -43,7 +43,6 @@ void init_env_list(t_env_var **env_list, char **env)
 		add_env_var(env_list, create_env_node(name_value[0], name_value[1]));
 		free_matrix((void *)name_value);
 		i++;
-	//	printf(" ciaoa a tutti \n" );
 	}
 }
 
@@ -51,6 +50,7 @@ void free_env_list(t_env_var **cur)
 {
 	t_env_var *tmp;
 
+	tmp = NULL;
 	while (*cur != NULL)
 	{
 		tmp = (*cur)->next;

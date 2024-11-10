@@ -37,10 +37,10 @@ void ft_ex_dollar(char *matrix, t_env_var *env)
 	while (env)
 	{
 		j = 0;
-		while (matrix[i][j])
+		while (matrix[j])
 		{
-			if (matrix[i][j] == '$')
-				ft_check_str(matrix[i], env);
+			if (matrix[j] == '$')
+				ft_check_str(matrix, env);
 			j++;
 		}
 		env = env->next;
@@ -53,7 +53,7 @@ void	ft_exit(t_rline *line, t_env_var **env_list)
 	free(line);
 	free_env_list(env_list);
 	clear_history();
-	printf("End of input\n");
+	printf("exit\n");
 }
 
 int	main(int argc, char **argv,char **env)

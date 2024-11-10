@@ -28,7 +28,7 @@ void	ft_check_str(char *str, t_env_var *env)
 	}
 }
 
-void ft_ex_dollar(char **matrix, t_env_var *env)
+void ft_ex_dollar(char *matrix, t_env_var *env)
 {
 	int	i;
 	int	j;
@@ -36,57 +36,53 @@ void ft_ex_dollar(char **matrix, t_env_var *env)
 	i = 0;
 	while (env)
 	{
-		i = 0;
-		while (matrix[i])
+		j = 0;
+		while (matrix[i][j])
 		{
-			j = 0;
-			while (matrix[i][j])
-			{
-				if (matrix[i][j] == '$')
-					ft_check_str(matrix[i], env);
-				j++;
-			}
-			i++;
+			if (matrix[i][j] == '$')
+				ft_check_str(matrix[i], env);
+			j++;
 		}
 		env = env->next;
 	}
 }
 
+void	ft_exit(t_rline *line, t_env_var **env_list)
+{
+	free(line->input);
+	free(line);
+	free_env_list(env_list);
+	clear_history();
+	printf("End of input\n");
+}
 
 int	main(int argc, char **argv,char **env)
 {
-	t_rline *line;
-	int i = 0;
-	int j = 0;
-	char **environ;
+	t_rline	*line;
+	int 	i;
+	t_env_var *env_list;
+
+	i = 0;
+	env_list = NULL;
+	line = NULL;
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
 	while (1)
 	{
-		t_env_var *env_list = NULL;
+		env_list = NULL;
 		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
 		init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-		{
-			free(line->input);
-			free(line);
-			free_env_list(&env_list);
-			clear_history();
-			printf("End of input\n");
-			break ;
-		}
+			return(ft_exit(line, &env_list), 0);
 		add_history(line->input);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		i = 0;
 		while (line->mat_input[i] != NULL)
-		{
-			printf("%s\n", line->mat_input[i]);
-			i++;
-		}
+			printf("%s\n", line->mat_input[i++]);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 	}

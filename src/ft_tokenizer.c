@@ -1,51 +1,47 @@
 #include "../minishell.h"
 
-t_var_count	token_double_quote(char *token, char *line,
-								t_env_var *env, t_var_count count)
+t_var_count token_double_quote(char *token, char *line,
+			t_env_var *env, t_var_count count)
 {
+	int	in_quotes;
+
+	in_quotes = 1;
 	count.i++;
-	while(is_space(line[count.i]))
-		count.i++;
-	while (line[count.i] != '"' && line[count.i] != '\0')
-		token[count.j++] = line[count.i++];
-	count.i++;
-	if (line[count.i] != ' ' && line[count.i] != '\0')
+	while (line[count.i] != '\0')
 	{
-		while (line[count.i] != ' ' && line[count.i] != '\0')
-		{
-			if (line[count.i] == '"' && line[count.i] != '\0')
-				count.i++;
-			if (line[count.i] == '\0')
-				break ;
-			token[count.j++] = line[count.i++];
-		}
+		if (line[count.i] == '"')
+			in_quotes = 0;
+		else if (in_quotes == 0 && line[count.i] == ' ')
+			break;
+		// else if (line[count.i] == '$')
+		// 	count = ft_ex_dollar(line, token, env, count);
+		else
+			token[count.j++] = line[count.i];
+		count.i++;
 	}
-	token[count.j++] = '\0';
-	return (count);
+	token[count.j] = '\0';
+	return count;
 }
 
 t_var_count	token_single_quote(char *token, char *line,
 								t_env_var *env, t_var_count count)
 {
+	int	in_quotes;
+
+	in_quotes = 1;
 	count.i++;
-	while(is_space(line[count.i]))
-		count.i++;
-	while (line[count.i] != '\'' && line[count.i] != '\0')
-		token[count.j++] = line[count.i++];
-	count.i++;
-	if (line[count.i] != ' ' && line[count.i] != '\0')
+	while (line[count.i] != '\0')
 	{
-		while (line[count.i] != ' ' && line[count.i] != '\0')
-		{
-			if (line[count.i] == '\'' && line[count.i] != '\0')
-				count.i++;
-			if (line[count.i] == '\0')
-				break ;
-			token[count.j++] = line[count.i++];
-		}
+		if (line[count.i] == '\'')
+			in_quotes = 0;
+		else if (in_quotes == 0 && line[count.i] == ' ')
+			break;
+		else
+			token[count.j++] = line[count.i];
+		count.i++;
 	}
-	token[count.j++] = '\0';
-	return (count);
+	token[count.j] = '\0';
+	return count;
 }
 
 t_var_count	token_separation(char *token, char *line,

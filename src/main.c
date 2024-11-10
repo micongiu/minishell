@@ -1,50 +1,41 @@
 #include "../minishell.h"
 
-void	ft_check_str(char *str, t_env_var *env)
+t_var_count	ft_check_str(char *line, char *token, t_env_var *env, t_var_count count)
 {
-	int	i;
 	int	j;
+	int k;
 	int	tmp;
-	int count;
 
-	i = 0;
-	j = -1;
-	tmp = 0;
-	count = 0;
-	while (str[tmp] != '$')
-		tmp++;
-	i = tmp;
-	while (str[++i] && env->name[++j])
+	j = 0;
+	k = 0;
+	tmp = count.i;
+	count.i++;
+	while (line[count.i] && env->name[j])
 	{
-		if (str[i] == env->name[j])
-			count++;
+		if (line[count.i] == env->name[j])
+			k++;
+		count.i++;
+		j++;
 	}
-	j = -1;
-	tmp--;
-	if (count == ft_strlen_lib(env->name))
+	j = 0;
+	if (k == ft_strlen_lib(env->name))
 	{
-		while (env->value[++j])
-			str[++tmp] = env->value[j];
+		while (env->value[j++])
+			token[tmp++] = env->value[j];
+		count.i =+ k - 1;
+		count.j =+ tmp;
 	}
+	return (count);
 }
 
-void ft_ex_dollar(char *matrix, t_env_var *env)
+t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count)
 {
-	int	i;
-	int	j;
-
-	i = 0;
 	while (env)
 	{
-		j = 0;
-		while (matrix[j])
-		{
-			if (matrix[j] == '$')
-				ft_check_str(matrix, env);
-			j++;
-		}
+		count = ft_check_str(line, token, env, count);
 		env = env->next;
 	}
+	return (count);
 }
 
 void	ft_exit(t_rline *line, t_env_var **env_list)

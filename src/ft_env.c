@@ -32,16 +32,28 @@ void add_env_var(t_env_var **env_list, t_env_var *new_var)
 
 void init_env_list(t_env_var **env_list, char **env)
 {
-	int			i;
-	char		**name_value;
+	int		i;
+	int		tmp;
+	char	**name_value;
 
 	name_value = NULL;
 	i = 0;
+	tmp = 0;
 	while (env[i])
 	{
+		tmp = 0;
+		while (env[tmp])
+		{
+			if (env[i][tmp] == '=' && env[i][tmp + 1] == '\0')
+			{
+				printf("%s", env[i]);
+				printf("%d\n", i);
+			}
+			tmp++;
+		}
 		name_value = ft_split(env[i], '=');
 		add_env_var(env_list, create_env_node(name_value[0], name_value[1]));
-		free_matrix((void *)name_value);
+		free_matrix((void **)name_value);
 		i++;
 	}
 }

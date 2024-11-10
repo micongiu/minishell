@@ -42,6 +42,7 @@ char		**ft_tokenizer(char *input, t_env_var *env);
 void 		free_env_list(t_env_var **cur);
 void		init_env_list(t_env_var **env_list, char **env);
 void		add_env_var(t_env_var **env_list, t_env_var *new_var);
+t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count);
 
 // ft_tokenizer_utility.c
 

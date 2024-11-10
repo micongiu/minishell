@@ -65,6 +65,8 @@ char	**ft_split(const char *s, char c)
 	{
 		if (s[k] != c && pos < 0)
 			pos = k;
+		// if (s[k] == '\0')
+		// 	break ;
 		if ((s[k] == c || k == ft_strlen_lib(s)) && pos >= 0)
 		{
 			matrix[j++] = ft_substr_lib(s, pos, (k - pos));

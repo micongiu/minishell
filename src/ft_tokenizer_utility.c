@@ -43,6 +43,8 @@ int	ft_count_len(char *input, int i)
 		i++;
 		return (i);
 	}
+	// bisogna modificare il count in modo tale che quando
+	// trovi una variabile di ambiente si conti la lunghezza di quella variabile e ritorni quella piú il resto
 	if (input[i] != ' ' && input[i] != '\0')
 	{
 		while (input[i] != ' ' && input[i] != '\0')

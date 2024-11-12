@@ -54,7 +54,7 @@ int	ft_count_len(char *input, int i)
 			i++;
 		}
 	}
-	return (i);
+	return (i + 2);
 }
 
 int	ft_count(char *input, int i)
@@ -86,8 +86,9 @@ int	ft_count_token(char *input)
 	{
 		while(is_space(input[i]))
 			i++;
-		if(input[i++] == '"' || input[i++] == '\'')
+		if(input[i] == '"' || input[i] == '\'')
 		{
+			i++;
 			while(input[i] != '"' && input[i] != '\'')
 				i++;
 			j++;

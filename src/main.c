@@ -52,6 +52,8 @@ int	main(int argc, char **argv,char **env)
 	t_rline	*line;
 	int 	i;
 	t_env_var *env_list;
+	t_process_list *process_list;
+
 
 	i = 0;
 	env_list = NULL;
@@ -72,6 +74,7 @@ int	main(int argc, char **argv,char **env)
 		add_history(line->input);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		i = 0;
+		ft_init_process_list(line->mat_input, &process_list);
 		while (line->mat_input[i] != NULL)
 			printf("%s\n", line->mat_input[i++]);
 		free_matrix((void **)line->mat_input);

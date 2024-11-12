@@ -23,6 +23,14 @@ typedef struct s_env_var
 	struct s_env_var *next;
 }	t_env_var;
 
+typedef struct s_process_list
+{
+	char	*command;
+	char	*option;
+	char	*full_process;
+}	t_process_list;
+
+
 typedef struct s_rline
 {
 	char	*input;
@@ -66,5 +74,11 @@ void		ft_signal_handle(int signal);
 // ft_utility.c
 
 void		free_matrix(void **matrix);
+
+
+
+
+
+void	ft_init_process_list(char **mat, t_process_list **process_list);
 
 #endif

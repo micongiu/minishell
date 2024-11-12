@@ -8,20 +8,18 @@ t_var_count	ft_check_str(char *line, char *token, t_env_var *env, t_var_count co
 
 	j = 0;
 	k = 0;
-	tmp = count.i;
+	tmp = count.j;
 	count.i++;
-	while (line[count.i] && env->name[j])
+	while (line && *line != '$')
 	{
-		if (line[count.i] == env->name[j])
-			k++;
-		count.i++;
-		j++;
+		line++;
+		k++;
 	}
-	j = 0;
-	if (k == ft_strlen_lib(env->name))
+	line++;
+	if (ft_strncmp(line, env->name, ft_strlen_lib(env->name)) == 0)
 	{
-		while (env->value[j++])
-			token[tmp++] = env->value[j];
+		while (env->value[j])
+			token[tmp++] = env->value[j++];
 		count.i =+ k - 1;
 		count.j =+ tmp;
 	}

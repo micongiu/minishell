@@ -65,7 +65,7 @@ int	main(int argc, char **argv,char **env)
 		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
-		init_env_list(&env_list, env);
+		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
 			return(ft_exit(line, &env_list), 0);

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_env_var *create_env_node(char *name, char *value)
+t_env_var	*ft_create_env_node(char *name, char *value)
 {
 	t_env_var *new_var;
 
@@ -13,7 +13,7 @@ t_env_var *create_env_node(char *name, char *value)
 	return (new_var);
 }
 
-void add_env_var(t_env_var **env_list, t_env_var *new_var)
+void	ft_add_env_var(t_env_var **env_list, t_env_var *new_var)
 {
 	t_env_var *temp;
 
@@ -30,31 +30,51 @@ void add_env_var(t_env_var **env_list, t_env_var *new_var)
 	}
 }
 
-void init_env_list(t_env_var **env_list, char **env)
+char	*ft_save_value(t_var_count count, char **env, char *str_name)
 {
-	int		i;
-	int		tmp;
-	char	**name_value;
+	char	*tmp_str;
+	char	*str_value;
 
-	name_value = NULL;
-	i = 0;
-	tmp = 0;
-	while (env[i])
+	str_value = NULL;
+	tmp_str = NULL;
+	str_value = ft_calloc(ft_strlen_lib(env[count.i]) - count.k + 1, sizeof(char *));
+	count.j = 0;
+	count.k++;
+	while (str_value && env[count.i][count.k])
+		str_value[count.j++] = env[count.i][count.k++];
+	str_value[count.j] = '\0';
+	if (ft_strncmp(str_name, "SHLVL", ft_strlen_lib(str_name)) == 0)
 	{
-		tmp = 0;
-		while (env[tmp])
-		{
-			if (env[i][tmp] == '=' && env[i][tmp + 1] == '\0')
-			{
-				printf("%s", env[i]);
-				printf("%d\n", i);
-			}
-			tmp++;
-		}
-		name_value = ft_split(env[i], '=');
-		add_env_var(env_list, create_env_node(name_value[0], name_value[1]));
-		free_matrix((void **)name_value);
-		i++;
+		tmp_str = ft_itoa(ft_atoi(str_value) + 1);
+		free(str_value);
+		str_value = tmp_str;
+	}
+	return (str_value);
+}
+
+void ft_init_env_list(t_env_var **env_list, char **env)
+{
+	t_var_count	count;
+	char	*str_name;
+	char	*str_value;
+
+	str_value = NULL;
+	str_name = NULL;
+	count.i = 0;
+	count.j = 0;
+	count.k = 0;
+	while (env[count.i])
+	{
+		count.k = 0;
+		while (env[count.i][count.k] && env[count.i][count.k] != '=')
+			count.k++;
+		str_name = ft_calloc(count.k + 1, sizeof(char *));
+		ft_strlcpy(str_name, env[count.i], count.k + 1);
+		str_value = ft_save_value(count, env, str_name);
+		ft_add_env_var(env_list, ft_create_env_node(str_name, str_value));
+		free(str_name);
+		free(str_value);
+		count.i++;
 	}
 }
 

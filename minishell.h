@@ -34,15 +34,23 @@ typedef struct s_var_count
 {
 	int	i;
 	int	j;
+	int	k;
 }	t_var_count;
 
-void		free_matrix(void **matrix);
+// main.c
+
 int			main(int argc, char **argv,char **env);
-char		**ft_tokenizer(char *input, t_env_var *env);
+t_var_count	ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count);
+
+// ft_env.c
+
+void		ft_init_env_list(t_env_var **env_list, char **env);
 void 		free_env_list(t_env_var **cur);
-void		init_env_list(t_env_var **env_list, char **env);
-void		add_env_var(t_env_var **env_list, t_env_var *new_var);
-t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count);
+
+
+// ft_tokenizer.c
+
+char		**ft_tokenizer(char *input, t_env_var *env);
 
 // ft_tokenizer_utility.c
 
@@ -54,5 +62,9 @@ int			ft_count_token(char *input);
 // ft_signal_handle.c
 
 void		ft_signal_handle(int signal);
+
+// ft_utility.c
+
+void		free_matrix(void **matrix);
 
 #endif

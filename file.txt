@@ -13,4 +13,7 @@ aggiornamenti 3/11  17:33 = fatta la { env_lis } , tutte le variabili d'anbiente
 
 aggiornamenti 7/11  14:36 = tolto MAX_tokens , aggiustato il tokenizer (gestiva male i doppi apici) ,
 
-aggiornamenti 9/11  14:59 = token_count FINALMENTE perfetto gg,
+aggiornamenti 9/11  14:59 = token_count FINALMENTE perfetto gg
+
+aggiornamenti 12/11  20:56 = "ciao" viene memorizzato "cioa"\0 , ora bisogna costruire la lista contenente ogni processo diviso da (| < > << >>) ,
+					 22:76 = (ft_init_process_list bisogna) finire questa funzione

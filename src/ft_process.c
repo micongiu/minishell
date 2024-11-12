@@ -1,42 +1,58 @@
 #include "../minishell.h"
-
-void	ft_init_process_list(char **mat, t_process_list **process_list)
+void	ft_add_process_node(t_process_list **process_list, t_process_list *new_var)
 {
-	int i;
+	t_process_list *temp;
 
-	i = 0;
-	while(mat[i] != NULL)
+	temp = *process_list;
+	if (!process_list)
+		return ;
+	if (!*process_list)
+		*process_list = new_var;
+	else
 	{
-		if((mat[i][0] == '|' || mat[i][0] == '>' || mat[i][0] == '<') && (mat[i][1] == '\0' || mat[i][1] == '>' || mat[i][1] == '<'))
-			printf("--------------------\n");
-		i++;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_var;
 	}
 }
 
-int	ft_count_token_modded(char *input)
+void	ft_init_process_list(char **mat, t_process_list **process_list)
 {
-	int i;
-	int j;
-	
-	i = 0;
-	j = 0;
-	while(input[i] != '\0')
+	t_var_count2	count;
+	char	*command;
+	char	*option;
+	char	*full_process;
+
+	count.a = 0;
+	count.b = 0;
+	count.c = 0;
+	command = NULL;
+	option = NULL;
+	full_process = NULL;
+
+	while(mat[count.a] != NULL)
 	{
-		while(is_space(input[i]))
-			i++;
-		if(input[i++] == '"' || input[i++] == '\'')
+
+		if((mat[count.a][0] == '|' || mat[count.a][0] == '>' || mat[count.a][0] == '<') && (mat[count.a][1] == '\0' || mat[count.a][1] == '>' || mat[count.a][1] == '<'))
 		{
-			while(input[i] != '"' && input[i] != '\'')
-				i++;
-			j++;
-			i++;
+			if(count.a == 0)
+			{
+				printf("ERROR\n");
+				break;
+			}
+			if((count.a - count.b) == 1)
+			{
+				command = calloc(ft_strlen_lib(mat[(count.a)]) + 1, sizeof(char));
+				if(!ft_strlcpy(command, mat[count.a], ft_strlen_lib(mat[(count.a)])+1))
+					printf("ERROR 1\n");
+				printf("%s\n", command);
+				free(command);
+				count.b = count.a;
+			}
+			//ft_add_process_node(process_list, ft_create_process_node(str_name, str_value));
+			printf("--------------------\n");
+			printf("%i\n", (count.a - count.b));
 		}
-		if(!is_space(input[i]))
-		{
-			j++;
-			while(!is_space(input[i]) && input[i] != '\0')
-				i++;
-		}
+		count.a++;
 	}
-	return (j);
 }

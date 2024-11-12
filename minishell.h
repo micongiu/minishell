@@ -28,6 +28,7 @@ typedef struct s_process_list
 	char	*command;
 	char	*option;
 	char	*full_process;
+	struct s_process_list *next;
 }	t_process_list;
 
 
@@ -37,6 +38,12 @@ typedef struct s_rline
 	char	**mat_input;
 }	t_rline;
 
+typedef struct s_var_count2
+{
+	int	a;
+	int	b;
+	int	c;
+}	t_var_count2;
 
 typedef struct s_var_count
 {

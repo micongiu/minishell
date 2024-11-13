@@ -17,3 +17,5 @@ aggiornamenti 9/11  14:59 = token_count FINALMENTE perfetto gg
 
 aggiornamenti 12/11  20:56 = "ciao" viene memorizzato "cioa"\0 , ora bisogna costruire la lista contenente ogni processo diviso da (| < > << >>) ,
 					 22:76 = (ft_init_process_list bisogna) finire questa funzione
+
+aggiornamenti 13/11 21:44 = poca roba , risolto una cazzatina della funzione di ieri , scoperto HackTheBox

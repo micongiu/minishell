@@ -35,7 +35,7 @@ void	ft_init_process_list(char **mat, t_process_list **process_list)
 	{
 		if((mat[count.a][0] == '|' || mat[count.a][0] == '>' || mat[count.a][0] == '<') && (mat[count.a][1] == '\0' || mat[count.a][1] == '>' || mat[count.a][1] == '<'))
 		{
-			
+
 			if(count.a == 0)
 			{
 				printf("ERROR\n");
@@ -46,7 +46,7 @@ void	ft_init_process_list(char **mat, t_process_list **process_list)
 				command = calloc(ft_strlen_lib(mat[(count.a)]) + 1, sizeof(char));
 				if(!ft_strlcpy(command, mat[count.a], ft_strlen_lib(mat[(count.a)])+1))
 					printf("ERROR 1\n");
-				ft_add_process_node(process_list, ft_create_process_node(command, option, full_process));
+				//ft_add_process_node(process_list, ft_create_process_node(command, option, full_process));
 				printf("%s\n", command);
 				free(command);
 				command = NULL;

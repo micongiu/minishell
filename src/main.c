@@ -9,7 +9,6 @@ t_var_count	ft_check_str(char *line, char *token, t_env_var *env, t_var_count co
 	j = 0;
 	k = 0;
 	tmp = count.j;
-	count.i++;
 	while (line && *line != '$')
 	{
 		line++;
@@ -20,7 +19,7 @@ t_var_count	ft_check_str(char *line, char *token, t_env_var *env, t_var_count co
 	{
 		while (env->value[j])
 			token[tmp++] = env->value[j++];
-		count.i =+ k - 1;
+		count.i =+ k + ft_strlen_lib(env->name);
 		count.j =+ tmp;
 	}
 	return (count);

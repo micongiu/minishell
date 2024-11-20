@@ -27,7 +27,9 @@ t_process_list *ft_create_process_node() {
 	node->file_fd = NULL;
 	node->redirection = 0;
 	node->full_process = NULL;
-	node->argument = NULL;
+	node->argument1 = NULL;
+	node->argument2 = NULL;
+	node->argument3 = NULL;
 	node->next = NULL;
 	return node;
 }
@@ -37,7 +39,9 @@ void print_process_list(t_process_list *head) {
     while (head) {
         printf("Command: %s\n", head->command);
         if (head->option) printf("Option: %s\n", head->option);
-        if (head->argument) printf("Argument: %s\n", head->argument);
+        if (head->argument1) printf("Argument1: %s\n", head->argument1);
+ 		if (head->argument2) printf("Argument2: %s\n", head->argument2);
+		if (head->argument3) printf("Argument3: %s\n", head->argument3);
         if (head->file_fd) {
             printf("File FD: %s\n", head->file_fd);
             printf("Redirection: %d\n", head->redirection);
@@ -89,15 +93,12 @@ t_process_list *ft_init_process_list(char **tokens) {
 			current_node->option = ft_strdup_lib(*tokens);
 		else
 		{
-			if (!current_node->argument)
-				current_node->argument = ft_strdup_lib(*tokens);
-			else
-			{
-				char *temp = malloc(sizeof(char) * (ft_strlen_lib(current_node->argument) + ft_strlen_lib(*tokens) + 2 ));
-				
-				free(current_node->argument);
-				current_node->argument = temp;
-			}
+			if (!current_node->argument1)
+				current_node->argument1 = ft_strdup_lib(*tokens);
+			else if (!current_node->argument2)
+				current_node->argument2 = ft_strdup_lib(*tokens);
+			else if (!current_node->argument3)
+				current_node->argument3 = ft_strdup_lib(*tokens);
 		}
 		if (!*(tokens + 1) || ft_strncmp(*(tokens + 1), "|", 2) == 0)
 		{
@@ -112,3 +113,4 @@ t_process_list *ft_init_process_list(char **tokens) {
 	return head;
 }
 
+//serve commentare e mettere a norma 

@@ -1,0 +1,43 @@
+/nfs/homes/anmedyns:
+total 1964
+drwx------   20 anmedyns 2023_rome    4096 Nov 20 15:53 .
+drwxr-xr-x 1579 root     root        36864 Nov 18 17:41 ..
+-rw-------    1 anmedyns 2023_rome    1047 Nov  3 17:04 .bash_history
+-rw-r--r--    1 anmedyns 2023_rome       0 Jul 18 17:05 .blockfolderview
+drwxr-xr-x   28 anmedyns 2023_rome    4096 Oct 31 16:37 .cache
+drwx------   24 anmedyns 2023_rome    4096 Nov 20 13:56 .config
+-rw-r--r--    1 anmedyns 2023_rome  218960 Nov  3 19:27 CV_Andrea_Medynskyy.pdf
+drwxr-xr-x    6 anmedyns 2023_rome    4096 Nov 12 15:48 Desktop
+-rw-r--r--    1 anmedyns 2023_rome      37 Nov 19 16:49 .dmrc
+drwxr-xr-x    3 anmedyns 2023_rome    4096 Jan 24  2024 .docker
+drwxr-xr-x    3 anmedyns 2023_rome    4096 Mar 11  2024 .dotnet
+-rw-r--r--    1 anmedyns 2023_rome 1568461 Oct 30 16:43 en.subject.pdf
+-rw-r--r--    1 anmedyns 2023_rome     201 May  8  2024 .gitconfig
+-rw-r--r--    1 anmedyns 2023_rome     165 May  7  2024 .gitconfig.save
+drwx------    3 anmedyns 2023_rome    4096 Oct 31 16:28 .gnupg
+lrwxrwxrwx    1 anmedyns 2023_rome      36 Nov 20 15:53 goinfre -> /nfs/sgoinfre/goinfre/Perso/anmedyns
+drwxr-xr-x    2 anmedyns 2023_rome    4096 Apr  3  2024 .gphoto
+-rw-------    1 anmedyns 2023_rome      20 Nov 20 15:51 .lesshst
+drwxr-x---    2 anmedyns 2023_rome    4096 Oct 16 19:05 .lldb
+drwxr-xr-x    3 anmedyns 2023_rome    4096 Jan 24  2024 .local
+drwx------    3 anmedyns 2023_rome    4096 Apr  3  2024 .mozilla
+-rw-r--r--    1 anmedyns 2023_rome       0 Oct 24 15:25 parola
+drwx------    3 anmedyns 2023_rome    4096 Mar 11  2024 .pki
+drwx------    4 anmedyns 2023_rome    4096 Jul 24 14:39 snap
+drwx------    2 anmedyns 2023_rome    4096 Nov 13 17:44 .ssh
+drwx------    6 anmedyns 2023_rome    4096 Apr  3  2024 .thunderbird
+drwxr-xr-x    3 anmedyns 2023_rome    4096 Mar 11  2024 .var
+drwxr-xr-x    2 anmedyns 2023_rome    4096 Oct  5 16:38 .vim
+-rw-------    1 anmedyns 2023_rome   16533 Nov  3 17:16 .viminfo
+drwxr-xr-x    4 anmedyns 2023_rome    4096 Mar 11  2024 .vscode
+drwxr-xr-x    2 anmedyns 2023_rome    4096 Nov  3 12:57 Wallpapers
+-rw-------    1 anmedyns 2023_rome    4033 Nov 20 15:53 .Xauthority
+-rw-------    1 anmedyns 2023_rome     911 Nov 20 15:53 .xsession-errors
+-rw-------    1 anmedyns 2023_rome     911 Nov 20 13:26 .xsession-errors.old
+-rw-r--r--    1 anmedyns 2023_rome   49802 Nov 19 14:21 .zcompdump
+-rw-r--r--    1 anmedyns 2023_rome       0 Jan 24  2024 .zshrc
+
+/nfs/homes/anmedyns/Desktop/prove:
+total 8
+drwxr-xr-x 2 anmedyns 2023_rome 4096 Nov  3 17:16 .
+drwxr-xr-x 6 anmedyns 2023_rome 4096 Nov 12 15:48 ..

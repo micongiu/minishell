@@ -30,7 +30,10 @@ typedef struct s_process_list
 	char	*file_fd;
 	int		redirection;
 	char	*full_process;
-	char	*argument;
+	char	*argument1;
+	char	*argument2;
+	char	*argument3;
+
 	struct s_process_list *next;
 }	t_process_list;
 

@@ -81,5 +81,6 @@ int	main(int argc, char **argv,char **env)
 			printf("%s\n", line->mat_input[i++]);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
+		free_process_list(&head_process);
 	}
 }

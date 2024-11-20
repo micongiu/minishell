@@ -61,9 +61,9 @@ t_process_list *ft_init_process_list(char **tokens) {
 	while (*tokens)
 	{
 		if (!current_node)
-			current_node = ft_create_process_node();
+			current_node = ft_create_process_node();//se non esiste un nodo , lo crea
 
-		if (ft_strncmp(*tokens, "<", 2) == 0)
+		if (ft_strncmp(*tokens, "<", 2) == 0) //da qui
 		{
 			current_node->redirection = 1;
 			tokens++;
@@ -75,7 +75,7 @@ t_process_list *ft_init_process_list(char **tokens) {
 			tokens++;
 			current_node->file_fd = ft_strdup_lib(*tokens);
 		}
-		else if (ft_strncmp(*tokens, "<<", 3) == 0)
+		else if (ft_strncmp(*tokens, "<<", 3) == 0) // ci salviamo il delemitatore subito dopo le <<
 		{
 			current_node->redirection = 3;
 			tokens++;
@@ -86,7 +86,7 @@ t_process_list *ft_init_process_list(char **tokens) {
 			current_node->redirection = 4;
 			tokens++;
 			current_node->file_fd = ft_strdup_lib(*tokens);
-		}
+		}										//a qui controlla eventuali redirection e si salva il file in cui dovra essere scritto l'output o viceversa
 		else if (!current_node->command)
 			current_node->command = ft_strdup_lib(*tokens);
 		else if (**tokens == '-')
@@ -113,4 +113,34 @@ t_process_list *ft_init_process_list(char **tokens) {
 	return head;
 }
 
-//serve commentare e mettere a norma 
+void free_process_list(t_process_list **cur)
+{
+	t_process_list *tmp;
+
+	tmp = NULL;
+	while (*cur != NULL)
+	{
+		tmp = (*cur)->next;
+		free((*cur)->command);
+		free((*cur)->option);
+		free((*cur)->file_fd);
+		free((*cur)->full_process);
+		free((*cur)->argument1);
+		free((*cur)->argument2);
+		free((*cur)->argument3);
+		free(*cur);
+		*cur = tmp;
+	}
+}
+
+//Il simbolo > è utilizzato per redirigere l'output di un comando verso un file. Se il file non esiste, viene creato; se il file esiste già, il suo contenuto viene sovrascritto.
+//Il simbolo < è utilizzato per redirigere l'input da un file invece che dalla tastiera. Quando un comando si aspetta dell'input da tastiera, < permette di leggere i dati da un file invece che dall'utente.
+//Il simbolo << è utilizzato per creare un "here document", che permette di passare un blocco di testo direttamente a un comando. Questo è utile quando vuoi fornire più righe di input a un comando senza dover scrivere un file separato.
+//Il simbolo >> è simile a >, ma invece di sovrascrivere il contenuto del file, aggiunge (append) l'output alla fine del file esistente. Se il file non esiste, viene creato.
+
+
+
+
+//serve commentare e mettere a norma
+//si memorizza i primi 3  argomenti se ci dovessero essere e gli altri li skippa
+//aggiungere eventuale ERROR per troppi argomenti passati

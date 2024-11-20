@@ -95,5 +95,7 @@ void		free_matrix(void **matrix);
 
 
 t_process_list	*ft_init_process_list(char **mat);
+void			free_process_list(t_process_list **cur);
+
 
 #endif

@@ -140,7 +140,7 @@ void free_process_list(t_process_list **cur)
 
 
 
-
+//full_path non utilizato, non so come e' meglio memorizarcelo (stringa o matrice)
 //serve commentare e mettere a norma
 //si memorizza i primi 3  argomenti se ci dovessero essere e gli altri li skippa
 //aggiungere eventuale ERROR per troppi argomenti passati

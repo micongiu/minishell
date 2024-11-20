@@ -27,10 +27,15 @@ typedef struct s_process_list
 {
 	char	*command;
 	char	*option;
+	char	*file_fd;
+	int		redirection;
 	char	*full_process;
+	char	*argument;
 	struct s_process_list *next;
 }	t_process_list;
 
+
+// REDIRECTION _________1 = 1 ; 2 = 2;  3 = 1 inversa  , 4  = 2 inversse
 
 typedef struct s_rline
 {
@@ -86,6 +91,6 @@ void		free_matrix(void **matrix);
 
 
 
-void	ft_init_process_list(char **mat, t_process_list **process_list);
+t_process_list	*ft_init_process_list(char **mat);
 
 #endif

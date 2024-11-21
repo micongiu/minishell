@@ -81,7 +81,7 @@ int	ft_count_len_sqoute(char *input, int i, t_env_var *env)
 			i++;
 		}
 	}
-	return (i + count.i - count.j);
+	return (i + count.i - count.j + 2);
 }
 
 int	ft_count_len_dqoute(char *input, int i, t_env_var *env)
@@ -114,7 +114,7 @@ int	ft_count_len_dqoute(char *input, int i, t_env_var *env)
 			i++;
 		}
 	}
-	return (i + count.i - count.j);
+	return (i + count.i - count.j + 2);
 }
 
 int	ft_count(char *input, int i, t_env_var *env)

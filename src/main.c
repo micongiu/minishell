@@ -74,8 +74,8 @@ int	main(int argc, char **argv,char **env)
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		i = 0;
 		head_process = ft_init_process_list(line->mat_input);
-		while (line->mat_input[i] != NULL)
-			printf("%s\n", line->mat_input[i++]);
+		// while (line->mat_input[i] != NULL)
+		// 	printf("%s\n", line->mat_input[i++]);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 		free_process_list(&head_process);

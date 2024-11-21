@@ -139,8 +139,11 @@ void free_process_list(t_process_list **cur)
 //Il simbolo >> è simile a >, ma invece di sovrascrivere il contenuto del file, aggiunge (append) l'output alla fine del file esistente. Se il file non esiste, viene creato.
 
 
-
-//full_path non utilizato, non so come e' meglio memorizarcelo (stringa o matrice)
 //serve commentare e mettere a norma
-//si memorizza i primi 3  argomenti se ci dovessero essere e gli altri li skippa
 //aggiungere eventuale ERROR per troppi argomenti passati
+
+
+
+//COSE DA FARE
+//salva il full_path come array di stringhe    char[] = {"ciao","duce","ok",NULL};
+

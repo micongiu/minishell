@@ -84,3 +84,8 @@ int	main(int argc, char **argv,char **env)
 		free_process_list(&head_process);
 	}
 }
+
+
+// se trovo << , dichiari stringa cacca = "comadno1 \n , comando2 \n, comando3 \n"
+
+

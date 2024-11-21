@@ -56,7 +56,7 @@ char		**ft_tokenizer(char *input, t_env_var *env);
 
 int			is_space(char c);
 int			ft_check_quote(char *input);
-int			ft_count(char *input, int i);
+int			ft_count(char *input, int i, t_env_var *env);
 int			ft_count_token(char *input);
 
 // ft_signal_handle.c

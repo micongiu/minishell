@@ -6,6 +6,8 @@ t_var_count token_double_quote(char *token, char *line,
 	int	in_quotes;
 
 	in_quotes = 1;
+	token[count.j++] = line[count.i];
+
 	count.i++;
 	while (line[count.i] != '\0')
 	{
@@ -19,6 +21,7 @@ t_var_count token_double_quote(char *token, char *line,
 			token[count.j++] = line[count.i];
 		count.i++;
 	}
+	token[count.j++] = '"';
 	token[count.j] = '\0';
 	return count;
 }
@@ -29,6 +32,8 @@ t_var_count	token_single_quote(char *token, char *line,
 	int	in_quotes;
 
 	in_quotes = 1;
+	token[count.j++] = line[count.i];
+
 	count.i++;
 	while (line[count.i] != '\0')
 	{
@@ -42,6 +47,7 @@ t_var_count	token_single_quote(char *token, char *line,
 			token[count.j++] = line[count.i];
 		count.i++;
 	}
+	token[count.j++] = '\'';
 	token[count.j] = '\0';
 	return count;
 }

@@ -70,7 +70,7 @@ int	ft_count_len_sqoute(char *input, int i, t_env_var *env)
 	{
 		while (input[i] != ' ' && input[i] != '\0')
 		{
-			if (input[i] != '\"' && input[i] != '\0')
+			if (input[i] != '\'' && input[i] != '\0')
 			{
 				if (input[i] == '$')
 					count = ft_count_dollar(input, env);

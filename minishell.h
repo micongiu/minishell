@@ -46,13 +46,6 @@ typedef struct s_rline
 	char	**mat_input;
 }	t_rline;
 
-typedef struct s_var_count2
-{
-	int	a;
-	int	b;
-	int	c;
-}	t_var_count2;
-
 typedef struct s_var_count
 {
 	int	i;
@@ -79,6 +72,9 @@ char		**ft_tokenizer(char *input, t_env_var *env);
 
 int			is_space(char c);
 int			ft_check_quote(char *input);
+
+// ft_tokenizer_counter.c
+
 int			ft_count(char *input, int i, t_env_var *env);
 int			ft_count_token(char *input);
 
@@ -90,12 +86,9 @@ void		ft_signal_handle(int signal);
 
 void		free_matrix(void **matrix);
 
-
-
-
+// ft_process.c
 
 t_process_list	*ft_init_process_list(char **mat);
 void			free_process_list(t_process_list **cur);
-
 
 #endif

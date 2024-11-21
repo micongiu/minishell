@@ -1,4 +1,5 @@
 #include "../minishell.h"
+
 void	ft_add_process_node(t_process_list **process_list, t_process_list *new_var)
 {
 	t_process_list *temp;
@@ -15,8 +16,12 @@ void	ft_add_process_node(t_process_list **process_list, t_process_list *new_var)
 		temp->next = new_var;
 	}
 }
-t_process_list *ft_create_process_node() {
-	t_process_list *node = malloc(sizeof(t_process_list));
+
+t_process_list	*ft_create_process_node()
+{
+	t_process_list *node;
+
+	node = ft_calloc(1, sizeof(t_process_list));
 	if (!node)
 	{
 		printf("err_ft_create_process_node\n");
@@ -35,6 +40,7 @@ t_process_list *ft_create_process_node() {
 }
 
 //chat gpt, per printare la lista
+
 void print_process_list(t_process_list *head) {
     while (head) {
         printf("Command: %s\n", head->command);
@@ -51,18 +57,17 @@ void print_process_list(t_process_list *head) {
     }
 }
 
-t_process_list *ft_init_process_list(char **tokens) {
+t_process_list	*ft_init_process_list(char **tokens)
+{
 	t_process_list	*head = NULL;
 	t_process_list	*current_node = NULL;
 	char			*temp;
 
 	temp = NULL;
-
 	while (*tokens)
 	{
 		if (!current_node)
 			current_node = ft_create_process_node();//se non esiste un nodo , lo crea
-
 		if (ft_strncmp(*tokens, "<", 2) == 0) //da qui
 		{
 			current_node->redirection = 1;
@@ -113,9 +118,9 @@ t_process_list *ft_init_process_list(char **tokens) {
 	return head;
 }
 
-void free_process_list(t_process_list **cur)
+void	free_process_list(t_process_list **cur)
 {
-	t_process_list *tmp;
+	t_process_list	*tmp;
 
 	tmp = NULL;
 	while (*cur != NULL)

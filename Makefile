@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c
+SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c ./src/ft_process.c
 SRC_DIRS = ./src
 OBJS = ${SRCS:.c=.o}
 
@@ -49,7 +49,7 @@ re: fclean all clean
 
 git:
 	make fclean
-	git add *
+	git add .
 	git commit -m "update"
 	git push
 

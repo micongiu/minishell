@@ -23,12 +23,35 @@ typedef struct s_env_var
 	struct s_env_var *next;
 }	t_env_var;
 
+typedef struct s_process_list
+{
+	char	*command;
+	char	*option;
+	char	*file_fd;
+	int		redirection;
+	char	*full_process;
+	char	*argument1; // 1argomento che e' un' array di stringhe 
+	char	*argument2;
+	char	*argument3;
+
+	struct s_process_list *next;
+}	t_process_list;
+
+
+// REDIRECTION _________1 = 1 ; 2 = 2;  3 = 1 inversa  , 4  = 2 inversse
+
 typedef struct s_rline
 {
 	char	*input;
 	char	**mat_input;
 }	t_rline;
 
+typedef struct s_var_count2
+{
+	int	a;
+	int	b;
+	int	c;
+}	t_var_count2;
 
 typedef struct s_var_count
 {
@@ -66,5 +89,13 @@ void		ft_signal_handle(int signal);
 // ft_utility.c
 
 void		free_matrix(void **matrix);
+
+
+
+
+
+t_process_list	*ft_init_process_list(char **mat);
+void			free_process_list(t_process_list **cur);
+
 
 #endif

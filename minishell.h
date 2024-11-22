@@ -30,9 +30,7 @@ typedef struct s_process_list
 	char	*file_fd;
 	int		redirection;
 	char	*full_process;
-	char	*argument1; // 1argomento che e' un' array di stringhe 
-	char	*argument2;
-	char	*argument3;
+	char	**argument; // 1argomento che e' un' array di stringhe
 
 	struct s_process_list *next;
 }	t_process_list;

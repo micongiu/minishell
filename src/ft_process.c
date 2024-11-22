@@ -17,24 +17,33 @@ void	ft_add_process_node(t_process_list **process_list, t_process_list *new_var)
 	}
 }
 
-t_process_list	*ft_create_process_node()
+t_process_list	*ft_create_process_node(char **tokens)
 {
 	t_process_list *node;
+	int i;
+	int j;
 
+	i = 0;
+	j = 0;
 	node = ft_calloc(1, sizeof(t_process_list));
-	if (!node)
-	{
-		printf("err_ft_create_process_node\n");
-		return (NULL);
-	}
+
+	while((tokens[i] != NULL) && (ft_strncmp(tokens[i], ">", 2) != 0) && (ft_strncmp(tokens[i], "<", 2) != 0) && (ft_strncmp(tokens[i], ">>", 3) != 0) && (ft_strncmp(tokens[i], "<<", 3) != 0) && (ft_strncmp(tokens[i], "|", 2) != 0))
+			{
+				i++;
+				printf("valore TOKENS %i = %s\n", i, tokens[i]);
+			}
 	node->command = NULL;
 	node->option = NULL;
 	node->file_fd = NULL;
 	node->redirection = 0;
 	node->full_process = NULL;
-	node->argument1 = NULL;
-	node->argument2 = NULL;
-	node->argument3 = NULL;
+	node->argument = malloc(sizeof(char*) * i);
+
+	while(j < i)
+	{
+		node->argument[j] = NULL;
+		j++;
+	}
 	node->next = NULL;
 	return node;
 }
@@ -42,12 +51,17 @@ t_process_list	*ft_create_process_node()
 //chat gpt, per printare la lista
 
 void print_process_list(t_process_list *head) {
+	int i;
     while (head) {
+		i = 0;
         printf("Command: %s\n", head->command);
         if (head->option) printf("Option: %s\n", head->option);
-        if (head->argument1) printf("Argument1: %s\n", head->argument1);
- 		if (head->argument2) printf("Argument2: %s\n", head->argument2);
-		if (head->argument3) printf("Argument3: %s\n", head->argument3);
+        if (head->argument[i])
+		{
+			while(head->argument[i])
+				printf("Argument: %s\n", head->argument[i]);
+				i++;
+		}
         if (head->file_fd) {
             printf("File FD: %s\n", head->file_fd);
             printf("Redirection: %d\n", head->redirection);
@@ -62,12 +76,16 @@ t_process_list	*ft_init_process_list(char **tokens)
 	t_process_list	*head = NULL;
 	t_process_list	*current_node = NULL;
 	char			*temp;
+	int arg;
 
+	arg = 0;
 	temp = NULL;
 	while (*tokens)
 	{
 		if (!current_node)
-			current_node = ft_create_process_node();//se non esiste un nodo , lo crea
+		{
+			current_node = ft_create_process_node(tokens);//se non esiste un nodo , lo crea
+		}
 		if (ft_strncmp(*tokens, "<", 2) == 0) //da qui
 		{
 			current_node->redirection = 1;
@@ -93,17 +111,19 @@ t_process_list	*ft_init_process_list(char **tokens)
 			current_node->file_fd = ft_strdup_lib(*tokens);
 		}										//a qui controlla eventuali redirection e si salva il file in cui dovra essere scritto l'output o viceversa
 		else if (!current_node->command)
-			current_node->command = ft_strdup_lib(*tokens);
-		else if (**tokens == '-')
-			current_node->option = ft_strdup_lib(*tokens);
-		else
 		{
-			if (!current_node->argument1)
-				current_node->argument1 = ft_strdup_lib(*tokens);
-			else if (!current_node->argument2)
-				current_node->argument2 = ft_strdup_lib(*tokens);
-			else if (!current_node->argument3)
-				current_node->argument3 = ft_strdup_lib(*tokens);
+			current_node->command = ft_strdup_lib(*tokens);
+		}
+		else if (**tokens == '-')
+		{
+			current_node->option = ft_strdup_lib(*tokens);
+			current_node->argument[arg] == ft_strdup_lib(*tokens);
+			arg++;
+		}
+		else if((ft_strncmp(*(tokens), "|", 2) != 0) && !*(tokens) && !(**tokens == '-'))
+		{
+			current_node->argument[arg] == ft_strdup_lib(*tokens);
+			arg++;
 		}
 		if (!*(tokens + 1) || ft_strncmp(*(tokens + 1), "|", 2) == 0)
 		{
@@ -121,7 +141,9 @@ t_process_list	*ft_init_process_list(char **tokens)
 void	free_process_list(t_process_list **cur)
 {
 	t_process_list	*tmp;
+	int i;
 
+	i = 0;
 	tmp = NULL;
 	while (*cur != NULL)
 	{
@@ -130,9 +152,12 @@ void	free_process_list(t_process_list **cur)
 		free((*cur)->option);
 		free((*cur)->file_fd);
 		free((*cur)->full_process);
-		free((*cur)->argument1);
-		free((*cur)->argument2);
-		free((*cur)->argument3);
+		while((*cur)->argument[i] != NULL)
+		{
+			free((*cur)->argument[i]);
+			i++;
+		}
+		free((*cur)->argument);
 		free(*cur);
 		*cur = tmp;
 	}

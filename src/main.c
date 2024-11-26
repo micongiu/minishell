@@ -37,12 +37,13 @@ void	ft_exit(t_rline *line, t_env_var **env_list)
 	printf("exit\n");
 }
 
-// print all the env_list
+// print all the env_list, questa leaka GESÙ
 
 void	ft_env(t_env_var **env)
 {
-	while (env)
+	while (*env != NULL)
 	{
+		// if ((*env)->name && (*env)->value)
 		printf("%s=%s\n", (*env)->name, (*env)->value);
 		(*env) = (*env)->next;
 	}
@@ -50,33 +51,35 @@ void	ft_env(t_env_var **env)
 
 void	ft_unset(t_env_var **env, char *str)
 {
-	t_env_var *env_tmp;
+	t_env_var *prev;
+	t_env_var *curr;
 
-	env_tmp	= (*env);
-	while (env)
+	prev = NULL;
+	curr = *env;
+	while (curr)
 	{
-		if (ft_strncmp(str, (*env)->name, ft_strlen_lib((*env)->name)) == 0)
+		if (ft_strncmp(str, curr->name, ft_strlen_lib(curr->name)) == 0)
 		{
-			env_tmp = (*env)->next;
-			free((*env)->name);
-			free((*env)->value);
-			free((*env));
-			*env = env_tmp;
-			break ;
+			if (prev)
+				prev->next = curr->next;
+			else
+				*env = curr->next;
+			free(curr->name);
+			free(curr->value);
+			free(curr);
+			break;
 		}
-		(*env) = (*env)->next;
+		prev = curr;
+		curr = curr->next;
 	}
 }
 
 int	main(int argc, char **argv,char **env)
 {
 	t_rline	*line;
-	int 	i;
 	t_env_var *env_list;
 	t_process_list *head_process;
 
-
-	i = 0;
 	env_list = NULL;
 	head_process = NULL;
 	line = NULL;
@@ -94,14 +97,9 @@ int	main(int argc, char **argv,char **env)
 		line->input = readline("minishell->");
 		if (line->input == NULL)
 			return(ft_exit(line, &env_list), 0);
-		add_history(line->input);
 		line->mat_input = ft_tokenizer(line->input, env_list);
-		i = 0;
 		head_process = ft_init_process_list(line->mat_input);
-		// while (line->mat_input[i] != NULL)
-		// 	printf("%s\n", line->mat_input[i++]);
-		ft_unset(&env_list, "PATH");
-		// ft_env(&env_list);
+		add_history(line->input);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 		free_process_list(&head_process);

@@ -5,8 +5,6 @@ void	ft_add_process_node(t_process_list **process_list, t_process_list *new_var)
 	t_process_list *temp;
 
 	temp = *process_list;
-	if (!process_list)
-		return ;
 	if (!*process_list)
 		*process_list = new_var;
 	else
@@ -47,19 +45,17 @@ t_process_list	*ft_create_process_node(char **tokens)
 	return node;
 }
 
-//chat gpt, per printare la lista
-
 void print_process_list(t_process_list *head) {
 	int i;
-    while (head) {
+    if (head) {
 		i = 0;
         printf("Command: %s\n", head->command);
         if (head->option) printf("Option: %s\n", head->option);
-        if (head->argument[i] != NULL)
+        if (head->argument)
 		{
 			while(head->argument[i] != NULL)
 			{
-				printf("Argument: %s\n", head->argument[i]);
+				printf("Argument %i: %s\n",i, head->argument[i]);
 				i++;
 			}
 		}
@@ -115,15 +111,19 @@ t_process_list	*ft_init_process_list(char **tokens)
 		{
 			current_node->command = ft_strdup_lib(*tokens);
 		}
-		else if (**tokens == '-')
+		else if ((tokens != NULL) && (ft_strncmp(*tokens, ">", 2) != 0) && (ft_strncmp(*tokens, "<", 2) != 0) && (ft_strncmp(*tokens, ">>", 3) != 0) && (ft_strncmp(*tokens, "<<", 3) != 0) && (ft_strncmp(*tokens, "|", 2) != 0)) //SISTEMA DIO CARO
 		{
-			current_node->option = ft_strdup_lib(*tokens);
-			current_node->argument[arg] == ft_strdup_lib(*tokens);
+			if(**tokens == '-')
+			{
+				current_node->option = ft_strdup_lib(*tokens);
+			}
+			current_node->argument[arg] = ft_strdup_lib(*tokens);
+			printf("argomento %i = %s\n", arg, current_node->argument[arg]);
 			arg++;
 		}
 		else if((ft_strncmp(*(tokens), "|", 2) != 0) && !*(tokens) && !(**tokens == '-'))
 		{
-			current_node->argument[arg] == ft_strdup_lib(*tokens);
+			current_node->argument[arg] = ft_strdup_lib(*tokens);
 			arg++;
 		}
 		if (!*(tokens + 1) || ft_strncmp(*(tokens + 1), "|", 2) == 0)
@@ -142,27 +142,32 @@ t_process_list	*ft_init_process_list(char **tokens)
 void	free_process_list(t_process_list **cur)
 {
 	t_process_list	*tmp;
-	int i;
-
-	i = 0;
-	tmp = NULL;
+	int j;
+	j = 0;
 	while (*cur != NULL)
 	{
 		tmp = (*cur)->next;
 		free((*cur)->command);
-		free((*cur)->option);
-		free((*cur)->file_fd);
-		free((*cur)->full_process);
-		while((*cur)->argument[i] != NULL)
+		if ((*cur)->option)
+			free((*cur)->option);
+		if ((*cur)->file_fd)
+			free((*cur)->file_fd);
+		if ((*cur)->full_process)
+			free((*cur)->full_process);
+		if ((*cur)->argument != NULL)
 		{
-			free((*cur)->argument[i]);
-			i++;
+			while ((*cur)->argument[j] != NULL)
+			{
+				free((*cur)->argument[j]);
+				j++;
+			}
+			free((*cur)->argument);
 		}
-		free((*cur)->argument);
 		free(*cur);
 		*cur = tmp;
 	}
 }
+
 
 //Il simbolo > è utilizzato per redirigere l'output di un comando verso un file. Se il file non esiste, viene creato; se il file esiste già, il suo contenuto viene sovrascritto.
 //Il simbolo < è utilizzato per redirigere l'input da un file invece che dalla tastiera. Quando un comando si aspetta dell'input da tastiera, < permette di leggere i dati da un file invece che dall'utente.

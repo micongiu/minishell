@@ -35,11 +35,12 @@ t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 	return (count);
 }
 
-void	ft_exit(t_rline *line, t_env_var **env_list)
+void	ft_exit(t_rline *line, t_env_var **env_list, t_process_list **head_process)
 {
 	free(line->input);
 	free(line);
 	free_env_list(env_list);
+	free_process_list(head_process);
 	clear_history();
 	printf("exit\n");
 }
@@ -69,7 +70,7 @@ int	main(int argc, char **argv,char **env)
 		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-			return(ft_exit(line, &env_list), 0);
+			return(ft_exit(line, &env_list, &head_process), 0);
 		add_history(line->input);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		i = 0;

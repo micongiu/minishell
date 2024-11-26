@@ -30,7 +30,6 @@ t_process_list	*ft_create_process_node(char **tokens)
 	while((tokens[i] != NULL) && (ft_strncmp(tokens[i], ">", 2) != 0) && (ft_strncmp(tokens[i], "<", 2) != 0) && (ft_strncmp(tokens[i], ">>", 3) != 0) && (ft_strncmp(tokens[i], "<<", 3) != 0) && (ft_strncmp(tokens[i], "|", 2) != 0))
 			{
 				i++;
-				printf("valore TOKENS %i = %s\n", i, tokens[i]);
 			}
 	node->command = NULL;
 	node->option = NULL;
@@ -56,11 +55,13 @@ void print_process_list(t_process_list *head) {
 		i = 0;
         printf("Command: %s\n", head->command);
         if (head->option) printf("Option: %s\n", head->option);
-        if (head->argument[i])
+        if (head->argument[i] != NULL)
 		{
-			while(head->argument[i])
+			while(head->argument[i] != NULL)
+			{
 				printf("Argument: %s\n", head->argument[i]);
 				i++;
+			}
 		}
         if (head->file_fd) {
             printf("File FD: %s\n", head->file_fd);

@@ -29,10 +29,8 @@ typedef struct s_process_list
 	char	*option;
 	char	*file_fd;
 	int		redirection;
-	char	*full_process;
-	char	*argument1; // 1argomento che e' un' array di stringhe 
-	char	*argument2;
-	char	*argument3;
+	char	*full_process; // sarebbe ARGUMENT daje
+	char	**argument; // 1argomento che e' un' array di stringhe il primo elemento dopo il comando e l'ultimo prima di redirection o pipe o NULL
 
 	struct s_process_list *next;
 }	t_process_list;

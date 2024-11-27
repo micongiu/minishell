@@ -1,35 +1,28 @@
 #include "../minishell.h"
 
-t_var_count	ft_check_str(char *line, char *token, t_env_var *env, t_var_count count)
+t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count)
 {
 	int	j;
 	int k;
 	int	tmp;
 
-	j = 0;
 	k = 0;
-	tmp = count.j;
 	while (line && *line != '$')
-	{
 		line++;
-		k++;
-	}
 	line++;
-	if (ft_strncmp(line, env->name, ft_strlen_lib(env->name)) == 0)
-	{
-		while (env->value[j])
-			token[tmp++] = env->value[j++];
-		count.i =+ k + ft_strlen_lib(env->name);
-		count.j =+ tmp;
-	}
-	return (count);
-}
-
-t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count)
-{
+	k = *line;
 	while (env)
 	{
-		count = ft_check_str(line, token, env, count);
+		j = 0;
+		tmp = count.j;
+		if (ft_strncmp(line, env->name, ft_strlen_lib(env->name)) == 0)
+		{
+			while (env->value[j])
+				token[tmp++] = env->value[j++];
+			count.i =+ k + ft_strlen_lib(env->name);
+			count.j =+ tmp;
+			break ;
+		}
 		env = env->next;
 	}
 	return (count);
@@ -45,15 +38,49 @@ void	ft_exit(t_rline *line, t_env_var **env_list, t_process_list **head_process)
 	printf("exit\n");
 }
 
+// print all the env_list, questa leaka GESÙ
+
+void	ft_env(t_env_var **env)
+{
+	while (*env != NULL)
+	{
+		// if ((*env)->name && (*env)->value)
+		printf("%s=%s\n", (*env)->name, (*env)->value);
+		(*env) = (*env)->next;
+	}
+}
+
+void	ft_unset(t_env_var **env, char *str)
+{
+	t_env_var *prev;
+	t_env_var *curr;
+
+	prev = NULL;
+	curr = *env;
+	while (curr)
+	{
+		if (ft_strncmp(str, curr->name, ft_strlen_lib(curr->name)) == 0)
+		{
+			if (prev)
+				prev->next = curr->next;
+			else
+				*env = curr->next;
+			free(curr->name);
+			free(curr->value);
+			free(curr);
+			break;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
+}
+
 int	main(int argc, char **argv,char **env)
 {
 	t_rline	*line;
-	int 	i;
 	t_env_var *env_list;
 	t_process_list *head_process;
 
-
-	i = 0;
 	env_list = NULL;
 	head_process = NULL;
 	line = NULL;
@@ -70,14 +97,13 @@ int	main(int argc, char **argv,char **env)
 		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-			return(ft_exit(line, &env_list, &head_process), 0);
-		add_history(line->input);
+      return(ft_exit(line, &env_list, &head_process), 0);
 		line->mat_input = ft_tokenizer(line->input, env_list);
-		i = 0;
 		head_process = ft_init_process_list(line->mat_input);
-
+		add_history(line->input);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
+		free_process_list(&head_process);
 		free_process_list(&head_process);
 	}
 }

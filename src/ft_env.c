@@ -37,7 +37,7 @@ char	*ft_save_value(t_var_count count, char **env, char *str_name)
 
 	str_value = NULL;
 	tmp_str = NULL;
-	str_value = ft_calloc(ft_strlen_lib(env[count.i]) - count.k + 1, sizeof(char *));
+	str_value = (char *)ft_calloc(ft_strlen_lib(env[count.i]) - count.k + 1, sizeof(char));
 	count.j = 0;
 	count.k++;
 	while (str_value && env[count.i][count.k])
@@ -68,7 +68,7 @@ void ft_init_env_list(t_env_var **env_list, char **env)
 		count.k = 0;
 		while (env[count.i][count.k] && env[count.i][count.k] != '=')
 			count.k++;
-		str_name = ft_calloc(count.k + 1, sizeof(char *));
+		str_name = (char *)ft_calloc(count.k + 1, sizeof(char));
 		ft_strlcpy(str_name, env[count.i], count.k + 1);
 		str_value = ft_save_value(count, env, str_name);
 		ft_add_env_var(env_list, ft_create_env_node(str_name, str_value));

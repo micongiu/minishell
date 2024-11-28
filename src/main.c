@@ -79,34 +79,36 @@ void	ft_unset(t_env_var **env, char *str)
 
 void	ft_export(t_process_list **info_process, t_env_var **env)
 {
-	int		i;
-	char	*str_name;
-	char	*str_value;
+	int			i;
+	char		*str_name;
+	char		*str_value;
+	t_env_var	*tmp;
 
 	i = 0;
 	str_name = NULL;
 	str_value = NULL;
+	tmp = *env;
 	while ((*info_process)->argument[1][i] && (*info_process)->argument[1][i] != '=')
 		i++;
 	if ((*info_process)->argument[1][i] != '=')
 		return ;
 	str_name = ft_substr_lib((*info_process)->argument[1], 0, i);
 	str_value = ft_substr_lib((*info_process)->argument[1], i + 1, ft_strlen_lib((*info_process)->argument[1]) - i + 1);
-	while (*env)
+	while (tmp)
 	{
-		if (ft_strncmp(str_name, (*env)->name, ft_strlen_lib((*env)->name)) == 0)
+		if (ft_strncmp(str_name, (tmp)->name, ft_strlen_lib((tmp)->name)) == 0)
 		{
-			free((*env)->value);
-			(*env)->value = ft_strdup_lib(str_value);
+			free((tmp)->value);
+			(tmp)->value = ft_strdup_lib(str_value);
 			free(str_value);
 			return (free(str_name));
 		}
-		*env = (*env)->next;
+		tmp = (tmp)->next;
 	}
 	ft_add_env_var(env, ft_create_env_node(str_name, str_value));
 }
 
-int	main(int argc, char **argv,char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_rline	*line;
 	t_env_var *env_list;
@@ -118,25 +120,26 @@ int	main(int argc, char **argv,char **env)
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
+	env_list = NULL;
+	ft_init_env_list(&env_list, env);
 	while (1)
 	{
-		env_list = NULL;
 		head_process = NULL;
 		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
-		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
 			return(ft_exit(line, &env_list, &head_process), 0);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		add_history(line->input);
+		// ft_export(&head_process, &env_list);
+		// ft_env(env_list);
 		free_matrix((void **)line->mat_input);
-		free_env_list(&env_list);
-		free_process_list(&head_process);
 		free_process_list(&head_process);
 	}
+	free_env_list(&env_list);
 }
 
 

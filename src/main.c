@@ -40,14 +40,16 @@ void	ft_exit(t_rline *line, t_env_var **env_list, t_process_list **head_process)
 
 // print all the env_list, questa leaka GESÙ
 
-void	ft_env(t_env_var **env)
+void	ft_env(t_env_var *env)
 {
-	while (*env != NULL)
+    t_env_var *current;
+
+	current = env;
+    while (current != NULL)
 	{
-		// if ((*env)->name && (*env)->value)
-		printf("%s=%s\n", (*env)->name, (*env)->value);
-		(*env) = (*env)->next;
-	}
+        printf("%s=%s\n", current->name, current->value);
+        current = current->next;
+    }
 }
 
 void	ft_unset(t_env_var **env, char *str)
@@ -75,6 +77,35 @@ void	ft_unset(t_env_var **env, char *str)
 	}
 }
 
+void	ft_export(t_process_list **info_process, t_env_var **env)
+{
+	int		i;
+	char	*str_name;
+	char	*str_value;
+
+	i = 0;
+	str_name = NULL;
+	str_value = NULL;
+	while ((*info_process)->argument[1][i] && (*info_process)->argument[1][i] != '=')
+		i++;
+	if ((*info_process)->argument[1][i] != '=')
+		return ;
+	str_name = ft_substr_lib((*info_process)->argument[1], 0, i);
+	str_value = ft_substr_lib((*info_process)->argument[1], i + 1, ft_strlen_lib((*info_process)->argument[1]) - i + 1);
+	while (*env)
+	{
+		if (ft_strncmp(str_name, (*env)->name, ft_strlen_lib((*env)->name)) == 0)
+		{
+			free((*env)->value);
+			(*env)->value = ft_strdup_lib(str_value);
+			free(str_value);
+			return (free(str_name));
+		}
+		*env = (*env)->next;
+	}
+	ft_add_env_var(env, ft_create_env_node(str_name, str_value));
+}
+
 int	main(int argc, char **argv,char **env)
 {
 	t_rline	*line;
@@ -97,7 +128,7 @@ int	main(int argc, char **argv,char **env)
 		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-      return(ft_exit(line, &env_list, &head_process), 0);
+			return(ft_exit(line, &env_list, &head_process), 0);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		add_history(line->input);

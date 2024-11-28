@@ -35,12 +35,12 @@ t_process_list	*ft_create_process_node(char **tokens)
 	node->file_fd = NULL;
 	node->redirection = 0;
 	node->full_process = NULL;
-	node->argument = malloc(sizeof(char*) * i + 1);
-	while(j < i + 1)
-	{
-		node->argument[j] = NULL;
-		j++;
-	}
+	node->argument = ft_calloc(sizeof(char*), i + 1);
+	// while(j < i + 1)
+	// {
+	// 	node->argument[j] = NULL;
+	// 	j++;
+	// }
 	//node->argument[j] = NULL;
 	node->next = NULL;
 	return node;

@@ -58,6 +58,8 @@ t_var_count	ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 
 // ft_env.c
 
+t_env_var	*ft_create_env_node(char *name, char *value);
+void		ft_add_env_var(t_env_var **env_list, t_env_var *new_var);
 void		ft_init_env_list(t_env_var **env_list, char **env);
 void 		free_env_list(t_env_var **cur);
 

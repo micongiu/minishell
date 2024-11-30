@@ -29,8 +29,8 @@ typedef struct s_process_list
 	char	*option;
 	char	*file_fd;
 	int		redirection;
-	char	*full_process; // sarebbe ARGUMENT daje
-	char	**argument; // 1argomento che e' un' array di stringhe il primo elemento dopo il comando e l'ultimo prima di redirection o pipe o NULL
+	char	*full_process;
+	char	**argument;
 
 	struct s_process_list *next;
 }	t_process_list;
@@ -88,5 +88,9 @@ void		free_matrix(void **matrix);
 
 t_process_list	*ft_init_process_list(char **mat);
 void			free_process_list(t_process_list **cur);
+
+//ft_execute.c
+
+void execute_command(t_process_list *process,t_env_var **env_list);
 
 #endif

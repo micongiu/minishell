@@ -38,8 +38,6 @@ void	ft_exit(t_rline *line, t_env_var **env_list, t_process_list **head_process)
 	printf("exit\n");
 }
 
-// print all the env_list, questa leaka GESÙ
-
 void	ft_env(t_env_var **env)
 {
 	while (*env != NULL)
@@ -97,10 +95,11 @@ int	main(int argc, char **argv,char **env)
 		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-      return(ft_exit(line, &env_list, &head_process), 0);
+			return(ft_exit(line, &env_list, &head_process), 0);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		add_history(line->input);
+		execute_command(head_process,&env_list);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 		free_process_list(&head_process);

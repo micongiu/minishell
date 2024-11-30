@@ -27,3 +27,6 @@ aggiornamenti 20/11 17:40 = BENTORNATI, 80% ft_process.c , serve metterlo a norm
 
 aggiotnamenti 26/11 19:29 = bella, abbiamo la lista per ogni processo , # aggiustare la creazione dei nodi successivi al prima , # cominciare a giocare con EXECVE ,
 							# controllare tutti i leak (sicuro leakka)             --oggi ho fatto anche ft_printf dell'exam03 duce
+
+
+aggiornamenti 30/11 16:59 = lavori in corso (  ft_execute.c ) , da errore nella copia del Path della HOME nella variabile char* home_pwd

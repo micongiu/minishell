@@ -30,3 +30,5 @@ aggiotnamenti 26/11 19:29 = bella, abbiamo la lista per ogni processo , # aggius
 
 
 aggiornamenti 30/11 16:59 = lavori in corso (  ft_execute.c ) , da errore nella copia del Path della HOME nella variabile char* home_pwd
+
+aggiornamenti 1/12 19:11 = forse concluso (cd) ,ma serve testarlo , gg

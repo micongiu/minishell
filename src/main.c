@@ -99,7 +99,8 @@ int	main(int argc, char **argv,char **env)
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		add_history(line->input);
-		execute_command(head_process,&env_list);
+		if(line->mat_input[0])
+			execute_command(head_process,&env_list);
 		free_matrix((void **)line->mat_input);
 		free_env_list(&env_list);
 		free_process_list(&head_process);

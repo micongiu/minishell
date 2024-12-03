@@ -34,6 +34,8 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 	}
 	if(process->argument[1] == NULL)
 	{
+		// if(!env->value[1])
+		// 	printf("PALLE SCURE\n");
 		if (chdir(env->value) != 0)
 		{
 			printf("error_cd\n");
@@ -47,7 +49,7 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 			printf("Error replace PWD strlcpy in cd\n");
 			return;
 		}
-		printf("dovrebbe essere PWD nuovo = %s\n", env->value);
+		//printf("dovrebbe essere PWD nuovo = %s\n", env->value);
 	}
 	else if(ft_strncmp(process->argument[1], ".", 2) == 0)
 	{
@@ -57,16 +59,21 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 	else if(ft_strncmp(process->argument[1], "..", 3) == 0)
 	{
 		env = get_node_of(env_list,"PWD");
-		if (chdir(process->argument[1]) != 0)
-		{
-			printf("error_cd\n");
-			return;
-		}
 		len = ft_strlen_lib(env->value);
-		while(env->value[len -1] != '/')
+		while(env->value[len] != '/')
 		{
 			len--;
 		}
+		// if(len == 0)
+		// 	printf("%spalle\n", env->value);
+		if (chdir(process->argument[1]) != 0)
+		{
+
+			printf("error_cd\n");
+			return;
+		}
+		if(len == 0)
+			len = 1;
 		free(home_pwd);
 		home_pwd = malloc(len + 1);
 		if(ft_strlcpy(home_pwd, env->value, len + 1) == 0)
@@ -82,11 +89,12 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 	}
 	else
 	{
+
 		free(home_pwd);
+
 		if(chdir(process->argument[1]) != 0)
 		{
 			printf("error_cd_path\n");
-			return;
 		}
 		env = get_node_of(env_list,"PWD");
 		if(!((env->value[ft_strlen_lib(env->value)]) == '/'))
@@ -97,7 +105,7 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 		else
 		{
 			home_pwd = ft_strjoin_lib(env->value, process->argument[1]);
-			printf("home_pwd = %s\n", home_pwd);
+		//	printf("home_pwd = %s\n", home_pwd);
 		}
 
 		free(env->value);
@@ -107,7 +115,7 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 			printf("Error replace PWD strlcpy in cd_path\n");
 			return;
 		}
-		printf("dovrebbe essere PWD cd_path = %s\n", env->value);
+		//printf("dovrebbe essere PWD cd_path = %s\n", env->value);
 	}
 	env = get_node_of(env_list, "SHELL");
 }
@@ -125,7 +133,5 @@ void execute_command(t_process_list *process,t_env_var **env_list)
 		change_directory(process,env_list);
 	else if (ft_strncmp(process->command, "pwd", 4) == 0)
 		pwd_directory(process,env_list);
-	else
-		return;
 }
 

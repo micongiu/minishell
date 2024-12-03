@@ -85,14 +85,14 @@ int	main(int argc, char **argv,char **env)
 	if (argc != 1)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
+	env_list = NULL;
+	ft_init_env_list(&env_list, env);
 	while (1)
 	{
-		env_list = NULL;
 		head_process = NULL;
 		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
 		free(line->input);
-		ft_init_env_list(&env_list, env);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
 			return(ft_exit(line, &env_list, &head_process), 0);
@@ -101,12 +101,12 @@ int	main(int argc, char **argv,char **env)
 		add_history(line->input);
 		if(line->mat_input[0])
 			execute_command(head_process,&env_list);
-		
+
 		free_matrix((void **)line->mat_input);
-		free_env_list(&env_list);
 		free_process_list(&head_process);
 		free_process_list(&head_process);
 	}
+		free_env_list(&env_list);
 }
 
 

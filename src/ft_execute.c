@@ -109,6 +109,7 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 		}
 		printf("dovrebbe essere PWD cd_path = %s\n", env->value);
 	}
+	env = get_node_of(env_list, "SHELL");
 }
 
 void pwd_directory(t_process_list *process, t_env_var **env_list)

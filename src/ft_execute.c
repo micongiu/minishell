@@ -22,10 +22,9 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 	char *home_pwd;
 	int len;
 
-	t_env_var *env = *env_list;
+	t_env_var *env = get_node_of(env_list,"HOME");
 	if(!process)
 		return;
-	env = get_node_of(env_list,"HOME");
 	home_pwd = malloc(ft_strlen_lib(env->value) + 1);
 	if(ft_strlcpy(home_pwd, env->value, ft_strlen_lib(env->value)) == 0)
 	{
@@ -112,11 +111,19 @@ void change_directory(t_process_list *process, t_env_var **env_list)
 	}
 }
 
+void pwd_directory(t_process_list *process, t_env_var **env_list)
+{
+	t_env_var *env = *env_list;
+	env = get_node_of(env_list, "PWD");
+	printf("%s\n", env->value);
+}
 
 void execute_command(t_process_list *process,t_env_var **env_list)
 {
 	if(ft_strncmp(process->command, "cd", 3) == 0)
 		change_directory(process,env_list);
+	else if (ft_strncmp(process->command, "pwd", 4) == 0)
+		pwd_directory(process,env_list);
 	else
 		return;
 }

@@ -19,7 +19,6 @@ t_var_count	ft_count_dollar(char *input, t_env_var *env)
 		}
 		env = env->next;
 	}
-	printf("dollar =%d %d\n", count.i, count.j);
 	return (count);
 }
 
@@ -104,7 +103,7 @@ int	ft_count(char *input, int i, t_env_var *env)
 			i++;
 	}
 	i++;
-	return (i - tmp + count.i);
+	return (i - tmp + count.i - count.j);
 }
 
 int	ft_count_token(char *input)

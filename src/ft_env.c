@@ -10,6 +10,8 @@ t_env_var	*ft_create_env_node(char *name, char *value)
 	new_var->name = ft_strdup_lib(name);
 	new_var->value = ft_strdup_lib(value);
 	new_var->next = NULL;
+	free(name);
+	free(value);
 	return (new_var);
 }
 
@@ -72,8 +74,6 @@ void ft_init_env_list(t_env_var **env_list, char **env)
 		ft_strlcpy(str_name, env[count.i], count.k + 1);
 		str_value = ft_save_value(count, env, str_name);
 		ft_add_env_var(env_list, ft_create_env_node(str_name, str_value));
-		free(str_name);
-		free(str_value);
 		count.i++;
 	}
 }

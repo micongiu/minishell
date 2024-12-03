@@ -103,7 +103,7 @@ int	ft_count(char *input, int i, t_env_var *env)
 			i++;
 	}
 	i++;
-	return (i - tmp + count.i);
+	return (i - tmp + count.i - count.j);
 }
 
 int	ft_count_token(char *input)

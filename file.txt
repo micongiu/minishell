@@ -23,7 +23,7 @@ aggiornamenti 13/11 21:44 = poca roba , risolto una cazzatina della funzione di 
 aggiornamenti 20/11 17:40 = BENTORNATI, 80% ft_process.c , serve metterlo a norma e discutere se e' apposto o meno, dare un'occhiata come gestire (<<),
 							non so fare le cose a norma;
 
-------------
+--------------
 
 aggiotnamenti 26/11 19:29 = bella, abbiamo la lista per ogni processo , # aggiustare la creazione dei nodi successivi al prima , # cominciare a giocare con EXECVE ,
 							# controllare tutti i leak (sicuro leakka)             --oggi ho fatto anche ft_printf dell'exam03 duce

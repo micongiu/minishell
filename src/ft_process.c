@@ -26,9 +26,7 @@ t_process_list	*ft_create_process_node(char **tokens)
 	j = 0;
 	node = ft_calloc(1, sizeof(t_process_list));
 	while((tokens[i]) && (ft_strncmp(tokens[i], ">", 2) != 0) && (ft_strncmp(tokens[i], "<", 2) != 0) && (ft_strncmp(tokens[i], ">>", 3) != 0) && (ft_strncmp(tokens[i], "<<", 3) != 0) && (ft_strncmp(tokens[i], "|", 2) != 0))
-			{
-				i++;
-			}
+		i++;
 	node->command = NULL;
 	node->option = NULL;
 	node->file_fd = NULL;

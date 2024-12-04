@@ -97,4 +97,8 @@ void			ft_env(t_env_var *env);
 void			ft_unset(t_env_var **env, char *str);
 void			ft_export(t_process_list **info_process, t_env_var **env);
 
+// ft_buildtins_echo.c
+
+void	ft_echo(t_process_list *info_process, int fd);
+
 #endif

@@ -19,8 +19,8 @@ t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 		{
 			while (env->value[j])
 				token[tmp++] = env->value[j++];
-			count.i =+ k + ft_strlen_lib(env->name) + 1;
-			count.j =+ tmp;
+			count.i += k + ft_strlen_lib(env->name) + 1;
+			count.j += tmp;
       break ;
 		}
 		env = env->next;

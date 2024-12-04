@@ -53,36 +53,38 @@ typedef struct s_var_count
 
 // main.c
 
-int			main(int argc, char **argv,char **env);
-t_var_count	ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count);
+int				main(int argc, char **argv,char **env);
+t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count count);
 
 // ft_env.c
 
-void		ft_init_env_list(t_env_var **env_list, char **env);
-void 		free_env_list(t_env_var **cur);
+t_env_var		*ft_create_env_node(char *name, char *value);
+void			ft_add_env_var(t_env_var **env_list, t_env_var *new_var);
+void			ft_init_env_list(t_env_var **env_list, char **env);
+void 			free_env_list(t_env_var **cur);
 
 
 // ft_tokenizer.c
 
-char		**ft_tokenizer(char *input, t_env_var *env);
+char			**ft_tokenizer(char *input, t_env_var *env);
 
 // ft_tokenizer_utility.c
 
-int			is_space(char c);
-int			ft_check_quote(char *input);
+int				is_space(char c);
+int				ft_check_quote(char *input);
 
 // ft_tokenizer_counter.c
 
-int			ft_count(char *input, int i, t_env_var *env);
-int			ft_count_token(char *input);
+int				ft_count(char *input, int i, t_env_var *env);
+int				ft_count_token(char *input);
 
 // ft_signal_handle.c
 
-void		ft_signal_handle(int signal);
+void			ft_signal_handle(int signal);
 
 // ft_utility.c
 
-void		free_matrix(void **matrix);
+void			free_matrix(void **matrix);
 
 // ft_process.c
 
@@ -92,5 +94,16 @@ void			free_process_list(t_process_list **cur);
 //ft_execute.c
 
 void execute_command(t_process_list *process,t_env_var **env_list);
+
+// ft_buildtins_env.c
+
+void			ft_env(t_env_var *env);
+void			ft_unset(t_env_var **env, char *str);
+void			ft_export(t_process_list **info_process, t_env_var **env);
+
+// ft_buildtins_echo.c
+
+void	ft_echo(t_process_list *info_process, int fd);
+
 
 #endif

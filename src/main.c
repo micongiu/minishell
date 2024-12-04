@@ -7,10 +7,10 @@ t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 	int	tmp;
 
 	k = 0;
+	k = (ft_strchr(line, '$') - line);
 	while (line && *line != '$')
 		line++;
 	line++;
-	k = *line;
 	while (env)
 	{
 		j = 0;
@@ -19,9 +19,9 @@ t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 		{
 			while (env->value[j])
 				token[tmp++] = env->value[j++];
-			count.i += k + ft_strlen_lib(env->name);
-			count.j += tmp;
-			break ;
+			count.i =+ k + ft_strlen_lib(env->name) + 1;
+			count.j =+ tmp;
+      break ;
 		}
 		env = env->next;
 	}
@@ -38,42 +38,7 @@ void	ft_exit(t_rline *line, t_env_var **env_list, t_process_list **head_process)
 	printf("exit\n");
 }
 
-void	ft_env(t_env_var **env)
-{
-	while (*env != NULL)
-	{
-		// if ((*env)->name && (*env)->value)
-		printf("%s=%s\n", (*env)->name, (*env)->value);
-		(*env) = (*env)->next;
-	}
-}
-
-void	ft_unset(t_env_var **env, char *str)
-{
-	t_env_var *prev;
-	t_env_var *curr;
-
-	prev = NULL;
-	curr = *env;
-	while (curr)
-	{
-		if (ft_strncmp(str, curr->name, ft_strlen_lib(curr->name)) == 0)
-		{
-			if (prev)
-				prev->next = curr->next;
-			else
-				*env = curr->next;
-			free(curr->name);
-			free(curr->value);
-			free(curr);
-			break;
-		}
-		prev = curr;
-		curr = curr->next;
-	}
-}
-
-int	main(int argc, char **argv,char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_rline	*line;
 	t_env_var *env_list;
@@ -104,9 +69,8 @@ int	main(int argc, char **argv,char **env)
 
 		free_matrix((void **)line->mat_input);
 		free_process_list(&head_process);
-		free_process_list(&head_process);
 	}
-		free_env_list(&env_list);
+	free_env_list(&env_list);
 }
 
 

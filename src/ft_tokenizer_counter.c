@@ -117,7 +117,7 @@ int	ft_count_token(char *input)
 	{
 		while (is_space (input[i]))
 			i++;
-		if (input[i++] == '"' || input[i++] == '\'')
+		if (input[i] == '"' || input[i] == '\'')
 		{
 			while (input[i] != '"' && input[i] != '\'')
 				i++;

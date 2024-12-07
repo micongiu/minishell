@@ -89,9 +89,9 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	token_count = 0;
 	if (ft_check_quote(input) == -1)
 		return (ft_putendl_fd("minishell->Error: Unclosed quotes", 1), NULL);
-	tokens = ft_calloc(ft_count_token(input) + 1, sizeof (char **));
-	tmp = ft_count_token(input);
-	while (token_count < tmp)
+	tokens = ft_calloc(ft_count_token(input) + 2, sizeof (char **));
+	tmp = ft_count_token(input) + 1;
+	while (token_count <= tmp)
 	{
 		while (is_space(input[count.i]))
 			count.i++;

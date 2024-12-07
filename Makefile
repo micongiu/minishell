@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c ./src/ft_process.c ./src/ft_tokenizer_counter.c \
 	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute.c

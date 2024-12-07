@@ -37,30 +37,30 @@ t_process_list	*ft_create_process_node(char **tokens)
 	return node;
 }
 
-//funzione di chat per printare la listonaaaaa
 
-// void print_process_list(t_process_list *head) {
-//     while (head != NULL) { // Itera finché ci sono nodi nella lista
-//         printf("Command: %s\n", head->command);
-//         if (head->option) {
-//             printf("Option: %s\n", head->option);
-//         }
+	void print_process_list(t_process_list *head) {
+		while (head != NULL) { // Itera finché ci sono nodi nella lista
+			printf("Command: %s\n", head->command);
+			if (head->option) {
+				printf("Option: %s\n", head->option);
+			}
 
-//         int i = 0;
-//         while (head->argument != NULL && head->argument[i] != NULL) { // Controlla se 'argument' è valido
-//             printf("Argument: %s\n", head->argument[i]);
-//             i++;
-//         }
+			int i = 0;
+			while (head->argument != NULL && head->argument[i] != NULL)
+			{ // Controlla se 'argument' è valido
+				printf("Argument: %s\n", head->argument[i]);
+				i++;
+			}
 
-//         if (head->file_fd) {
-//             printf("File FD: %s\n", head->file_fd); // Usa %d se file_fd è un int
-//             printf("Redirection: %d\n", head->redirection);
-//         }
+			if (head->file_fd) {
+				printf("File FD: %s\n", head->file_fd); // Usa %d se file_fd è un int
+				printf("Redirection: %d\n", head->redirection);
+			}
 
-//         printf("----\n");
-//         head = head->next; // Passa al nodo successivo
-//     }
-// }
+			printf("----\n");
+			head = head->next; // Passa al nodo successivo
+		}
+	}
 
 t_process_list	*ft_init_process_list(char **tokens)
 {
@@ -131,7 +131,7 @@ t_process_list	*ft_init_process_list(char **tokens)
 		}
 		tokens++;
 	}
-//	print_process_list(head);
+	print_process_list(head);
 	return head;
 }
 
@@ -161,6 +161,8 @@ void free_process_list(t_process_list **cur) {
 		*cur = tmp;
 	}
 }
+
+// gestire gli errori se si danno molteplici redirection 
 
 //serve commentare e mettere a norma
 

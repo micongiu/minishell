@@ -23,7 +23,7 @@ aggiornamenti 13/11 21:44 = poca roba , risolto una cazzatina della funzione di 
 aggiornamenti 20/11 17:40 = BENTORNATI, 80% ft_process.c , serve metterlo a norma e discutere se e' apposto o meno, dare un'occhiata come gestire (<<),
 							non so fare le cose a norma;
 
-------------
+--------------
 
 aggiotnamenti 26/11 19:29 = bella, abbiamo la lista per ogni processo , # aggiustare la creazione dei nodi successivi al prima , # cominciare a giocare con EXECVE ,
 							# controllare tutti i leak (sicuro leakka)             --oggi ho fatto anche ft_printf dell'exam03 duce
@@ -32,3 +32,10 @@ aggiotnamenti 26/11 19:29 = bella, abbiamo la lista per ogni processo , # aggius
 aggiornamenti 30/11 16:59 = lavori in corso (  ft_execute.c ) , da errore nella copia del Path della HOME nella variabile char* home_pwd
 
 aggiornamenti 1/12 19:11 = forse concluso (cd) ,ma serve testarlo , gg
+
+
+aggiornamenti 5/12 18:58 = ok finito definitivamente cd , aggiustato il tokenizer(token_count), scoperto sanitizer    # serve gestire gli errori inn caso di  molteplici redirection,
+							# aggiustare ft_init_process_list (dal secondo processo in poi memorizza male gli argomentoi , presumo sia una cazzatina da poco)
+
+aggiornamenti 7/12 20:16 = poca robba, messo a norma e diviso le funzioni ft_execute, sistemato un memory leak di ft_count_token(c'era un if che incrementava due volte la i)
+							#vedere come gestire e redirection , salvarsi il fd di per la pipe

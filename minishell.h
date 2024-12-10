@@ -93,7 +93,17 @@ void			free_process_list(t_process_list **cur);
 
 //ft_execute.c
 
-void execute_command(t_process_list *process,t_env_var **env_list);
+void		execute_command(t_process_list *process,t_env_var **env_list);
+void		pwd_directory(t_process_list *process, t_env_var **env_list);
+char		*get_home_directory(t_env_var **env_list);
+void		update_pwd(t_env_var *env, char *new_pwd);
+t_env_var	*get_node_of(t_env_var **env_list, char *c);
+void		change_directory(t_process_list *process, t_env_var **env_list);
+void		cd_specific_directory(t_process_list *process, t_env_var **env_list, t_env_var *env);
+void		cd_parent_directory(t_env_var **env_list, t_env_var *env);
+void		cd_home_directory(t_env_var **env_list, t_env_var *env);
+char		*compute_parent_directory(char *pwd);
+
 
 // ft_buildtins_env.c
 

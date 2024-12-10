@@ -19,9 +19,9 @@ t_var_count ft_ex_dollar(char *line, char *token, t_env_var *env, t_var_count co
 		{
 			while (env->value[j])
 				token[tmp++] = env->value[j++];
-			count.i =+ k + ft_strlen_lib(env->name) + 1;
-			count.j =+ tmp;
-      break ;
+			count.i += k + ft_strlen_lib(env->name) + 1;
+			count.j += tmp;
+			break ;
 		}
 		env = env->next;
 	}
@@ -72,8 +72,4 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_list(&env_list);
 }
-
-
-// se trovo << , dichiari stringa cacca = "comadno1 \n , comando2 \n, comando3 \n"
-
 

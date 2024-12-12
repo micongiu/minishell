@@ -1,11 +1,11 @@
 #include "../minishell.h"
 
-int	is_space (char c)
+int	is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
 }
 
-int	ft_check_quote (char *input)
+int	ft_check_quote(char *input)
 {
 	int	i;
 

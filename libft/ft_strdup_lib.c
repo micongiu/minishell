@@ -6,7 +6,7 @@
 /*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:54:29 by micongiu          #+#    #+#             */
-/*   Updated: 2024/05/13 17:06:04 by micongiu         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:48:24 by micongiu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup_lib(const char *src)
 
 	i = 0;
 	len = ft_strlen_lib(src);
-	copy = (char *)malloc(sizeof(char) * (len + 1));
+	copy = (char *)ft_calloc(sizeof(char), (len + 1));
 	if (copy == NULL)
 		return (NULL);
 	while (src[i] != '\0')

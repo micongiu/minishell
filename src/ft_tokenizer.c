@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_var_count token_double_quote(char *token, char *line,
+t_var_count	token_double_quote(char *token, char *line,
 			t_env_var *env, t_var_count count)
 {
 	int	in_quotes;
@@ -26,7 +26,7 @@ t_var_count token_double_quote(char *token, char *line,
 		}
 	}
 	token[count.j] = '"';
-	return count;
+	return (count);
 }
 
 t_var_count	token_single_quote(char *token, char *line,
@@ -50,7 +50,7 @@ t_var_count	token_single_quote(char *token, char *line,
 		count.i++;
 	}
 	token[count.j] = '\'';
-	return count;
+	return (count);
 }
 
 t_var_count	token_separation(char *token, char *line,
@@ -79,28 +79,28 @@ t_var_count	token_separation(char *token, char *line,
 char	**ft_tokenizer(char *input, t_env_var *env)
 {
 	char		**tokens;
-	int			token_count;
-	int			tmp;
-	t_var_count count;
+	int			t_count;
+	t_var_count	count;
 
 	count.i = 0;
 	count.j = 0;
-	tmp = 0;
-	token_count = 0;
+	count.k = 0;
+	t_count = 0;
 	if (ft_check_quote(input) == -1)
 		return (ft_putendl_fd("minishell->Error: Unclosed quotes", 1), NULL);
 	tokens = ft_calloc(ft_count_token(input) + 2, sizeof (char **));
-	tmp = ft_count_token(input) + 1;
-	while (token_count <= tmp)
+	count.k = ft_count_token(input) + 1;
+	while (t_count <= count.k)
 	{
 		while (is_space(input[count.i]))
 			count.i++;
 		if (input[count.i] == '\0')
-			break;
-		tokens[token_count] = (char *)ft_calloc(ft_count(input, count.i, env), sizeof (char));
+			break ;
+		tokens[t_count] = (char *)ft_calloc(ft_count(input, count.i, env),
+				sizeof(char));
 		count.j = 0;
-		count = token_separation(tokens[token_count], input, env, count);
-		token_count++;
+		count = token_separation(tokens[t_count], input, env, count);
+		t_count++;
 	}
 	return (tokens);
 }

@@ -29,7 +29,7 @@ int	ft_count_len_sqoute(char *input, int i, t_env_var *env)
 	count.i = 0;
 	count.j = 0;
 	i++;
-	while (input[i] != '\''  && input[i] != '\0')
+	while (input[i] != '\'' && input[i] != '\0')
 		i++;
 	if (input[i] == '\0')
 		return (++i);
@@ -82,7 +82,7 @@ int	ft_count_len_dqoute(char *input, int i, t_env_var *env)
 
 int	ft_count(char *input, int i, t_env_var *env)
 {
-	int	tmp;
+	int			tmp;
 	t_var_count	count;
 
 	count.i = 0;
@@ -108,8 +108,8 @@ int	ft_count(char *input, int i, t_env_var *env)
 
 int	ft_count_token(char *input)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

@@ -5,7 +5,7 @@ void	ft_echo(t_process_list *info_process, int fd)
 	int	i;
 
 	i = 0;
-	while(info_process->argument[i])
+	while (info_process->argument[i])
 	{
 		ft_putstr_fd(info_process->argument[i], fd);
 		if (info_process->argument[i + 1])

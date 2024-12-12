@@ -2,7 +2,7 @@
 
 t_env_var	*ft_create_env_node(char *name, char *value)
 {
-	t_env_var *new_var;
+	t_env_var	*new_var;
 
 	new_var = (t_env_var *)ft_calloc(1, sizeof(t_env_var));
 	if (!new_var)
@@ -17,7 +17,7 @@ t_env_var	*ft_create_env_node(char *name, char *value)
 
 void	ft_add_env_var(t_env_var **env_list, t_env_var *new_var)
 {
-	t_env_var *temp;
+	t_env_var	*temp;
 
 	temp = *env_list;
 	if (!env_list)
@@ -39,7 +39,8 @@ char	*ft_save_value(t_var_count count, char **env, char *str_name)
 
 	str_value = NULL;
 	tmp_str = NULL;
-	str_value = (char *)ft_calloc(ft_strlen_lib(env[count.i]) - count.k + 1, sizeof(char));
+	str_value = (char *)ft_calloc(ft_strlen_lib(env[count.i]) - count.k + 1,
+			sizeof(char));
 	count.j = 0;
 	count.k++;
 	while (str_value && env[count.i][count.k])
@@ -54,11 +55,11 @@ char	*ft_save_value(t_var_count count, char **env, char *str_name)
 	return (str_value);
 }
 
-void ft_init_env_list(t_env_var **env_list, char **env)
+void	ft_init_env_list(t_env_var **env_list, char **env)
 {
 	t_var_count	count;
-	char	*str_name;
-	char	*str_value;
+	char		*str_name;
+	char		*str_value;
 
 	str_value = NULL;
 	str_name = NULL;
@@ -78,9 +79,9 @@ void ft_init_env_list(t_env_var **env_list, char **env)
 	}
 }
 
-void free_env_list(t_env_var **cur)
+void	free_env_list(t_env_var **cur)
 {
-	t_env_var *tmp;
+	t_env_var	*tmp;
 
 	tmp = NULL;
 	while (*cur != NULL)

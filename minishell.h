@@ -116,4 +116,8 @@ void			ft_export(t_process_list **info_process, t_env_var **env);
 void	ft_echo(t_process_list *info_process, int fd);
 
 
+// pipe
+
+void	ft_execute_pipe_line(t_env_var *env, t_process_list *head);
+
 #endif

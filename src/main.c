@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		add_history(line->input);
-		ft_execute_pipe_line(head_process, env_list);
+		ft_execute_pipe_line(env_list, head_process);
 		//if(line->mat_input[0])
 		//	execute_command(head_process,&env_list);
 

@@ -42,11 +42,13 @@ char **ft_list_to_arr(t_env_var *env_h)
 void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
 {
 	char **mat; //env convertita in matrice easy
+	char *bin_path = ft_strjoin_lib("/bin/", process->command);
 	int pipe_fd[2];
 	int prev_fd = 0;
 	pid_t pid;
 
 	mat = ft_list_to_arr(env);
+	process->argument[0] = bin_path;
 	while(process)
 	{
 		if(process->next)
@@ -72,8 +74,8 @@ void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
 				close(pipe_fd[0]);
 				close(pipe_fd[1]);
 			}
-			if(execve(process->command, process->argument, mat) == -1)
-				printf("#####err_execve\n");
+			execve(bin_path, process->argument, mat);
+			printf("#####err_execve\n");
 		}
 		else
 		{
@@ -85,4 +87,5 @@ void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
 		waitpid(pid,NULL,0);
 		process = process->next;
 	}
+	free_matrix((void *) mat);
 }

@@ -4,25 +4,27 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c ./src/ft_process.c ./src/ft_tokenizer_counter.c \
-	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute0.c ./src/ft_execute1.c ./src/ft_process_utility.c
+	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute0.c ./src/ft_execute1.c ./src/ft_process_utility.c ./gnl/get_next_line_utils.c ./gnl/get_next_line.c \
+	   ./src/ft_handle_fd.c
 SRC_DIRS = ./src
 OBJS = ${SRCS:.c=.o}
 
 LIBFT		:= libft/libft.a
 
 GREEN		=\033[0;32m
-PURPLE			=\033[0;31m
+PURPLE		=\033[0;31m
 BLUE		=\033[0;34m
-PURPLE = \033[0;35m
+PURPLE		= \033[0;35m
 
 MAKEFLAGS += -s
 
 OBJ_DIR = ./obj
-OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,${SRCS})
+OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, ${SRCS})
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@mkdir -p ./obj/libft
+	@mkdir -p ./obj/gnl
 	@$(CC) -g -c $< -o $@;
 
 all: $(NAME) clean

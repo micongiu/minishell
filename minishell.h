@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include "gnl/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -124,5 +125,10 @@ void			handle_argument(t_process_list *current_process,
 					char *token, int *arg_index);
 t_process_list	*handle_list_creation(t_process_list *current_node,
 					char ***tokens, int *arg_index);
+
+// ft_handle_fd.c
+
+int				open_file(char *file, int redirection);
+char			*read_file(int fd);
 
 #endif

@@ -9,31 +9,26 @@ int	is_operator(char *token)
 		|| ft_strncmp(token, "<<", 3) == 0);
 }
 
+/*
+The function identifies the type of redirection in the current command and stores the information in the process node current_node.
+If the token is a redirection symbol (<, <<, >, >>), the function extracts the target file and saves it in the structure.
+*/
 void	checking_redirection(char ***tokens, t_process_list	*current_node)
 {
 	if (ft_strncmp(**tokens, "<", 2) == 0)
-	{
 		current_node->redirection = 1;
-		(*tokens)++;
-		current_node->file_fd = ft_strdup_lib(**tokens);
-	}
 	else if (ft_strncmp(**tokens, "<<", 3) == 0)
-	{
 		current_node->redirection = 3;
-		(*tokens)++;
-		current_node->file_fd = ft_strdup_lib(**tokens);
-	}
 	else if (ft_strncmp(**tokens, ">", 2) == 0)
-	{
 		current_node->redirection = 2;
-		(*tokens)++;
-		current_node->file_fd = ft_strdup_lib(**tokens);
-	}
 	else if (ft_strncmp(**tokens, ">>", 3) == 0)
-	{
 		current_node->redirection = 4;
+	if (current_node->redirection)
+	{
 		(*tokens)++;
 		current_node->file_fd = ft_strdup_lib(**tokens);
+		// current_node->fd = open_file(current_node->file_fd,
+		// 	current_node->redirection);
 	}
 }
 

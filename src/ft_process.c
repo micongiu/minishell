@@ -116,7 +116,3 @@ void	free_process_list(t_process_list **cur)
 		*cur = tmp;
 	}
 }
-
-// gestire gli errori se si danno molteplici redirection 
-
-//serve commentare e mettere a norma

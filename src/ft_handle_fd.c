@@ -22,8 +22,8 @@ int	open_file(char *file, int redirection)
 
 char	*read_file(int fd)
 {
-	char *tmp;
-	char *str;
+	char	*tmp;
+	char	*str;
 
 	str = NULL;
 	tmp = NULL;

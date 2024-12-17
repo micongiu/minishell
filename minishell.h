@@ -29,6 +29,7 @@ typedef struct s_process_list
 	char					*command;
 	char					*option;
 	char					*file_fd;
+	int						fd;
 	int						redirection;
 	char					*full_process;
 	char					**argument;

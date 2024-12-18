@@ -132,4 +132,8 @@ t_process_list	*handle_list_creation(t_process_list *current_node,
 int				open_file(char *file, int redirection);
 char			*read_file(int fd);
 
+// pipe
+
+void	ft_execute_pipe_line(t_env_var *env, t_process_list *head);
+
 #endif

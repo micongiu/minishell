@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c ./src/ft_process.c ./src/ft_tokenizer_counter.c \
-	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute0.c ./src/ft_execute1.c ./src/ft_process_utility.c ./gnl/get_next_line_utils.c ./gnl/get_next_line.c \
+	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute0.c ./src/ft_execute1.c ./src/ft_process_utility.c ./src/ft_pipe.c ./gnl/get_next_line_utils.c ./gnl/get_next_line.c \
 	   ./src/ft_handle_fd.c
 SRC_DIRS = ./src
 OBJS = ${SRCS:.c=.o}

@@ -2,14 +2,17 @@
 
 // print all the env_list
 
-void	ft_env(t_env_var *env)
+void	ft_env(t_env_var *env, int fd)
 {
 	t_env_var	*current;
 
 	current = env;
 	while (current != NULL)
 	{
-		printf("%s=%s\n", current->name, current->value);
+		ft_putstr_fd(current->name, fd);
+		ft_putchar_fd('=', fd);
+		ft_putstr_fd(current->value, fd);
+		ft_putchar_fd('\n', fd);
 		current = current->next;
 	}
 }
@@ -56,7 +59,23 @@ void	ft_export_utility(t_env_var *tmp, char *str_name, char *str_value,
 	ft_add_env_var(env, ft_create_env_node(str_name, str_value));
 }
 
-void	ft_export(t_process_list **info_process, t_env_var **env)
+void	ft_export_null(t_env_var *env, int fd)
+{
+	t_env_var	*current;
+
+	current = env;
+	while (current != NULL)
+	{
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(current->name, fd);
+		ft_putchar_fd('=', fd);
+		ft_putstr_fd(current->value, fd);
+		ft_putchar_fd('\n', fd);
+		current = current->next;
+	}
+}
+
+void	ft_export(t_process_list **info_process, t_env_var **env, int fd)
 {
 	int			i;
 	char		*str_name;
@@ -67,6 +86,11 @@ void	ft_export(t_process_list **info_process, t_env_var **env)
 	str_name = NULL;
 	str_value = NULL;
 	tmp = *env;
+	if ((*info_process)->argument[1] == NULL)
+	{
+		ft_export_null((*env), fd);
+		return ;
+	}
 	while ((*info_process)->argument[1][i]
 			&& (*info_process)->argument[1][i] != '=')
 		i++;

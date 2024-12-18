@@ -54,6 +54,7 @@ void print_process_list(t_process_list *head)
 
 		if (head->file_fd) {
 			printf("File FD: %s\n", head->file_fd); // Usa %d se file_fd è un int
+			printf("Fd file: %d\n", head->fd);
 			printf("Redirection: %d\n", head->redirection);
 		}
 
@@ -104,6 +105,8 @@ void	free_process_list(t_process_list **cur)
 			free((*cur)->option);
 		if ((*cur)->file_fd)
 			free((*cur)->file_fd);
+		if ((*cur)->fd)
+			close((*cur)->fd);
 		if ((*cur)->full_process)
 			free((*cur)->full_process);
 		if ((*cur)->argument)
@@ -116,7 +119,3 @@ void	free_process_list(t_process_list **cur)
 		*cur = tmp;
 	}
 }
-
-// gestire gli errori se si danno molteplici redirection 
-
-//serve commentare e mettere a norma

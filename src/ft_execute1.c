@@ -71,6 +71,8 @@ void	cd_specific_directory(t_process_list *process,
 		printf("Error changing to specific path: %s\n", path);
 		return ;
 	}
+	if (process->argument[1][0] == '/')
+		new_pwd = process->argument[1];
 	if (env->value[ft_strlen_lib (env->value) - 1] != '/')
 	{
 		temp = ft_strjoin_lib (env->value, "/");

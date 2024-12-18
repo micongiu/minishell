@@ -51,8 +51,33 @@ typedef struct s_var_count
 	int	k;
 }	t_var_count;
 
+enum	e_error
+{
+	QUOTE = 1,
+	NDIR = 2,
+	NPERM = 3,
+	NCMD = 6,
+	DUPERR = 7,
+	FORKERR = 8,
+	PIPERR = 9,
+	PIPENDERR = 10,
+	MEM = 11,
+	IS_DIR = 12,
+	NOT_DIR = 13,
+	NOT_FILE_OR_DIR = 14
+};
+
+enum	e_redirection
+{
+	S_IN_RED = 1,
+	S_OUT_RED = 2,
+	HERDOC = 3,
+	D_OUT_RED = 4
+};
+
 // main.c
 
+void			*ft_error(int err_type, char *str, int err);
 int				main(int argc, char **argv, char **env);
 t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,
 					t_var_count count);
@@ -94,7 +119,8 @@ t_process_list	*ft_create_process_node(char **tokens);
 
 //ft_execute.c
 
-void			execute_command(t_process_list *process, t_env_var **env_list);
+void			execute_command(t_process_list *process, t_env_var **env_list,
+					char **env_mat);
 void			pwd_directory(t_process_list *process, t_env_var **env_list, int fd);
 char			*get_home_directory(t_env_var **env_list);
 void			update_pwd(t_env_var *env, char *new_pwd);
@@ -134,6 +160,6 @@ char			*read_file(int fd);
 
 // pipe
 
-void	ft_execute_pipe_line(t_env_var *env, t_process_list *head);
+void			ft_execute_pipe_line(t_env_var **env, t_process_list *process);
 
 #endif

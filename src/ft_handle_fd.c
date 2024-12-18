@@ -1,5 +1,7 @@
 #include "../minishell.h"
 
+extern int	g_status;
+
 int	open_file(char *file, int redirection)
 {
 	int	fd;
@@ -11,13 +13,12 @@ int	open_file(char *file, int redirection)
 	// 	error("minishell: permission denied");
 	// if ((redirection == 2 || redirection == 4) && access(file, W_OK) == -1)
 	// 	error("minishell: permission denied");
-	if (redirection == 1)
+	if (redirection == S_IN_RED)
 		fd = open(file, O_RDONLY);
-	else if (redirection == 2)
+	else if (redirection == S_OUT_RED)
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	else if (redirection == 4)
+	else if (redirection == D_OUT_RED)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0666);
-	printf("\n%d\n\n", fd);
 	return (fd);
 }
 

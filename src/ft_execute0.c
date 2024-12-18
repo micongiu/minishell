@@ -55,7 +55,8 @@ void	pwd_directory(t_process_list *process, t_env_var **env_list, int fd)
 	ft_putendl_fd(env->value, fd);
 }
 
-void	execute_command(t_process_list *process, t_env_var **env_list)
+void	execute_command(t_process_list *process, t_env_var **env_list,
+		char **env_mat)
 {
 	if (ft_strncmp (process->command, "cd", 3) == 0)
 		change_directory(process, env_list);
@@ -64,10 +65,16 @@ void	execute_command(t_process_list *process, t_env_var **env_list)
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
 		ft_echo(process, process->fd);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
+	{
+		if (process->argument[2])
+			ft_error(14, process->argument[2], 127);
 		ft_env(*env_list, process->fd);
+	}
 	else if (ft_strncmp (process->command, "export", 7) == 0)
 		ft_export(&process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
+	else
+		execve(process->argument[0], process->argument, env_mat);
 }

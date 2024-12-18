@@ -1,11 +1,10 @@
 #include "../minishell.h"
 
-int ft_count_node(t_env_var *env)
+int	ft_count_node(t_env_var *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	while(env)
 	{
 		i++;
@@ -13,42 +12,44 @@ int ft_count_node(t_env_var *env)
 	}
 	return(i);
 }
-char **ft_list_to_arr(t_env_var *env_h)
-{
-	char **mat;
-	int i;
-	char *c;
 
-	c = "=";
+char	**ft_list_to_arr(t_env_var *env_h)
+{
+	char		**env_mat;
+	int			i;
+	char		*tmp;
+	t_env_var	*current;
+
+	current = env_h;
 	i = 0;
-	mat = malloc((ft_count_node(env_h) + 1) * sizeof(char*));
-	while(env_h)
+	env_mat = ft_calloc((ft_count_node(current) + 1), sizeof(char *));
+	while (current != NULL)
 	{
-		mat[i] = ft_strjoin_lib(env_h->name, c);
-		mat[i] = ft_strjoin_lib(mat[i], env_h->value);
+		tmp = ft_strjoin_lib(current->name, "=");
+		env_mat[i] = ft_strjoin_lib(tmp, current->value);
+		free(tmp);
 		i++;
-		env_h = env_h->next;
+		current = current->next;
 	}
-	mat[i] = NULL;
-	// i = 0;
-	// while(mat[i])
-	// {
-	// 	printf("%s\n", mat[i]);
-	// 	i++;
-	// }
-	return(mat);
+	return(env_mat);
 }
 
-void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
+void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 {
-	char **mat; //env convertita in matrice easy
-	char *bin_path = ft_strjoin_lib("/bin/", process->command);
-	int pipe_fd[2];
-	int prev_fd = 0;
-	pid_t pid;
+	char	**env_mat;
+	char	*bin_path;
+	int		pipe_fd[2];
+	int		prev_fd = 0;
+	pid_t	pid;
 
-	mat = ft_list_to_arr(env);
-	process->argument[0] = bin_path;
+	env_mat = ft_list_to_arr(*env);
+	bin_path = ft_strjoin_lib("/bin/", process->command);
+	free(process->argument[0]);
+	process->argument[0] = ft_strdup(bin_path);
+	free(bin_path);
+	// execute_command(process, env, env_mat);
+	// free_matrix((void **)env_mat);
+	// return ;
 	while(process)
 	{
 		if(process->next)
@@ -74,7 +75,7 @@ void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
 				close(pipe_fd[0]);
 				close(pipe_fd[1]);
 			}
-			execve(bin_path, process->argument, mat);
+			execute_command(process, env, env_mat);
 			printf("#####err_execve\n");
 		}
 		else
@@ -87,5 +88,5 @@ void	ft_execute_pipe_line(t_env_var *env, t_process_list *process)
 		waitpid(pid,NULL,0);
 		process = process->next;
 	}
-	free_matrix((void *) mat);
+	free_matrix((void **)env_mat);
 }

@@ -14,5 +14,4 @@ void	free_matrix(void **matrix)
 		i++;
 	}
 	free(matrix);
-	matrix = NULL;
 }

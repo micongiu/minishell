@@ -59,15 +59,19 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 		char **env_mat)
 {
 	if (ft_strncmp (process->command, "cd", 3) == 0)
+	{
+		if (process->argument[2])
+			ft_error(15, process->command, 1);
 		change_directory(process, env_list);
+	}
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
 		pwd_directory(process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
 		ft_echo(process, process->fd);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
 	{
-		if (process->argument[2])
-			ft_error(14, process->argument[2], 127);
+		if (process->argument[1])
+			ft_error(14, process->argument[1], 127);
 		ft_env(*env_list, process->fd);
 	}
 	else if (ft_strncmp (process->command, "export", 7) == 0)

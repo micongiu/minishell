@@ -64,7 +64,8 @@ enum	e_error
 	MEM = 11,
 	IS_DIR = 12,
 	NOT_DIR = 13,
-	NOT_FILE_OR_DIR = 14
+	NOT_FILE_OR_DIR = 14,
+	TOO_MUCH_DIR = 15
 };
 
 enum	e_redirection
@@ -77,6 +78,7 @@ enum	e_redirection
 
 // main.c
 
+char			*remove_quotes(char *str);
 void			*ft_error(int err_type, char *str, int err);
 int				main(int argc, char **argv, char **env);
 t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,

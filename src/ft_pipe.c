@@ -47,9 +47,9 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 	free(process->argument[0]);
 	process->argument[0] = ft_strdup(bin_path);
 	free(bin_path);
-	// execute_command(process, env, env_mat);
-	// free_matrix((void **)env_mat);
-	// return ;
+	execute_command(process, env, env_mat);
+	free_matrix((void **)env_mat);
+	return ;
 	while(process)
 	{
 		if(process->next)

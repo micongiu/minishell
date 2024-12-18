@@ -125,4 +125,8 @@ void			handle_argument(t_process_list *current_process,
 t_process_list	*handle_list_creation(t_process_list *current_node,
 					char ***tokens, int *arg_index);
 
+// pipe
+
+void	ft_execute_pipe_line(t_env_var *env, t_process_list *head);
+
 #endif

@@ -67,8 +67,7 @@ int	main(int argc, char **argv, char **env)
 		head_process = ft_init_process_list(line->mat_input);
 		if (ft_strlen_lib(line->input) > 0)
 			add_history(line->input);
-		if (line->mat_input[0])
-			execute_command(head_process, &env_list);
+    ft_execute_pipe_line(env_list, head_process);
 		free_matrix((void **) line->mat_input);
 		free_process_list(&head_process);
 	}

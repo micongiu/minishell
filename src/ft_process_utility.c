@@ -18,13 +18,13 @@ the target file and saves it in the structure.
 void	checking_redirection(char ***tokens, t_process_list	*current_node)
 {
 	if (ft_strncmp(**tokens, "<", 2) == 0)
-		current_node->redirection = 1;
+		current_node->redirection = S_IN_RED;
 	else if (ft_strncmp(**tokens, "<<", 3) == 0)
-		current_node->redirection = 3;
+		current_node->redirection = HERDOC;
 	else if (ft_strncmp(**tokens, ">", 2) == 0)
-		current_node->redirection = 2;
+		current_node->redirection = S_OUT_RED;
 	else if (ft_strncmp(**tokens, ">>", 3) == 0)
-		current_node->redirection = 4;
+		current_node->redirection = D_OUT_RED;
 	if (current_node->redirection)
 	{
 		(*tokens)++;

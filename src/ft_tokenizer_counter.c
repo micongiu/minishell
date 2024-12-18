@@ -19,6 +19,8 @@ t_var_count	ft_count_dollar(char *input, t_env_var *env)
 		}
 		env = env->next;
 	}
+	if (count.j == 0)
+		count.j++;
 	return (count);
 }
 
@@ -94,7 +96,7 @@ int	ft_count(char *input, int i, t_env_var *env)
 			return ((ft_count_len_dqoute(input, i, env)) - tmp - 1);
 		else if (input[i] == '\'')
 			return ((ft_count_len_sqoute(input, i, env)) - tmp - 1);
-		else if (input[i] == '$')
+		else if (input[i] == '$' && input[i + 1])
 		{
 			count = ft_count_dollar(input, env);
 			i += count.j;

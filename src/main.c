@@ -2,6 +2,48 @@
 
 extern int	g_status;
 
+char	get_first_quote(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (str[i]);
+		i++;
+	}
+	return (0);
+}
+
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+	char	quote_type;
+
+	i = 0;
+	j = 0;
+	if (!str)
+		return (NULL);
+	quote_type = get_first_quote(str);
+	new_str = ft_calloc((ft_strlen_lib(str) + 1), sizeof(char));
+	if (!new_str)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if (str[i] != quote_type)
+			new_str[j++] = str[i];
+		i++;
+	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+
+
 t_var_count	ft_ex_dollar(char *line, char *token,
 	t_env_var *env, t_var_count count)
 {
@@ -9,7 +51,6 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 	int	k;
 	int	tmp;
 
-	k = 0;
 	k = (ft_strchr(line, '$') - line);
 	while (line && *line != '$')
 		line++;
@@ -28,6 +69,8 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 		}
 		env = env->next;
 	}
+	if (count.i == 0)
+		count.i++;
 	return (count);
 }
 
@@ -69,6 +112,8 @@ void	*ft_error(int err_type, char *str, int err)
 		ft_putstr_fd("minishell: Not a directory: ", 2);
 	else if (err_type == NOT_FILE_OR_DIR)
 		ft_putstr_fd("minishell: Not a directory: ", 2);
+	else if (err_type == TOO_MUCH_DIR)
+		ft_putstr_fd("minishell: too many arguments: ", 2);
 	ft_putendl_fd(str, 2);
 	return (NULL);
 }
@@ -106,17 +151,3 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_list(&env_list);
 }
-
-// pwd ciao+
-// pwd: too many arguments
-
-// env gnl                                                     
-// env: ‘gnl’: No such file or directory
-// ➜  minishell git:(builtins) ✗ echo $?                                                     
-// 127
-
-// cd ciao
-// cd: no such file or directory: ciao
-// ➜  minishell git:(builtins) ✗ echo $?   
-// 1
-

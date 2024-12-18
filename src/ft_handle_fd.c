@@ -17,6 +17,7 @@ int	open_file(char *file, int redirection)
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	else if (redirection == 4)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0666);
+	printf("\n%d\n\n", fd);
 	return (fd);
 }
 

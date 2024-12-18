@@ -95,7 +95,7 @@ t_process_list	*ft_create_process_node(char **tokens);
 //ft_execute.c
 
 void			execute_command(t_process_list *process, t_env_var **env_list);
-void			pwd_directory(t_process_list *process, t_env_var **env_list);
+void			pwd_directory(t_process_list *process, t_env_var **env_list, int fd);
 char			*get_home_directory(t_env_var **env_list);
 void			update_pwd(t_env_var *env, char *new_pwd);
 t_env_var		*get_node_of(t_env_var **env_list, char *c);
@@ -108,9 +108,9 @@ char			*compute_parent_directory(char *pwd);
 
 // ft_buildtins_env.c
 
-void			ft_env(t_env_var *env);
+void			ft_env(t_env_var *env, int fd);
 void			ft_unset(t_env_var **env, char *str);
-void			ft_export(t_process_list **info_process, t_env_var **env);
+void			ft_export(t_process_list **info_process, t_env_var **env, int fd);
 
 // ft_buildtins_echo.c
 

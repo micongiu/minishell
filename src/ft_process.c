@@ -54,7 +54,7 @@ void print_process_list(t_process_list *head)
 
 		if (head->file_fd) {
 			printf("File FD: %s\n", head->file_fd); // Usa %d se file_fd è un int
-			print("Fd file: %d\n", head->fd);
+			printf("Fd file: %d\n", head->fd);
 			printf("Redirection: %d\n", head->redirection);
 		}
 
@@ -106,7 +106,7 @@ void	free_process_list(t_process_list **cur)
 		if ((*cur)->file_fd)
 			free((*cur)->file_fd);
 		if ((*cur)->fd)
-			close((*cur)->file_fd);
+			close((*cur)->fd);
 		if ((*cur)->full_process)
 			free((*cur)->full_process);
 		if ((*cur)->argument)

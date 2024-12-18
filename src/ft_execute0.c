@@ -46,13 +46,13 @@ char	*get_home_directory(t_env_var **env_list)
 	return (home);
 }
 
-void	pwd_directory(t_process_list *process, t_env_var **env_list)
+void	pwd_directory(t_process_list *process, t_env_var **env_list, int fd)
 {
 	t_env_var	*env;
 
 	env = *env_list;
 	env = get_node_of(env_list, "PWD");
-	printf("%s\n", env->value);
+	ft_putendl_fd(env->value, fd);
 }
 
 void	execute_command(t_process_list *process, t_env_var **env_list)
@@ -60,13 +60,13 @@ void	execute_command(t_process_list *process, t_env_var **env_list)
 	if (ft_strncmp (process->command, "cd", 3) == 0)
 		change_directory(process, env_list);
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
-		pwd_directory(process, env_list);
+		pwd_directory(process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
-		ft_echo(process, 1);
+		ft_echo(process, process->fd);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
-		ft_env(*env_list);
+		ft_env(*env_list, process->fd);
 	else if (ft_strncmp (process->command, "export", 7) == 0)
-		ft_export(&process, env_list);
+		ft_export(&process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);

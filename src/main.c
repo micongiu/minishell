@@ -74,3 +74,17 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_list(&env_list);
 }
+
+// pwd ciao+
+// pwd: too many arguments
+
+// env gnl                                                     
+// env: ‘gnl’: No such file or directory
+// ➜  minishell git:(builtins) ✗ echo $?                                                     
+// 127
+
+// cd ciao
+// cd: no such file or directory: ciao
+// ➜  minishell git:(builtins) ✗ echo $?   
+// 1
+

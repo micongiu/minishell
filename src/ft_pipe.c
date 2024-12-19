@@ -43,58 +43,73 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 	pid_t pid;
 
 	mat = ft_list_to_arr(*env);
-	process->argument[0] = bin_path;
-	while(process)
+	bin_path = ft_strjoin_lib("/bin/", process->command);
+	free(process->argument[0]);
+	process->argument[0] = ft_strdup(bin_path);
+	free(bin_path);
+	while (process)
 	{
-		if(process->next)
+		if (process->next)
 		{
-			if(pipe(pipe_fd) == -1)
-				perror("err_create_pipe\n");
+			if (pipe(pipe_fd) == -1)
+			{
+				perror("Error creating pipe");
+				exit(EXIT_FAILURE);
+			}
 		}
 		pid = fork();
-		if(pid == -1)
-			printf("err_fork\n");
-		if(pid == 0)
+		if (pid == -1)
 		{
-			printf("====processo figlio pid = %i\n", getpid());
-			if(prev_fd)
+			perror("Error during fork");
+			exit(EXIT_FAILURE);
+		}
+
+		if (pid == 0) // Child process
+		{
+			printf("==== Child process PID = %i\n", getpid());
+			if (prev_fd)
 			{
-				if(dup2(prev_fd, STDIN_FILENO) == -1)
-					printf("err_dup2_STDION\n");
+				if (dup2(prev_fd, STDIN_FILENO) == -1)
+				{
+					perror("Error duplicating STDIN");
+					exit(EXIT_FAILURE);
+				}
 				close(prev_fd);
 			}
-			if(process->next)
+			if (process->next)
 			{
-				if(dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-					printf("err_dup2_STDOUT\n");
+				if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+				{
+					perror("Error duplicating STDOUT");
+					exit(EXIT_FAILURE);
+				}
 			}
-				close(pipe_fd[0]);
-				close(pipe_fd[1]); // questi due close erano tenuti dentro l' if di sopra
-			if((ft_strncmp (process->command, "cd", 3) == 0) || (ft_strncmp (process->command, "pwd", 4) == 0)
-				|| (ft_strncmp (process->command, "echo", 5) == 0) || (ft_strncmp (process->command, "env", 4) == 0)
-				|| (ft_strncmp (process->command, "export", 7) == 0) || (ft_strncmp (process->command, "unset", 6) == 0))
-			{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			if ((ft_strncmp(process->command, "cd", 3) == 0) || 
+				(ft_strncmp(process->command, "pwd", 4) == 0) || 
+				(ft_strncmp(process->command, "echo", 5) == 0) || 
+				(ft_strncmp(process->command, "env", 4) == 0) || 
+				(ft_strncmp(process->command, "export", 7) == 0) || 
+				(ft_strncmp(process->command, "unset", 6) == 0))
 				execute_command(process, &*env, mat);
-			}
 			else
 			{
-				bin_path = ft_strjoin_lib("/bin/", process->command);
-				execve(bin_path, process->argument, mat);
-				printf("#####err_execve\n");
+				execve(process->command, process->argument, mat);
+				perror("Error executing command with execve");
+				exit(EXIT_FAILURE);
 			}
 		}
-		else
+		else // Parent process
 		{
-			printf("====processo PADRE pid = %i\n", getpid());
-
-			if(prev_fd)
-				close(prev_fd);
-			close(pipe_fd[1]);
-
-			prev_fd = pipe_fd[0];
+			printf("==== Parent process PID = %i\n", getpid());
+			if (prev_fd)
+				close(prev_fd); // Close previous pipe read end
+			close(pipe_fd[1]); // Close current pipe write end
+			prev_fd = pipe_fd[0]; // Save current pipe read end for next process
 		}
 		waitpid(pid,NULL,0);
 		process = process->next;
-	}
-	free_matrix((void *) mat);
+		}
+		free_matrix((void *) mat);
 }

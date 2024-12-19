@@ -89,7 +89,9 @@ void	change_directory(t_process_list *process, t_env_var **env_list)
 {
 	t_env_var	*pwd_env;
 
-	pwd_env = get_node_of (env_list, "PWD");
+	if (process->argument[2])
+		ft_error(15, process->command, 1);
+	pwd_env = get_node_of(env_list, "PWD");
 	if (!pwd_env)
 	{
 		printf ("env_PWD not found\n");

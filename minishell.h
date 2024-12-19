@@ -136,7 +136,7 @@ char			*compute_parent_directory(char *pwd);
 
 // ft_buildtins_env.c
 
-void			ft_env(t_env_var *env, int fd);
+void			ft_env(t_env_var *env, int fd, char *str);
 void			ft_unset(t_env_var **env, char *str);
 void			ft_export(t_process_list **info_process, t_env_var **env, int fd);
 

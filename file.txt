@@ -40,4 +40,4 @@ aggiornamenti 5/12 18:58 = ok finito definitivamente cd , aggiustato il tokenize
 aggiornamenti 7/12 20:16 = poca robba, messo a norma e diviso le funzioni ft_execute, sistemato un memory leak di ft_count_token(c'era un if che incrementava due volte la i)
 							#vedere come gestire e redirection , salvarsi il fd di per la pipe
 
-aggiornamenti 13/12 19:46 = work in progres ft_pipe.c, controllare ció che viene passato ad execve !! , domani esame 
+aggiornamenti 13/12 19:46 = work in progres ft_pipe.c, controllare ció che viene passato ad execve !! , domani esame --

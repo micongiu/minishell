@@ -17,7 +17,7 @@ t_var_count	token_double_quote(char *token, char *line,
 		}
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
-		else if (line[count.i] == '$')
+		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
 		{
@@ -43,7 +43,7 @@ t_var_count	token_single_quote(char *token, char *line,
 			in_quotes = 0;
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
-		else if (line[count.i] == '$' && in_quotes == 0)
+		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
 			token[count.j++] = line[count.i];
@@ -68,7 +68,7 @@ t_var_count	token_separation(char *token, char *line,
 			count = token_single_quote(token, line, env, count);
 			break ;
 		}
-		else if (line[count.i] == '$')
+		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
 			token[count.j++] = line[count.i++];

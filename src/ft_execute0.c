@@ -59,26 +59,23 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 		char **env_mat)
 {
 	if (ft_strncmp (process->command, "cd", 3) == 0)
-	{
-		if (process->argument[2])
-			ft_error(15, process->command, 1);
 		change_directory(process, env_list);
-	}
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
 		pwd_directory(process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
 		ft_echo(process, process->fd);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
-	{
-		if (process->argument[1])
-			ft_error(14, process->argument[1], 127);
-		ft_env(*env_list, process->fd);
-	}
+		ft_env(*env_list, process->fd, process->argument[1]);
 	else if (ft_strncmp (process->command, "export", 7) == 0)
 		ft_export(&process, env_list, process->fd);
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
 	else
+	{
 		execve(process->argument[0], process->argument, env_mat);
+		perror("Error executing command with execve");
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
 }

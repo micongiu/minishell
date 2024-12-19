@@ -115,7 +115,7 @@ void	*ft_error(int err_type, char *str, int err)
 	else if (err_type == TOO_MUCH_DIR)
 		ft_putstr_fd("minishell: too many arguments: ", 2);
 	ft_putendl_fd(str, 2);
-	return (NULL);
+	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv, char **env)

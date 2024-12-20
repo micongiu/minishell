@@ -62,48 +62,59 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 	pid_t	pid;
 
 	env_mat = ft_list_to_arr(*env);
-	while (process)
+	if (process->next == NULL && ((ft_strncmp(process->command, "cd", 3) == 0)
+			|| (ft_strncmp(process->command, "pwd", 4) == 0)
+			|| (ft_strncmp(process->command, "echo", 5) == 0)
+			|| (ft_strncmp(process->command, "env", 4) == 0)
+			|| (ft_strncmp(process->command, "export", 7) == 0)
+			|| (ft_strncmp(process->command, "unset", 6) == 0)
+			|| (ft_strncmp(process->command, "exit", 5) == 0)))
+		execute_command(process, env, env_mat);
+	else
 	{
-		bin_path = ft_strjoin_lib("/bin/", process->command);
-		free(process->argument[0]);
-		process->argument[0] = ft_strdup(bin_path);
-		free(bin_path);
-		if (process->next)
-			if (pipe(pipe_fd) == -1)
-				error_and_free("Error creating pipe", env_mat);
-		pid = fork();
-		if (pid == -1)
-			error_and_free("Error during fork", env_mat);
-		if (pid == 0)
+		while (process)
 		{
-			printf("==== Child process PID = %i\n", getpid());
-			if (prev_fd != -1)
-			{
-				if (dup2(prev_fd, STDIN_FILENO) == -1)
-					error_and_free("Error duplicating STDIN", NULL);
-				close(prev_fd);
-			}
+			bin_path = ft_strjoin_lib("/bin/", process->command);
+			free(process->argument[0]);
+			process->argument[0] = ft_strdup(bin_path);
+			free(bin_path);
 			if (process->next)
+				if (pipe(pipe_fd) == -1)
+					error_and_free("Error creating pipe", env_mat);
+			pid = fork();
+			if (pid == -1)
+				error_and_free("Error during fork", env_mat);
+			if (pid == 0)
 			{
-				if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-					error_and_free("Error duplicating STDOUT", NULL);
-				close(pipe_fd[1]);
+				printf("==== Child process PID = %i\n", getpid());
+				if (prev_fd != -1)
+				{
+					if (dup2(prev_fd, STDIN_FILENO) == -1)
+						error_and_free("Error duplicating STDIN", NULL);
+					close(prev_fd);
+				}
+				if (process->next)
+				{
+					if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+						error_and_free("Error duplicating STDOUT", NULL);
+					close(pipe_fd[1]);
+				}
+				if (pipe_fd[0] != -1)
+					close(pipe_fd[0]);
+				execute_command(process, env, env_mat);
 			}
-			if (pipe_fd[0] != -1)
-				close(pipe_fd[0]); 
-			execute_command(process, env, env_mat);
+			else
+			{
+				printf("==== Parent process PID = %i\n", getpid());
+				if (prev_fd != -1)
+					close(prev_fd);
+				if (pipe_fd[1] != -1)
+					close(pipe_fd[1]);
+				prev_fd = (process->next) ? pipe_fd[0] : -1;
+			}
+			process = process->next;
 		}
-		else
-		{
-			printf("==== Parent process PID = %i\n", getpid());
-			if (prev_fd != -1)
-				close(prev_fd);
-			if (pipe_fd[1] != -1)
-				close(pipe_fd[1]);
-			prev_fd = (process->next) ? pipe_fd[0] : -1;
-		}
-		process = process->next;
+		while (wait(NULL) > 0);
 	}
-	while (wait(NULL) > 0);
 	free_matrix((void **)env_mat);
 }

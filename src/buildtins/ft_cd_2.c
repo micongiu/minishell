@@ -41,12 +41,12 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
 	// else if (ft_strncmp(process->command, "exit", 5) == 0)
-	// 	ft_exit(env_list, process->argument[1]);
+	// 	ft_exit(NULL, &*env_list, &process);
 	else
 	{
 		execve(process->argument[0], process->argument, env_mat);
 		perror("Error executing command with execve");
 		exit(EXIT_FAILURE);
 	}
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }

@@ -74,18 +74,7 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 	return (count);
 }
 
-void	ft_exit(t_rline *line, t_env_var **env_list,
-	t_process_list **head_process)
-{
-	free(line->input);
-	free(line);
-	free_env_list(env_list);
-	free_process_list(head_process);
-	clear_history();
-	printf("exit\n");
-}
-
-void	*ft_error(int err_type, char *str, int err)
+void	ft_error(int err_type, char *str, int err)
 {
 	g_status = err;
 	if (err_type == 1)
@@ -114,6 +103,10 @@ void	*ft_error(int err_type, char *str, int err)
 		ft_putstr_fd("minishell: Not a directory: ", 2);
 	else if (err_type == TOO_MUCH_DIR)
 		ft_putstr_fd("minishell: too many arguments: ", 2);
+	else if (err_type == HOME_DIRERR)
+		ft_putstr_fd("Error changing to home directory\n", 2);
+	else if (err_type == NENV_PWD)
+		ft_putstr_fd("env_PWD not found\n", 2);
 	ft_putendl_fd(str, 2);
 	exit(EXIT_FAILURE);
 }
@@ -127,7 +120,7 @@ int	main(int argc, char **argv, char **env)
 	env_list = NULL;
 	head_process = NULL;
 	line = NULL;
-	if (argc != 1)
+	if (argc != 1 && argv[0] == NULL)
 		return (printf("Error argc number\n"), 1);
 	line = ft_calloc(1, sizeof(t_rline));
 	env_list = NULL;

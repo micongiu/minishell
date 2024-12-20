@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	ft_add_process_node(t_process_list **process_list,
 			t_process_list *new_var)
@@ -20,10 +20,8 @@ t_process_list	*ft_create_process_node(char **tokens)
 {
 	t_process_list	*node;
 	int				i;
-	int				j;
 
 	i = 0;
-	j = 0;
 	node = ft_calloc(1, sizeof(t_process_list));
 	while ((tokens[i]) && (ft_strncmp(tokens[i], "|", 2) != 0))
 		i++;
@@ -67,11 +65,9 @@ t_process_list	*ft_init_process_list(char **tokens)
 {
 	t_process_list	*head;
 	t_process_list	*current_node;
-	char			*temp;
 	int				arg;
 
 	arg = 0;
-	temp = NULL;
 	head = NULL;
 	current_node = NULL;
 	while (*tokens)

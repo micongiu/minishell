@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*compute_parent_directory(char *pwd)
 {
@@ -22,24 +22,29 @@ char	*compute_parent_directory(char *pwd)
 	return (parent);
 }
 
-void	cd_home_directory(t_env_var **env_list, t_env_var *env)
+char	*get_home_directory(t_env_var **env_list)
 {
-	char	*home;
+	t_env_var	*env;
+	char		*home;
 
-	home = get_home_directory (env_list);
-	if (!home)
-		return ;
-	if (chdir (home) != 0)
+	env = get_node_of(env_list, "HOME");
+	home = malloc(ft_strlen_lib(env->value) + 1);
+	if (!env || !env->value)
 	{
-		printf ("Error changing to home directory\n");
-		free (home);
-		return ;
+		printf("Error: HOME not found\n");
+		return (NULL);
 	}
-	update_pwd (env, home);
-	free (home);
+	if (!home || ft_strlcpy(home, env->value, ft_strlen_lib(env->value) + 1)
+		== 0)
+	{
+		printf("Error copying HOME\n");
+		free(home);
+		return (NULL);
+	}
+	return (home);
 }
 
-void	cd_parent_directory(t_env_var **env_list, t_env_var *env)
+void	cd_parent_directory(t_env_var *env)
 {
 	char	*parent;
 
@@ -56,8 +61,7 @@ void	cd_parent_directory(t_env_var **env_list, t_env_var *env)
 	free (parent);
 }
 
-void	cd_specific_directory(t_process_list *process,
-	t_env_var **env_list, t_env_var *env)
+void	cd_specific_directory(t_process_list *process, t_env_var *env)
 {
 	char	*temp;
 	char	*new_pwd;
@@ -88,21 +92,27 @@ void	cd_specific_directory(t_process_list *process,
 void	change_directory(t_process_list *process, t_env_var **env_list)
 {
 	t_env_var	*pwd_env;
+	char		*home;
 
 	if (process->argument[2])
 		ft_error(15, process->command, 1);
 	pwd_env = get_node_of(env_list, "PWD");
 	if (!pwd_env)
-	{
-		printf ("env_PWD not found\n");
-		return ;
-	}
+		ft_error(17, NULL, 126);
 	if (!process->argument[1])
-		cd_home_directory (env_list, pwd_env);
+	{
+		home = get_home_directory (env_list);
+		if (!home)
+			return ;
+		if (chdir (home) != 0)
+			return (free(home), ft_error(16, NULL, 126));
+		update_pwd(pwd_env, home);
+		free(home);
+	}
 	else if (ft_strncmp (process->argument[1], ".", 2) == 0)
 		return ;
 	else if (ft_strncmp (process->argument[1], "..", 3) == 0)
-		cd_parent_directory (env_list, pwd_env);
+		cd_parent_directory (pwd_env);
 	else
-		cd_specific_directory (process, env_list, pwd_env);
+		cd_specific_directory (process, pwd_env);
 }

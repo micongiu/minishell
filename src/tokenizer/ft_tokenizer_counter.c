@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_var_count	ft_count_dollar(char *input, t_env_var *env)
 {

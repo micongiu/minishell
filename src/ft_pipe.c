@@ -36,12 +36,13 @@ char	**ft_list_to_arr(t_env_var *env_h)
 
 int	is_builtins(char *str)
 {
-	return ((ft_strncmp(str, "cd", 3) == 0) || 
-			(ft_strncmp(str, "pwd", 4) == 0) || 
-			(ft_strncmp(str, "echo", 5) == 0) || 
-			(ft_strncmp(str, "env", 4) == 0) || 
-			(ft_strncmp(str, "export", 7) == 0) || 
-			(ft_strncmp(str, "unset", 6) == 0));
+	return ((ft_strncmp(str, "cd", 3) == 0)
+			|| (ft_strncmp(str, "pwd", 4) == 0)
+			|| (ft_strncmp(str, "echo", 5) == 0)
+			|| (ft_strncmp(str, "env", 4) == 0)
+			|| (ft_strncmp(str, "export", 7) == 0)
+			|| (ft_strncmp(str, "unset", 6) == 0)
+			|| (ft_strncmp(str, "exit", 5) == 0));
 }
 
 void	error_and_free(char *str, char	**env_mat)

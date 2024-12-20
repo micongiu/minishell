@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 // Helper function to check if a token is an operator
 int	is_operator(char *token)

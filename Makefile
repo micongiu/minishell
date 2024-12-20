@@ -1,55 +1,61 @@
 NAME = minishell
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ./src/main.c ./src/ft_utility.c ./src/ft_env.c ./src/ft_tokenizer.c ./src/ft_tokenizer_utility.c ./src/ft_signal_handle.c ./src/ft_process.c ./src/ft_tokenizer_counter.c \
-	   ./src/ft_buildtins_env.c ./src/ft_buildtins_echo.c ./src/ft_execute0.c ./src/ft_execute1.c ./src/ft_process_utility.c ./src/ft_pipe.c ./gnl/get_next_line_utils.c ./gnl/get_next_line.c \
-	   ./src/ft_handle_fd.c
-SRC_DIRS = ./src
-OBJS = ${SRCS:.c=.o}
-
-LIBFT		:= libft/libft.a
-
-GREEN		=\033[0;32m
-PURPLE		=\033[0;31m
-BLUE		=\033[0;34m
-PURPLE		= \033[0;35m
-
-MAKEFLAGS += -s
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+COLOUR_END = \033[0m
 
 OBJ_DIR = ./obj
-OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, ${SRCS})
+SRC_DIR = ./src
+LIBFT_DIR = ./libft
+LIBFT	:= libft/libft.a
+MAKEFLAGS += -s
 
-$(OBJ_DIR)/%.o: %.c
+BUILDTINS = ./src/buildtins/ft_cd_2.c ./src/buildtins/ft_cd.c ./src/buildtins/ft_echo.c \
+	./src/buildtins/ft_env.c ./src/buildtins/ft_exit.c ./src/buildtins/ft_export.c \
+	./src/buildtins/ft_pwd.c ./src/buildtins/ft_unset.c 
+
+ENV = ./src/env/ft_env_list.c
+HANDLE_FILE = ./src/handle_file/ft_handle_fd.c
+PARSER = ./src/parser/ft_process_utility.c ./src/parser/ft_process.c
+SIGNAL = ./src/signal/ft_signal_handle.c
+TOKENIZER = ./src/tokenizer/ft_tokenizer_counter.c ./src/tokenizer/ft_tokenizer_utility.c \
+	./src/tokenizer/ft_tokenizer.c
+GNL = ./gnl/get_next_line_utils.c ./gnl/get_next_line.c
+MAIN = ./src/main.c ./src/ft_utility.c ./src/ft_pipe.c
+
+SRC = $(BUILDTINS) $(ENV) $(HANDLE_FILE) $(PARSER) $(SIGNAL) $(TOKENIZER) $(GNL) $(MAIN)
+
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+all: $(NAME)
+
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	@echo "$(PURPLE)EVERYTHING COMPILED!$(COLOUR_END)"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	@mkdir -p ./obj/libft
 	@mkdir -p ./obj/gnl
-	@$(CC) -g -c $< -o $@;
-
-all: $(NAME) clean
-
-$(NAME): $(OBJS)
-	@$(MAKE) -C ./libft/
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
-	@echo "$(PURPLE)EVERYTHING COMPILE!$(COLOUR_END)"
-
-%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
 clean:
-	@make clean -sC libft/
-	@rm -rf $(OBJS)
-	@${RM} -r ${OBJ_DIR}
-	@echo "$(GREEN)EVERYTHING HAS CLEAN!$(COLOUR_END)"
+	@make clean -C $(LIBFT_DIR)
+	@rm -rf $(OBJ_DIR)
+	@echo "$(GREEN)EVERYTHING CLEANED!$(COLOUR_END)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(RM) -f $(LIBFT)
-	@echo "$(BLUE)EVERYTHING HAS FCLEAN!$(COLOUR_END)"
+	@make fclean -C $(LIBFT_DIR)
+	@echo "$(BLUE)EVERYTHING CLEANED COMPLETELY!$(COLOUR_END)"
 
-re: fclean all clean
-	@$(MAKE)
+re: fclean all
 
 git:
 	make fclean

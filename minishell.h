@@ -65,7 +65,9 @@ enum	e_error
 	IS_DIR = 12,
 	NOT_DIR = 13,
 	NOT_FILE_OR_DIR = 14,
-	TOO_MUCH_DIR = 15
+	TOO_MUCH_DIR = 15,
+	HOME_DIRERR = 16,
+	NENV_PWD = 17
 };
 
 enum	e_redirection
@@ -79,7 +81,7 @@ enum	e_redirection
 // main.c
 
 char			*remove_quotes(char *str);
-void			*ft_error(int err_type, char *str, int err);
+void			ft_error(int err_type, char *str, int err);
 int				main(int argc, char **argv, char **env);
 t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,
 					t_var_count count);
@@ -123,16 +125,20 @@ t_process_list	*ft_create_process_node(char **tokens);
 
 void			execute_command(t_process_list *process, t_env_var **env_list,
 					char **env_mat);
-void			pwd_directory(t_process_list *process, t_env_var **env_list, int fd);
+void			pwd_directory(t_env_var **env_list, int fd);
 char			*get_home_directory(t_env_var **env_list);
 void			update_pwd(t_env_var *env, char *new_pwd);
 t_env_var		*get_node_of(t_env_var **env_list, char *c);
 void			change_directory(t_process_list *process, t_env_var **env_list);
-void			cd_specific_directory(t_process_list *process,
-					t_env_var **env_list, t_env_var *env);
-void			cd_parent_directory(t_env_var **env_list, t_env_var *env);
+void			cd_specific_directory(t_process_list *process, t_env_var *env);
+void			cd_parent_directory(t_env_var *env);
 void			cd_home_directory(t_env_var **env_list, t_env_var *env);
 char			*compute_parent_directory(char *pwd);
+
+// ft_exit.c
+
+void			ft_exit(t_rline *line, t_env_var **env_list,
+					t_process_list **head_process);
 
 // ft_buildtins_env.c
 

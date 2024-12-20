@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_env_var	*get_node_of(t_env_var **env_list, char *c)
 {
@@ -24,44 +24,13 @@ void	update_pwd(t_env_var *env, char *new_pwd)
 		printf("Error updating PWD\n");
 }
 
-char	*get_home_directory(t_env_var **env_list)
-{
-	t_env_var	*env;
-	char		*home;
-
-	env = get_node_of(env_list, "HOME");
-	home = malloc(ft_strlen_lib(env->value) + 1);
-	if (!env || !env->value)
-	{
-		printf("Error: HOME not found\n");
-		return (NULL);
-	}
-	if (!home || ft_strlcpy(home, env->value, ft_strlen_lib(env->value) + 1)
-		== 0)
-	{
-		printf("Error copying HOME\n");
-		free(home);
-		return (NULL);
-	}
-	return (home);
-}
-
-void	pwd_directory(t_process_list *process, t_env_var **env_list, int fd)
-{
-	t_env_var	*env;
-
-	env = *env_list;
-	env = get_node_of(env_list, "PWD");
-	ft_putendl_fd(env->value, fd);
-}
-
 void	execute_command(t_process_list *process, t_env_var **env_list,
 		char **env_mat)
 {
 	if (ft_strncmp (process->command, "cd", 3) == 0)
 		change_directory(process, env_list);
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
-		pwd_directory(process, env_list, process->fd);
+		pwd_directory(env_list, process->fd);
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
 		ft_echo(process, process->fd);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
@@ -71,6 +40,8 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
+	// else if (ft_strncmp(process->command, "exit", 5) == 0)
+	// 	ft_exit(env_list, process->argument[1]);
 	else
 	{
 		execve(process->argument[0], process->argument, env_mat);

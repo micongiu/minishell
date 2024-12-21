@@ -115,7 +115,7 @@ void exec_parent_process(int *prev_fd, int *pipe_fd)
 // Pipe loop
 void exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat)
 {
-	int pipe_fd[2] = {-1, -1};
+	int pipe_fd[2]= {-1, -1};
 	int prev_fd = -1;
 	pid_t pid;
 

@@ -138,7 +138,7 @@ char			*compute_parent_directory(char *pwd);
 // ft_exit.c
 
 void			ft_exit(t_rline *line, t_env_var **env_list,
-					t_process_list **head_process);
+					t_process_list **head_process, char **env_mat);
 
 // ft_buildtins_env.c
 

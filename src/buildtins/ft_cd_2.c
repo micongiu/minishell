@@ -44,7 +44,7 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
 	else if (ft_strncmp(process->command, "exit", 5) == 0)
-		ft_exit(NULL, &*env_list, &process);
+		ft_exit(NULL, &*env_list, &process, env_mat);
 	else
 	{
 		c = ft_strjoin_lib(c, process->argument[0]);

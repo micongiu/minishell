@@ -40,8 +40,8 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);
-	// else if (ft_strncmp(process->command, "exit", 5) == 0)
-	// 	ft_exit(NULL, &*env_list, &process);
+	else if (ft_strncmp(process->command, "exit", 5) == 0)
+		ft_exit(NULL, &*env_list, &process);
 	else
 	{
 		execve(process->argument[0], process->argument, env_mat);

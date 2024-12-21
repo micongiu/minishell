@@ -33,6 +33,8 @@ typedef struct s_process_list
 	int						redirection;
 	char					*full_process;
 	char					**argument;
+	int						in_file;
+	int						out_file;
 	struct s_process_list	*next;
 }	t_process_list;
 
@@ -125,7 +127,7 @@ t_process_list	*ft_create_process_node(char **tokens);
 
 void			execute_command(t_process_list *process, t_env_var **env_list,
 					char **env_mat);
-void			pwd_directory(t_env_var **env_list, int fd);
+void			pwd_directory(t_env_var **env_list);
 char			*get_home_directory(t_env_var **env_list);
 void			update_pwd(t_env_var *env, char *new_pwd);
 t_env_var		*get_node_of(t_env_var **env_list, char *c);
@@ -142,13 +144,13 @@ void			ft_exit(t_rline *line, t_env_var **env_list,
 
 // ft_buildtins_env.c
 
-void			ft_env(t_env_var *env, int fd, char *str);
+void			ft_env(t_env_var *env, char *str);
 void			ft_unset(t_env_var **env, char *str);
-void			ft_export(t_process_list **info_process, t_env_var **env, int fd);
+void			ft_export(t_process_list **info_process, t_env_var **env);
 
 // ft_buildtins_echo.c
 
-void			ft_echo(t_process_list *info_process, int fd);
+void			ft_echo(t_process_list *info_process);
 
 // ft_process_utility.c
 
@@ -164,7 +166,6 @@ t_process_list	*handle_list_creation(t_process_list *current_node,
 // ft_handle_fd.c
 
 int				open_file(char *file, int redirection);
-char			*read_file(int fd);
 
 // pipe
 

@@ -15,7 +15,7 @@ int	ft_echo_utility(char *option)
 	return (1);
 }
 
-void	ft_echo(t_process_list *info_process, int fd)
+void	ft_echo(t_process_list *info_process)
 {
 	int		i;
 	int		newline;
@@ -32,13 +32,13 @@ void	ft_echo(t_process_list *info_process, int fd)
 		{
 			tmp = remove_quotes(info_process->argument[i]);
 			if (ft_strlen_lib(tmp) > 0)
-				ft_putstr_fd(tmp, fd);
+				ft_putstr_fd(tmp, STDOUT_FILENO);
 			free(tmp);
 		}
 		if (info_process->argument[i + 1])
-			ft_putchar_fd(' ', fd);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
 	if (newline == 1)
-		write(fd, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 }

@@ -26,23 +26,23 @@ void	ft_export_utility(t_env_var *tmp, char *str_name, char *str_value,
 	free(str_value);
 }
 
-void	ft_export_null(t_env_var *env, int fd)
+void	ft_export_null(t_env_var *env)
 {
 	t_env_var	*current;
 
 	current = env;
 	while (current != NULL)
 	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(current->name, fd);
-		ft_putchar_fd('=', fd);
-		ft_putstr_fd(current->value, fd);
-		ft_putchar_fd('\n', fd);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(current->name, STDOUT_FILENO);
+		ft_putchar_fd('=', STDOUT_FILENO);
+		ft_putstr_fd(current->value, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		current = current->next;
 	}
 }
 
-void	ft_export(t_process_list **info_process, t_env_var **env, int fd)
+void	ft_export(t_process_list **info_process, t_env_var **env)
 {
 	int			i;
 	char		*str_name;
@@ -55,7 +55,7 @@ void	ft_export(t_process_list **info_process, t_env_var **env, int fd)
 	tmp = *env;
 	if ((*info_process)->argument[1] == NULL)
 	{
-		ft_export_null((*env), fd);
+		ft_export_null((*env));
 		return ;
 	}
 	while ((*info_process)->argument[1][i]

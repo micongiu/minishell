@@ -82,6 +82,7 @@ void handle_redirection(t_process_list *process)
 		close(fd);
 	}
 }
+
 // Child process management
 void exec_child_process(t_process_list *process, t_env_var **env,
 						char **env_mat, int prev_fd, int *pipe_fd)
@@ -100,6 +101,12 @@ void exec_child_process(t_process_list *process, t_env_var **env,
 		close(pipe_fd[0]);
 	handle_redirection(process);
 	execute_command(process, env, env_mat);
+	if (dup2(process->in_file, STDIN_FILENO) < 0)
+		error_and_free("Error duplicating output file descriptor", NULL);
+	if (dup2(process->out_file, STDOUT_FILENO) < 0)
+		error_and_free("Error duplicating output file descriptor", NULL);
+	process->in_file = 0;
+	process->out_file = 1;
 }
 
 // Parent process management
@@ -119,7 +126,9 @@ void exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat)
 	int prev_fd = -1;
 	pid_t pid;
 
-	while (process) {
+	while (process)
+	{
+		printf("gqebeqb\n");
 		if (process->next && pipe(pipe_fd) == -1)
 			error_and_free("Error creating pipe", env_mat);
 		pid = fork();
@@ -129,6 +138,7 @@ void exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat)
 			exec_child_process(process, env, env_mat, prev_fd, pipe_fd);
 		else
 			exec_parent_process(&prev_fd, pipe_fd);
+		printf("process = %p\n", process);
 		process = process->next;
 	}
 	while (wait(NULL) > 0)
@@ -147,7 +157,16 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 			|| (ft_strncmp(process->command, "export", 7) == 0)
 			|| (ft_strncmp(process->command, "unset", 6) == 0)
 			|| (ft_strncmp(process->command, "exit", 5) == 0)))
+	{
+		handle_redirection(process);
 		execute_command(process, env, env_mat);
+		if (dup2(process->in_file, STDIN_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor", NULL);
+		if (dup2(process->out_file, STDOUT_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor", NULL);
+		process->in_file = 0;
+		process->out_file = 1;
+	}
 	else
 		exec_pipe_loop(env, process, env_mat);
 	free_matrix((void **)env_mat);

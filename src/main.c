@@ -133,7 +133,7 @@ int	main(int argc, char **argv, char **env)
 		free(line->input);
 		line->input = readline("minishell->");
 		if (line->input == NULL)
-			return (ft_exit(line, &env_list, &head_process), 0);
+			return (ft_exit(line, &env_list, &head_process, NULL), 0);
 		line->mat_input = ft_tokenizer(line->input, env_list);
 		head_process = ft_init_process_list(line->mat_input);
 		if (ft_strlen_lib(line->input) > 0)

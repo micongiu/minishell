@@ -63,11 +63,9 @@ void	cd_parent_directory(t_env_var *env)
 
 void	cd_specific_directory(t_process_list *process, t_env_var *env)
 {
-	char	*temp;
 	char	*new_pwd;
 	char	*path;
 
-	temp = NULL;
 	new_pwd = NULL;
 	path = process->argument[1];
 	if (chdir(path) != 0)
@@ -79,14 +77,11 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 		new_pwd = process->argument[1];
 	else if(env->value[ft_strlen_lib (env->value) - 1] != '/')
 	{
-		temp = ft_strjoin_lib (env->value, "/");
-		new_pwd = ft_strjoin_lib (temp, path);
-		free (temp);
+		new_pwd = ft_strjoin_lib (ft_strjoin_lib (env->value, "/"), path);
 	}
 	else
 		new_pwd = ft_strjoin_lib (env->value, path);
 	update_pwd (env, new_pwd);
-	free (new_pwd);
 }
 
 void	change_directory(t_process_list *process, t_env_var **env_list)

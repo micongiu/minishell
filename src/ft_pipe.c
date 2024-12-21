@@ -52,27 +52,58 @@ void	error_and_free(char *str, char	**env_mat)
 		free_matrix((void **)env_mat);
 	exit(EXIT_FAILURE);
 }
-static void	exec_child_process(t_process_list *process, t_env_var **env,
-	char **env_mat, int prev_fd, int *pipe_fd)
+void handle_redirection(t_process_list *process)
 {
-	if (prev_fd != -1)
+	if (process->redirection == 1 && process->file_fd) // Input redirection
 	{
+		int fd = open(process->file_fd, O_RDONLY);
+		if (fd < 0)
+			error_and_free("Error opening input file", NULL);
+		if (dup2(fd, STDIN_FILENO) < 0)
+			error_and_free("Error duplicating input file descriptor", NULL);
+		close(fd);
+	}
+	else if (process->redirection == 2 && process->file_fd) // Output redirection
+	{
+		int fd = open(process->file_fd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd < 0)
+			error_and_free("Error opening output file", NULL);
+		if (dup2(fd, STDOUT_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor", NULL);
+		close(fd);
+	}
+	else if (process->redirection == 3 && process->file_fd) // Append redirection
+	{
+		int fd = open(process->file_fd, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd < 0)
+			error_and_free("Error opening output file in append mode", NULL);
+		if (dup2(fd, STDOUT_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor", NULL);
+		close(fd);
+	}
+}
+// Child process management
+void exec_child_process(t_process_list *process, t_env_var **env,
+						char **env_mat, int prev_fd, int *pipe_fd)
+{
+	if (prev_fd != -1) {
 		if (dup2(prev_fd, STDIN_FILENO) == -1)
-			error_and_free("Error duplicating STDIN", NULL);
+			error_and_free("Error duplicating STDIN", env_mat);
 		close(prev_fd);
 	}
-	if (process->next)
-	{
+	if (process->next) {
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-			error_and_free("Error duplicating STDOUT", NULL);
+			error_and_free("Error duplicating STDOUT", env_mat);
 		close(pipe_fd[1]);
 	}
 	if (pipe_fd[0] != -1)
 		close(pipe_fd[0]);
+	handle_redirection(process);
 	execute_command(process, env, env_mat);
 }
 
-static void	exec_parent_process(int *prev_fd, int *pipe_fd)
+// Parent process management
+void exec_parent_process(int *prev_fd, int *pipe_fd)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);
@@ -81,23 +112,14 @@ static void	exec_parent_process(int *prev_fd, int *pipe_fd)
 	*prev_fd = (pipe_fd[0] != -1) ? pipe_fd[0] : -1;
 }
 
-static void	exec_pipe_loop(t_env_var **env, t_process_list *process,
-	char **env_mat)
+// Pipe loop
+void exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat)
 {
-	int		pipe_fd[2];
-	int		prev_fd;
-	pid_t	pid;
-	char	*bin_path;
+	int pipe_fd[2] = {-1, -1};
+	int prev_fd = -1;
+	pid_t pid;
 
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
-	prev_fd = -1;
-	while (process)
-	{
-		bin_path = ft_strjoin_lib("/bin/", process->command);
-		free(process->argument[0]);
-		process->argument[0] = ft_strdup(bin_path);
-		free(bin_path);
+	while (process) {
 		if (process->next && pipe(pipe_fd) == -1)
 			error_and_free("Error creating pipe", env_mat);
 		pid = fork();

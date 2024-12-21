@@ -35,31 +35,31 @@ t_process_list	*ft_create_process_node(char **tokens)
 	return (node);
 }
 
-void	print_process_list(t_process_list *head)
-{
-	int	i;
+// void	print_process_list(t_process_list *head)
+// {
+// 	int	i;
 
-	i = 0;
-	while (head != NULL)
-	{
-		printf("Command: %s\n", head->command);
-		if (head->option)
-			printf("Option: %s\n", head->option);
-		while (head->argument != NULL && head->argument[i] != NULL)
-		{
-			printf("Argument: %s\n", head->argument[i]);
-			i++;
-		}
-		if (head->file_fd)
-		{
-			printf("File FD: %s\n", head->file_fd);
-			printf("Fd file: %d\n", head->fd);
-			printf("Redirection: %d\n", head->redirection);
-		}
-		printf("----\n");
-		head = head->next;
-	}
-}
+// 	i = 0;
+// 	while (head != NULL)
+// 	{
+// 		printf("Command: %s\n", head->command);
+// 		if (head->option)
+// 			printf("Option: %s\n", head->option);
+// 		while (head->argument != NULL && head->argument[i] != NULL)
+// 		{
+// 			printf("Argument: %s\n", head->argument[i]);
+// 			i++;
+// 		}
+// 		if (head->file_fd)
+// 		{
+// 			printf("File FD: %s\n", head->file_fd);
+// 			printf("Fd file: %d\n", head->fd);
+// 			printf("Redirection: %d\n", head->redirection);
+// 		}
+// 		printf("----\n");
+// 		head = head->next;
+// 	}
+// }
 
 t_process_list	*ft_init_process_list(char **tokens)
 {
@@ -82,7 +82,7 @@ t_process_list	*ft_init_process_list(char **tokens)
 		}
 		tokens++;
 	}
-	print_process_list(head);
+	// print_process_list(head);
 	return (head);
 }
 

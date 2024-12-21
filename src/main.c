@@ -138,9 +138,12 @@ int	main(int argc, char **argv, char **env)
 		head_process = ft_init_process_list(line->mat_input);
 		if (ft_strlen_lib(line->input) > 0)
 			add_history(line->input);
-		ft_execute_pipe_line(&env_list, head_process);
-		free_matrix((void **) line->mat_input);
-		free_process_list(&head_process);
+		if (ft_strlen_lib(line->input) > 0)
+			ft_execute_pipe_line(&env_list, head_process);
+		if(line->mat_input)
+			free_matrix((void **) line->mat_input);
+		if(head_process)
+			free_process_list(&head_process);
 	}
 	free_env_list(&env_list);
 }

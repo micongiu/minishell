@@ -170,4 +170,7 @@ char			*read_file(int fd);
 
 void			ft_execute_pipe_line(t_env_var **env, t_process_list *process);
 
+void	execute_not_b(t_process_list *process,
+		char **env_mat);
+
 #endif

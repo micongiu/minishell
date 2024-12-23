@@ -166,11 +166,19 @@ t_process_list	*handle_list_creation(t_process_list *current_node,
 int				open_file(char *file, int redirection);
 char			*read_file(int fd);
 
-// pipe
-
+// ft_pipe.c - ft_pipe_2.c
+void			error_and_free(char *str, char	**env_mat);
+int				ft_count_node(t_env_var *env);
+char			**ft_list_to_arr(t_env_var *env_h);
+void			exec_parent_process(int *prev_fd, int *pipe_fd);
+void			exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat);
 void			ft_execute_pipe_line(t_env_var **env, t_process_list *process);
-
-void	execute_not_b(t_process_list *process,
-		char **env_mat);
+void			execute_not_b(t_process_list *process,
+					char **env_mat);
+void			handle_input_redirection(t_process_list *process);
+void			handle_output_redirection(t_process_list *process);
+void			handle_append_redirection(t_process_list *process);
+void			handle_redirection(t_process_list *process);
+int				is_builtins(char *str);
 
 #endif

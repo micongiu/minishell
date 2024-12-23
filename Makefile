@@ -15,7 +15,7 @@ MAKEFLAGS += -s
 
 BUILDTINS = ./src/buildtins/ft_cd_2.c ./src/buildtins/ft_cd.c ./src/buildtins/ft_echo.c \
 	./src/buildtins/ft_env.c ./src/buildtins/ft_exit.c ./src/buildtins/ft_export.c \
-	./src/buildtins/ft_pwd.c ./src/buildtins/ft_unset.c 
+	./src/buildtins/ft_pwd.c ./src/buildtins/ft_unset.c
 
 ENV = ./src/env/ft_env_list.c
 HANDLE_FILE = ./src/handle_file/ft_handle_fd.c
@@ -24,7 +24,7 @@ SIGNAL = ./src/signal/ft_signal_handle.c
 TOKENIZER = ./src/tokenizer/ft_tokenizer_counter.c ./src/tokenizer/ft_tokenizer_utility.c \
 	./src/tokenizer/ft_tokenizer.c
 GNL = ./gnl/get_next_line_utils.c ./gnl/get_next_line.c
-MAIN = ./src/main.c ./src/ft_utility.c ./src/ft_pipe.c
+MAIN = ./src/main.c ./src/ft_utility.c ./src/ft_pipe.c ./src/ft_pipe_2.c
 
 SRC = $(BUILDTINS) $(ENV) $(HANDLE_FILE) $(PARSER) $(SIGNAL) $(TOKENIZER) $(GNL) $(MAIN)
 

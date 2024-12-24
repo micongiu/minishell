@@ -104,11 +104,11 @@ void	ft_error(int err_type, char *str, int err)
 	else if (err_type == TOO_MUCH_DIR)
 		ft_putstr_fd("minishell: too many arguments: ", 2);
 	else if (err_type == HOME_DIRERR)
-		ft_putstr_fd("Error changing to home directory\n", 2);
+		ft_putstr_fd("cd: HOME not set\n", 2);
 	else if (err_type == NENV_PWD)
 		ft_putstr_fd("env_PWD not found\n", 2);
 	ft_putendl_fd(str, 2);
-	exit(EXIT_FAILURE);
+	// exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv, char **env)

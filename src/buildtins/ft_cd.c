@@ -31,7 +31,7 @@ char	*get_home_directory(t_env_var **env_list)
 	home = malloc(ft_strlen_lib(env->value) + 1);
 	if (!env || !env->value)
 	{
-		printf("Error: HOME not found\n");
+		ft_error(16, NULL, 1);
 		return (NULL);
 	}
 	if (!home || ft_strlcpy(home, env->value, ft_strlen_lib(env->value) + 1)
@@ -70,7 +70,7 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 	path = process->argument[1];
 	if (chdir(path) != 0)
 	{
-		printf("Error changing to specific path: %s\n", path);
+		ft_error(2, path, 1);
 		return ;
 	}
 	if (process->argument[1][0] == '/')
@@ -90,7 +90,7 @@ void	change_directory(t_process_list *process, t_env_var **env_list)
 	char		*home;
 
 	if (process->argument[2])
-		ft_error(15, process->command, 1);
+		return (ft_error(15, process->command, 1));
 	pwd_env = get_node_of(env_list, "PWD");
 	if (!pwd_env)
 		ft_error(17, NULL, 126);

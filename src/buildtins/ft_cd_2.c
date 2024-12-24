@@ -30,13 +30,13 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 	if (ft_strncmp (process->command, "cd", 3) == 0)
 		change_directory(process, env_list);
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
-		pwd_directory(env_list, process->fd);
+		pwd_directory(env_list);
 	else if (ft_strncmp (process->command, "echo", 5) == 0)
-		ft_echo(process, process->fd);
+		ft_echo(process);
 	else if (ft_strncmp (process->command, "env", 4) == 0)
-		ft_env(*env_list, process->fd, process->argument[1]);
+		ft_env(*env_list, process->argument[1]);
 	else if (ft_strncmp (process->command, "export", 7) == 0)
-		ft_export(&process, env_list, process->fd);
+		ft_export(&process, env_list);
 	else if (ft_strncmp (process->command, "unset", 6) == 0
 		&& !(process->option))
 		ft_unset(env_list, process->argument[1]);

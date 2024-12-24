@@ -2,7 +2,7 @@
 
 // print all the env_list
 
-void	ft_env(t_env_var *env, int fd, char *str)
+void	ft_env(t_env_var *env, char *str)
 {
 	t_env_var	*current;
 
@@ -11,10 +11,10 @@ void	ft_env(t_env_var *env, int fd, char *str)
 	current = env;
 	while (current != NULL)
 	{
-		ft_putstr_fd(current->name, fd);
-		ft_putchar_fd('=', fd);
-		ft_putstr_fd(current->value, fd);
-		ft_putchar_fd('\n', fd);
+		ft_putstr_fd(current->name, STDOUT_FILENO);
+		ft_putchar_fd('=', STDOUT_FILENO);
+		ft_putstr_fd(current->value, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		current = current->next;
 	}
 }

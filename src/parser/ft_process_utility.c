@@ -29,8 +29,8 @@ void	checking_redirection(char ***tokens, t_process_list	*current_node)
 	{
 		(*tokens)++;
 		current_node->file_fd = ft_strdup_lib(**tokens);
-		current_node->fd = open_file(current_node->file_fd,
-			current_node->redirection);
+		// current_node->fd = open_file(current_node->file_fd,
+		// 	current_node->redirection);
 	}
 }
 
@@ -75,5 +75,7 @@ t_process_list	*handle_list_creation(t_process_list *current_node,
 		current_node->argument[*arg_index] = ft_strdup_lib(**tokens);
 		(*arg_index)++;
 	}
+	current_node->in_file = dup(STDIN_FILENO);
+	current_node->out_file = dup(STDOUT_FILENO);
 	return (current_node);
 }

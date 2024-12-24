@@ -3,9 +3,10 @@
 void	ft_exit(t_rline *line, t_env_var **env_list,
 	t_process_list **head_process, char **env_mat)
 {
-	if (line->input)
+	if (line)
 	{
-		free(line->input);
+		if(line->input)
+			free(line->input);
 		free(line);
 	}
 	if (env_list)

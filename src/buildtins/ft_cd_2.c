@@ -27,9 +27,6 @@ void	update_pwd(t_env_var *env, char *new_pwd)
 void	execute_command(t_process_list *process, t_env_var **env_list,
 		char **env_mat)
 {
-	char *c;
-
-	c = "/bin/";
 	if (ft_strncmp (process->command, "cd", 3) == 0)
 		change_directory(process, env_list);
 	else if (ft_strncmp (process->command, "pwd", 4) == 0)
@@ -45,11 +42,15 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 		ft_unset(env_list, process->argument[1]);
 	else if (ft_strncmp(process->command, "exit", 5) == 0)
 		ft_exit(NULL, &*env_list, &process, env_mat);
-	else
-	{
-		c = ft_strjoin_lib(c, process->argument[0]);
-		execve(c , process->argument, env_mat);
-		perror("Error executing command with execve");
-		exit(EXIT_FAILURE);
-	}
 }
+void	execute_not_b(t_process_list *process, 
+		char **env_mat)
+{
+	char *c;
+	c = "/bin/";
+	c = ft_strjoin_lib(c, process->argument[0]);
+	execve(c , process->argument, env_mat);
+	perror("Error executing command with execve");
+	exit(EXIT_FAILURE);
+}
+

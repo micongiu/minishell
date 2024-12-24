@@ -41,3 +41,15 @@ aggiornamenti 7/12 20:16 = poca robba, messo a norma e diviso le funzioni ft_exe
 							#vedere come gestire e redirection , salvarsi il fd di per la pipe
 
 aggiornamenti 13/12 19:46 = work in progres ft_pipe.c, controllare ció che viene passato ad execve !! , domani esame --
+
+
+
+
+
+
+
+ci manca = 	<<
+			errori
+			exit
+			g_status
+			controllare

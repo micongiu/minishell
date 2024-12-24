@@ -21,7 +21,7 @@ void	ft_export_utility(t_env_var *tmp, char *str_name, char *str_value,
 	}
 	new_str_name = remove_quotes(str_name);
 	new_str_value = remove_quotes(str_value);
-	ft_add_env_var(env, ft_create_env_node(new_str_name, new_str_value));
+	ft_add_env_var(env, new_str_name, new_str_value);
 	free(str_name);
 	free(str_value);
 }

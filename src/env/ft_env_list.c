@@ -1,24 +1,35 @@
 #include "../../minishell.h"
 
-t_env_var	*ft_create_env_node(char *name, char *value)
+// This function retrieves a node from the environment list based on a given key.
+t_env_var	*get_node_of(t_env_var **env_list, char *key)
 {
+	t_env_var	*current;
+
+	if (!env_list || !key)
+		return (NULL);
+	current = *env_list;
+	while (current)
+	{
+		if (ft_strncmp(current->name, key, ft_strlen_lib(key)) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+void	ft_add_env_var(t_env_var **env_list, char *name, char *value)
+{
+	t_env_var	*temp;
 	t_env_var	*new_var;
 
 	new_var = (t_env_var *)ft_calloc(1, sizeof(t_env_var));
 	if (!new_var)
-		return (NULL);
+		return ;
 	new_var->name = ft_strdup_lib(name);
 	new_var->value = ft_strdup_lib(value);
 	new_var->next = NULL;
 	free(name);
 	free(value);
-	return (new_var);
-}
-
-void	ft_add_env_var(t_env_var **env_list, t_env_var *new_var)
-{
-	t_env_var	*temp;
-
 	temp = *env_list;
 	if (!env_list)
 		return ;
@@ -74,7 +85,7 @@ void	ft_init_env_list(t_env_var **env_list, char **env)
 		str_name = (char *)ft_calloc(count.k + 1, sizeof(char));
 		ft_strlcpy(str_name, env[count.i], count.k + 1);
 		str_value = ft_save_value(count, env, str_name);
-		ft_add_env_var(env_list, ft_create_env_node(str_name, str_value));
+		ft_add_env_var(env_list, str_name, str_value);
 		count.i++;
 	}
 }

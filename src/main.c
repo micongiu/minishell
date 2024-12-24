@@ -74,43 +74,6 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 	return (count);
 }
 
-void	ft_error(int err_type, char *str, int err)
-{
-	g_status = err;
-	if (err_type == 1)
-		ft_putstr_fd("minishell: error while looking for matching quote\n", 2);
-	else if (err_type == NDIR)
-		ft_putstr_fd("minishell: No such file or directory: ", 2);
-	else if (err_type == NPERM)
-		ft_putstr_fd("minishell: permission denied: ", 2);
-	else if (err_type == NCMD)
-		ft_putstr_fd("minishell: command not found: ", 2);
-	else if (err_type == DUPERR)
-		ft_putstr_fd("minishell: dup2 failed\n", 2);
-	else if (err_type == FORKERR)
-		ft_putstr_fd("minishell: fork failed\n", 2);
-	else if (err_type == PIPERR)
-		ft_putstr_fd("minishell: error creating pipe\n", 2);
-	else if (err_type == PIPENDERR)
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-	else if (err_type == MEM)
-		ft_putstr_fd("minishell: no memory left on device\n", 2);
-	else if (err_type == IS_DIR)
-		ft_putstr_fd("minishell: Is a directory: ", 2);
-	else if (err_type == NOT_DIR)
-		ft_putstr_fd("minishell: Not a directory: ", 2);
-	else if (err_type == NOT_FILE_OR_DIR)
-		ft_putstr_fd("minishell: Not a directory: ", 2);
-	else if (err_type == TOO_MUCH_DIR)
-		ft_putstr_fd("minishell: too many arguments: ", 2);
-	else if (err_type == HOME_DIRERR)
-		ft_putstr_fd("cd: HOME not set\n", 2);
-	else if (err_type == NENV_PWD)
-		ft_putstr_fd("env_PWD not found\n", 2);
-	ft_putendl_fd(str, 2);
-	// exit(EXIT_FAILURE);
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	char			*input;
@@ -141,5 +104,4 @@ int	main(int argc, char **argv, char **env)
 		if(head_process)
 			free_process_list(&head_process);
 	}
-	// free_env_list(&env_list);
 }

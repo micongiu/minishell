@@ -102,8 +102,6 @@ void	free_process_list(t_process_list **cur)
 			free((*cur)->option);
 		if ((*cur)->file_fd)
 			free((*cur)->file_fd);
-		if ((*cur)->fd)
-			close((*cur)->fd);
 		if ((*cur)->full_process)
 			free((*cur)->full_process);
 		if ((*cur)->argument)

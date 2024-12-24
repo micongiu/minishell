@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-void	pwd_directory(t_env_var **env_list)
+void	ft_pwd(t_env_var **env_list)
 {
 	t_env_var	*env;
 

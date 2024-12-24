@@ -1,12 +1,10 @@
 #include "../../minishell.h"
 
-void	ft_exit(t_rline *line, t_env_var **env_list,
+void	ft_exit(char *line, t_env_var **env_list,
 	t_process_list **head_process, char **env_mat)
 {
 	if (line)
 	{
-		if(line->input)
-			free(line->input);
 		free(line);
 	}
 	if (env_list)

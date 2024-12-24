@@ -66,23 +66,25 @@ t_process_list	*ft_init_process_list(char **tokens)
 	t_process_list	*head;
 	t_process_list	*current_node;
 	int				arg;
+	char			**tmp;
 
 	arg = 0;
 	head = NULL;
+	tmp = tokens;
 	current_node = NULL;
-	while (*tokens)
+	while (*tmp)
 	{
-		current_node = handle_list_creation(current_node, &tokens, &arg);
-		if (!*(tokens + 1) || ft_strncmp(*(tokens + 1), "|", 2) == 0)
+		current_node = handle_list_creation(current_node, &tmp, &arg);
+		if (!*(tmp + 1) || ft_strncmp(*(tmp + 1), "|", 2) == 0)
 		{
 			ft_add_process_node(&head, current_node);
 			current_node = NULL;
-			if (*(tokens + 1))
-				tokens++;
+			if (*(tmp + 1))
+				tmp++;
 		}
-		tokens++;
+		tmp++;
 	}
-	// print_process_list(head);
+	free_matrix((void **)tokens);
 	return (head);
 }
 

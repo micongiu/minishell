@@ -99,8 +99,8 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 		tokens[t_count] = (char *)ft_calloc(ft_count(input, count.i, env),
 				sizeof(char));
 		count.j = 0;
-		count = token_separation(tokens[t_count], input, env, count);
-		t_count++;
+		count = token_separation(tokens[t_count++], input, env, count);
 	}
+	free(input);
 	return (tokens);
 }

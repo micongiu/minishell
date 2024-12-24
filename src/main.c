@@ -113,37 +113,33 @@ void	ft_error(int err_type, char *str, int err)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_rline			*line;
+	char			*input;
 	t_env_var		*env_list;
 	t_process_list	*head_process;
 
 	env_list = NULL;
 	head_process = NULL;
-	line = NULL;
+	input = NULL;
+	env_list = NULL;
 	if (argc != 1 && argv[0] == NULL)
 		return (printf("Error argc number\n"), 1);
-	line = ft_calloc(1, sizeof(t_rline));
-	env_list = NULL;
 	ft_init_env_list(&env_list, env);
 	while (1)
 	{
 		head_process = NULL;
 		signal(SIGINT, ft_signal_handle);
 		signal(SIGQUIT, SIG_IGN);
-		free(line->input);
-		line->input = readline("minishell->");
-		if (line->input == NULL)
-			return (ft_exit(line, &env_list, &head_process, NULL), 0);
-		line->mat_input = ft_tokenizer(line->input, env_list);
-		head_process = ft_init_process_list(line->mat_input);
-		if (ft_strlen_lib(line->input) > 0)
-			add_history(line->input);
-		if (ft_strlen_lib(line->input) > 0)
+		input = readline("minishell->");
+		if (input == NULL)
+			return (ft_exit(input, &env_list, &head_process, NULL), 0);
+		if (ft_strlen_lib(input) > 0)
+		{
+			add_history(input);
+			head_process = ft_init_process_list(ft_tokenizer(input, env_list));
 			ft_execute_pipe_line(&env_list, head_process);
-		if(line->mat_input)
-			free_matrix((void **) line->mat_input);
+		}
 		if(head_process)
 			free_process_list(&head_process);
 	}
-	free_env_list(&env_list);
+	// free_env_list(&env_list);
 }

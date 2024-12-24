@@ -36,7 +36,8 @@ static void	execute_builtin_or_external(t_process_list *process,
 void	exec_child_process(t_process_list *process, t_env_var **env,
 							char **env_mat, int prev_fd, int *pipe_fd)
 {
-	handle_input_redirect(prev_fd, pipe_fd, process, env_mat);
+	if (process->redirection)
+		handle_input_redirect(prev_fd, pipe_fd, process, env_mat);
 	execute_builtin_or_external(process, env, env_mat);
 }
 

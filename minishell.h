@@ -17,8 +17,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+extern int g_status;
 // Structures
-
 typedef struct s_env_var
 {
 	char			*name;
@@ -166,7 +166,7 @@ int				is_special_token_after_quotes(char *line, int i);
 // Utilities
 
 // ft_utility.c
-void			error_and_free(char *str, char **env);
+void			error_and_free(char *str, char **env, int status);
 void			free_matrix(void **matrix);
 int				ft_count_node(t_env_var *env);
 char			**ft_list_to_arr(t_env_var *env_h);

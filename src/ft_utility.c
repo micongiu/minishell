@@ -58,12 +58,14 @@ int	is_builtins(char *str)
 		|| (ft_strncmp(str, "env", 4) == 0)
 		|| (ft_strncmp(str, "export", 7) == 0)
 		|| (ft_strncmp(str, "unset", 6) == 0)
-		|| (ft_strncmp(str, "exit", 5) == 0));
+		|| (ft_strncmp(str, "exit", 5) == 0)
+		|| (ft_strncmp(str, "$?", 3) == 0));
 }
 
-void	error_and_free(char *str, char **env_mat)
+void	error_and_free(char *str, char **env_mat, int status)
 {
 	perror(str);
+	g_status = status;
 	if (env_mat)
 		free_matrix((void **)env_mat);
 	exit(EXIT_FAILURE);

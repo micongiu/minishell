@@ -102,7 +102,7 @@ int	ft_count(char *input, int i, t_env_var *env)
 			i += count.j;
 		}
 		else
-			i++;
+			process_special_tokens(input, &i, &count.i);
 	}
 	i++;
 	return (i - tmp + count.i - count.j);
@@ -126,10 +126,11 @@ int	ft_count_token(char *input)
 			j++;
 			i++;
 		}
+		j += handle_special_characters(input, &i);
 		if (!is_space (input[i]))
 		{
 			j++;
-			while (!is_space (input[i]) && input[i] != '\0')
+			while (!is_space(input[i]) && input[i] != '\0' && !(input[i] == '|' || input[i] == '<' || input[i] == '>'))
 				i++;
 		}
 	}

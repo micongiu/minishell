@@ -157,6 +157,11 @@ int				ft_check_quote(char *input);
 int				ft_count(char *input, int i, t_env_var *env);
 int				ft_count_token(char *input);
 
+int				process_special_tokens(char *input, int *i, int *count_i);
+int				handle_special_characters(char *input, int *i);
+t_var_count		handleT_special_tokens(char *token, char *line, t_var_count count);
+int				is_special_token_after_quotes(char *line, int i);
+
 
 // Utilities
 

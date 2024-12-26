@@ -17,6 +17,8 @@ t_var_count	token_double_quote(char *token, char *line,
 		}
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
+		else if (is_special_token_after_quotes(line, count.i) && !is_space(line[count.i]) && in_quotes == 0)
+			break;
 		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
@@ -43,6 +45,8 @@ t_var_count	token_single_quote(char *token, char *line,
 			in_quotes = 0;
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
+		else if (is_special_token_after_quotes(line, count.i) && !is_space(line[count.i]) && in_quotes == 0)
+			break;
 		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
@@ -70,9 +74,17 @@ t_var_count	token_separation(char *token, char *line,
 		}
 		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
+		else if (line[count.i] == '|' || line[count.i] == '<' || line[count.i] == '>')
+		{
+			if (count.j > 0)
+				break;
+			count = handleT_special_tokens(token, line, count);
+			break;
+		}
 		else
 			token[count.j++] = line[count.i++];
 	}
+	token[count.j] = '\0';
 	return (count);
 }
 
@@ -104,3 +116,29 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	free(input);
 	return (tokens);
 }
+
+int handle_special_characters(char *input, int *i)
+{
+	int	count;
+
+	count= 0;
+	if (input[*i] == '<' && input[*i + 1] == '<')
+	{
+		count++;
+		*i += 2;
+	}
+	else if (input[*i] == '>' && input[*i + 1] == '>')
+	{
+		count++;
+		*i += 2;
+	}
+
+	else if (input[*i] == '|' || input[*i] == '<' || input[*i] == '>')
+	{
+		count++;
+		(*i)++;
+	}
+
+	return count;
+}
+

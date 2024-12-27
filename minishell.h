@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 15:59:22 by micongiu          #+#    #+#             */
+/*   Updated: 2024/12/27 16:16:44 by micongiu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -17,7 +29,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int g_status;
+extern int	g_status;
+
 // Structures
 typedef struct s_env_var
 {
@@ -160,8 +173,10 @@ int				ft_count_token(char *input);
 
 int				process_special_tokens(char *input, int *i, int *count_i);
 int				handle_special_characters(char *input, int *i);
-t_var_count		handleT_special_tokens(char *token, char *line, t_var_count count);
+t_var_count		handleT_special_tokens(char *token, char *line,
+					t_var_count count);
 int				is_special_token_after_quotes(char *line, int i);
+
 // Utilities
 
 // ft_utility.c
@@ -170,5 +185,8 @@ void			free_matrix(void **matrix);
 int				ft_count_node(t_env_var *env);
 char			**ft_list_to_arr(t_env_var *env_h);
 int				is_builtins(char *str);
+
+// ft_utility_2.c
+void			close_and_update_fd(int *prev_fd, int *pipe_fd);
 
 #endif

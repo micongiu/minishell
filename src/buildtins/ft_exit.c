@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 void	ft_exit(char *line, t_env_var **env_list,
-	t_process_list **head_process, char **env_mat)
+			t_process_list **head_process, char **env_mat)
 {
 	if (line)
 		free(line);

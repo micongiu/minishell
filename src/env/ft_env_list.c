@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:05:20 by micongiu          #+#    #+#             */
+/*   Updated: 2024/12/27 16:05:47 by micongiu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-// This function retrieves a node from the environment list based on a given key.
+// This function retrieves a node from the env list based on a given key.
 t_env_var	*get_node_of(t_env_var **env_list, char *key)
 {
 	t_env_var	*current;

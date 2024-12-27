@@ -1,7 +1,5 @@
 #include "../minishell.h"
 
-// extern int	g_status;
-
 char	get_first_quote(char *str)
 {
 	int	i;

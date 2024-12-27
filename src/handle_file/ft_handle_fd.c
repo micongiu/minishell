@@ -2,26 +2,6 @@
 
 extern int	g_status;
 
-// int	open_file(char *file, int redirection)
-// {
-// 	int	fd;
-
-// 	fd = 0;
-// 	// if (access(file, F_OK) == -1)
-// 	// 	error("minishell: No such file or directory");
-// 	// if (redirection == 1 && access(file, R_OK) == -1)
-// 	// 	error("minishell: permission denied");
-// 	// if ((redirection == 2 || redirection == 4) && access(file, W_OK) == -1)
-// 	// 	error("minishell: permission denied");
-// 	if (redirection == S_IN_RED)
-// 		fd = open(file, O_RDONLY);
-// 	else if (redirection == S_OUT_RED)
-// 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-// 	else if (redirection == D_OUT_RED)
-// 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0666);
-// 	return (fd);
-// }
-
 void	handle_input_redirection(t_process_list *process)
 {
 	int	fd;
@@ -66,4 +46,9 @@ void	handle_redirection(t_process_list *process)
 		handle_output_redirection(process);
 	else if (process->redirection == 3 && process->file_fd)
 		handle_append_redirection(process);
+	else if (process->redirection == 4 && process->file_fd)
+	{
+		handle_input_redirection(process);
+		unlink(process->file_fd);
+	}
 }

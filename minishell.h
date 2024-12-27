@@ -21,36 +21,36 @@ extern int g_status;
 // Structures
 typedef struct s_env_var
 {
-	char			*name;
-	char			*value;
+	char				*name;
+	char				*value;
 	struct s_env_var	*next;
-} t_env_var;
+}	t_env_var;
 
 typedef struct s_process_list
 {
-	char				*command;
-	char				*option;
-	char				*file_fd;
-	int					redirection;
-	char				*full_process;
-	char				**argument;
-	int					in_file;
-	int					out_file;
+	char					*command;
+	char					*option;
+	char					*file_fd;
+	int						redirection;
+	char					*full_process;
+	char					**argument;
+	int						in_file;
+	int						out_file;
 	struct s_process_list	*next;
-} t_process_list;
+}	t_process_list;
 
 typedef struct s_rline
 {
 	char	*input;
 	char	**mat_input;
-} t_rline;
+}	t_rline;
 
 typedef struct s_var_count
 {
 	int			i;
 	int			j;
 	int			k;
-} t_var_count;
+}	t_var_count;
 
 // Enums
 
@@ -65,8 +65,8 @@ enum e_redirection
 // main.c
 char			*remove_quotes(char *str);
 int				main(int argc, char **argv, char **env);
-t_var_count	ft_ex_dollar(char *line, char *token, t_env_var *env,
-				t_var_count count);
+t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,
+					t_var_count count);
 
 // Builtins
 
@@ -89,11 +89,10 @@ void			ft_export(t_process_list **info_process, t_env_var **env);
 
 // ft_exit.c
 void			ft_exit(char *line, t_env_var **env_list,
-				t_process_list **head_process, char **env_mat);
+					t_process_list **head_process, char **env_mat);
 
 // ft_pwd.c
 void			ft_pwd(t_env_var **env_list);
-
 
 // Environment
 
@@ -103,23 +102,25 @@ void			ft_add_env_var(t_env_var **env_list, char *name, char *value);
 void			ft_init_env_list(t_env_var **env_list, char **env);
 void			free_env_list(t_env_var **cur);
 
-
 // Execute
 
 // ft_pipe.c
 void			ft_execute_pipe_line(t_env_var **env, t_process_list *process);
 void			execute_not_b(t_process_list *process, char **env_mat);
 void			execute_command(t_process_list *process, t_env_var **env_list,
-				char **env_mat);
+					char **env_mat);
 
 // Handle File
+
+// ft_heredoc.c
+
+char			*ft_heredoc(char *keyword);
 
 // ft_handle_fd.c
 void			handle_input_redirection(t_process_list *process);
 void			handle_output_redirection(t_process_list *process);
 void			handle_append_redirection(t_process_list *process);
 void			handle_redirection(t_process_list *process);
-
 
 // Parser
 
@@ -131,18 +132,18 @@ t_process_list	*ft_init_process_list(char **mat);
 // ft_process_utility.c
 int				is_operator(char *token);
 void			checking_redirection(char ***tokens,
-				t_process_list *current_node);
+					t_process_list *current_node);
 int				is_flag(char *token);
 void			handle_argument(t_process_list *current_process,
-				char *token, int *arg_index);
+					char *token, int *arg_index);
 t_process_list	*handle_list_creation(t_process_list *current_node,
-				char ***tokens, int *arg_index);
+					char ***tokens, int *arg_index);
 
 // Signal Handling
 
 // ft_signal_handle.c
 void			ft_signal_handle(int signal);
-
+void			ft_signal_heredoc(int signal);
 
 // Tokenizer
 
@@ -161,8 +162,6 @@ int				process_special_tokens(char *input, int *i, int *count_i);
 int				handle_special_characters(char *input, int *i);
 t_var_count		handleT_special_tokens(char *token, char *line, t_var_count count);
 int				is_special_token_after_quotes(char *line, int i);
-
-
 // Utilities
 
 // ft_utility.c

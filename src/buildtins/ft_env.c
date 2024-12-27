@@ -7,7 +7,7 @@ void	ft_env(t_env_var *env, char *str)
 	t_env_var	*current;
 
 	if (str)
-			error_and_free("minishell: Not a directory: ", NULL, 1);
+		error_and_free("minishell: Not a directory: ", NULL, 1);
 	current = env;
 	while (current != NULL)
 	{

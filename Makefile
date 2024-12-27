@@ -24,7 +24,7 @@ TOKENIZER = ./src/tokenizer/ft_tokenizer_counter.c ./src/tokenizer/ft_tokenizer_
 	./src/tokenizer/ft_tokenizer.c
 GNL = ./gnl/get_next_line_utils.c ./gnl/get_next_line.c
 EXECUTE = ./src/execute/ft_pipe.c
-MAIN = ./src/main.c ./src/ft_utility.c
+MAIN = ./src/main.c ./src/ft_utility.c ./src/ft_utility_2.c
 
 SRC = $(BUILDTINS) $(ENV) $(HANDLE_FILE) $(PARSER) $(SIGNAL) $(TOKENIZER) $(GNL) $(MAIN) $(EXECUTE)
 

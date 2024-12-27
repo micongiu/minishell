@@ -1,8 +1,8 @@
 #include "../../minishell.h"
 
-void check_for_status(t_env_var *curr)
+void	check_for_status(t_env_var *curr)
 {
-	if(curr->next == NULL)
+	if (curr->next == NULL)
 		g_status = 0;
 }
 

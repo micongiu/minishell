@@ -9,7 +9,8 @@ void	update_pwd(t_env_var *env, char *new_pwd)
 		error_and_free("Error updating PWD\n", NULL, 1);
 }
 
-// This function returns the HOME directory from the list of environment variables.
+// This function returns the HOME directory from
+// the list of environment variables.
 char	*get_home_directory(t_env_var **env_list)
 {
 	t_env_var	*env;
@@ -20,7 +21,8 @@ char	*get_home_directory(t_env_var **env_list)
 	return (ft_strdup(env->value));
 }
 
-// This function changes the current directory to the parent directory.
+// This function changes the current
+// directory to the parent directory.
 void	cd_parent_directory(t_env_var *env)
 {
 	char	*parent;
@@ -35,12 +37,14 @@ void	cd_parent_directory(t_env_var *env)
 		len = 1;
 	parent = ft_substr_lib(env->value, 0, len);
 	if (!parent || chdir(parent) != 0)
-		return (free(parent), error_and_free("Error changing to parent directory\n", NULL, 1));
+		return (free(parent),
+			error_and_free("Error changing to parent directory\n", NULL, 1));
 	update_pwd(env, parent);
 	free(parent);
 }
 
-// This function changes the current directory to a specific directory provided in the arguments.
+// This function changes the current directory
+// to a specific directory provided in the arguments.
 void	cd_specific_directory(t_process_list *process, t_env_var *env)
 {
 	char	*new_pwd;
@@ -48,10 +52,11 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 
 	path = process->argument[1];
 	if (chdir(path) != 0)
-		return (error_and_free("minishell: No such file or directory", NULL, 1));
+		return (error_and_free
+			("minishell: No such file or directory", NULL, 1));
 	if (path[0] == '/')
 		new_pwd = ft_strdup(path);
-	else if(env->value[ft_strlen_lib (env->value) - 1] != '/')
+	else if (env->value[ft_strlen_lib (env->value) - 1] != '/')
 		new_pwd = ft_strjoin_lib(ft_strjoin_lib (env->value, "/"), path);
 	else
 		new_pwd = ft_strjoin_lib (env->value, path);
@@ -59,7 +64,8 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 	free(new_pwd);
 }
 
-// This function handles the "cd" command, managing arguments and special cases like HOME or "..".
+// This function handles the "cd" command,
+// managing arguments and special cases like HOME or "..".
 void	ft_cd(t_process_list *process, t_env_var **env_list)
 {
 	t_env_var	*pwd_env;

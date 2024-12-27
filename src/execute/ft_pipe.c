@@ -81,7 +81,7 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 	while (process)
 	{
 		if (g_status == 130)
-			break; ;
+			break ;
 		if (process->next && pipe(pipe_fd) == -1)
 			error_and_free("Error creating pipe", env_mat, 1);
 		pid = fork();
@@ -108,7 +108,7 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 {
 	char	**env_mat;
 	int		pipe_fd[2];
-  
+
 	pipe_fd[0] = -1;
 	pipe_fd[1] = -1;
 	env_mat = ft_list_to_arr(*env);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tokenizer.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:14:16 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/27 16:34:52 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 t_var_count	token_double_quote(char *token, char *line,
@@ -17,15 +29,13 @@ t_var_count	token_double_quote(char *token, char *line,
 		}
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
-		else if (is_special_token_after_quotes(line, count.i) && !is_space(line[count.i]) && in_quotes == 0)
-			break;
+		else if (is_special_token_after_quotes(line, count.i)
+			&& !is_space(line[count.i]) && in_quotes == 0)
+			break ;
 		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
-		{
-			token[count.j++] = line[count.i];
-			count.i++;
-		}
+			token[count.j++] = line[count.i++];
 	}
 	token[count.j] = '"';
 	return (count);
@@ -45,8 +55,9 @@ t_var_count	token_single_quote(char *token, char *line,
 			in_quotes = 0;
 		else if (in_quotes == 0 && line[count.i] == ' ')
 			break ;
-		else if (is_special_token_after_quotes(line, count.i) && !is_space(line[count.i]) && in_quotes == 0)
-			break;
+		else if (is_special_token_after_quotes(line, count.i)
+			&& !is_space(line[count.i]) && in_quotes == 0)
+			break ;
 		else if (line[count.i] == '$' && line[count.i + 1])
 			count = ft_ex_dollar(line, token, env, count);
 		else
@@ -58,34 +69,33 @@ t_var_count	token_single_quote(char *token, char *line,
 }
 
 t_var_count	token_separation(char *token, char *line,
-								t_env_var *env, t_var_count count)
+								t_env_var *env, t_var_count co)
 {
-	while (line[count.i] != '\0' && !is_space (line[count.i]))
+	while (line[co.i] != '\0' && !is_space (line[co.i]))
 	{
-		if (line[count.i] == '"')
+		if (line[co.i] == '"')
 		{
-			count = token_double_quote(token, line, env, count);
+			co = token_double_quote(token, line, env, co);
 			break ;
 		}
-		else if (line[count.i] == '\'')
+		else if (line[co.i] == '\'')
 		{
-			count = token_single_quote(token, line, env, count);
+			co = token_single_quote(token, line, env, co);
 			break ;
 		}
-		else if (line[count.i] == '$' && line[count.i + 1])
-			count = ft_ex_dollar(line, token, env, count);
-		else if (line[count.i] == '|' || line[count.i] == '<' || line[count.i] == '>')
+		else if (line[co.i] == '$' && line[co.i + 1])
+			co = ft_ex_dollar(line, token, env, co);
+		else if (line[co.i] == '|' || line[co.i] == '<' || line[co.i] == '>')
 		{
-			if (count.j > 0)
-				break;
-			count = handleT_special_tokens(token, line, count);
-			break;
+			if (co.j > 0)
+				break ;
+			co = handleT_special_tokens(token, line, co);
+			break ;
 		}
 		else
-			token[count.j++] = line[count.i++];
+			token[co.j++] = line[co.i++];
 	}
-	token[count.j] = '\0';
-	return (count);
+	return (token[co.j] = '\0', co);
 }
 
 char	**ft_tokenizer(char *input, t_env_var *env)
@@ -117,11 +127,11 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	return (tokens);
 }
 
-int handle_special_characters(char *input, int *i)
+int	handle_special_characters(char *input, int *i)
 {
 	int	count;
 
-	count= 0;
+	count = 0;
 	if (input[*i] == '<' && input[*i + 1] == '<')
 	{
 		count++;
@@ -132,13 +142,10 @@ int handle_special_characters(char *input, int *i)
 		count++;
 		*i += 2;
 	}
-
 	else if (input[*i] == '|' || input[*i] == '<' || input[*i] == '>')
 	{
 		count++;
 		(*i)++;
 	}
-
-	return count;
+	return (count);
 }
-

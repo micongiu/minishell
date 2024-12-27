@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:05:51 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/27 16:05:54 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-void check_for_status(t_env_var *curr)
+void	check_for_status(t_env_var *curr)
 {
-	if(curr->next == NULL)
+	if (curr->next == NULL)
 		g_status = 0;
 }
 

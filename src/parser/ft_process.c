@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_process.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:10:56 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/27 16:10:59 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	ft_add_process_node(t_process_list **process_list,
@@ -34,32 +46,6 @@ t_process_list	*ft_create_process_node(char **tokens)
 	node->next = NULL;
 	return (node);
 }
-
-// void	print_process_list(t_process_list *head)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (head != NULL)
-// 	{
-// 		printf("Command: %s\n", head->command);
-// 		if (head->option)
-// 			printf("Option: %s\n", head->option);
-// 		while (head->argument != NULL && head->argument[i] != NULL)
-// 		{
-// 			printf("Argument: %s\n", head->argument[i]);
-// 			i++;
-// 		}
-// 		if (head->file_fd)
-// 		{
-// 			printf("File FD: %s\n", head->file_fd);
-// 			printf("Fd file: %d\n", head->fd);
-// 			printf("Redirection: %d\n", head->redirection);
-// 		}
-// 		printf("----\n");
-// 		head = head->next;
-// 	}
-// }
 
 t_process_list	*ft_init_process_list(char **tokens)
 {

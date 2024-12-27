@@ -14,3 +14,9 @@ void	ft_signal_handle(int signal)
 		rl_redisplay();
 	}
 }
+
+void	ft_signal_heredoc(int signal)
+{
+	if (signal == SIGINT)
+		g_status = 130;
+}

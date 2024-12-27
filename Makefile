@@ -16,9 +16,8 @@ MAKEFLAGS += -s
 BUILDTINS = ./src/buildtins/ft_cd.c ./src/buildtins/ft_echo.c \
 	./src/buildtins/ft_env.c ./src/buildtins/ft_exit.c ./src/buildtins/ft_export.c \
 	./src/buildtins/ft_pwd.c ./src/buildtins/ft_unset.c
-
 ENV = ./src/env/ft_env_list.c
-HANDLE_FILE = ./src/handle_file/ft_handle_fd.c
+HANDLE_FILE = ./src/handle_file/ft_handle_fd.c ./src/handle_file/ft_heredoc.c
 PARSER = ./src/parser/ft_process_utility.c ./src/parser/ft_process.c
 SIGNAL = ./src/signal/ft_signal_handle.c
 TOKENIZER = ./src/tokenizer/ft_tokenizer_counter.c ./src/tokenizer/ft_tokenizer_utility.c \

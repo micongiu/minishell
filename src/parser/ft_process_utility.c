@@ -19,7 +19,12 @@ void	checking_redirection(char ***tokens, t_process_list	*current_node)
 		current_node->redirection = S_OUT_RED;
 	else if (ft_strncmp(**tokens, ">>", 3) == 0)
 		current_node->redirection = D_OUT_RED;
-	if (current_node->redirection)
+	if (current_node->redirection == HERDOC)
+	{
+		(*tokens)++;
+		current_node->file_fd = ft_strdup(ft_heredoc(**tokens));
+	}
+	else if (current_node->redirection)
 	{
 		(*tokens)++;
 		current_node->file_fd = ft_strdup_lib(**tokens);

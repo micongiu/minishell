@@ -1,5 +1,11 @@
 #include "../../minishell.h"
 
+void check_for_status(t_env_var *curr)
+{
+	if(curr->next == NULL)
+		g_status = 0;
+}
+
 void	ft_unset(t_env_var **env, char *str)
 {
 	t_env_var	*prev;
@@ -25,5 +31,6 @@ void	ft_unset(t_env_var **env, char *str)
 		}
 		prev = curr;
 		curr = curr->next;
+		check_for_status(curr);
 	}
 }

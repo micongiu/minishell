@@ -11,13 +11,14 @@ void	exec_child_process(t_process_list *process, t_env_var **env,
 	if (prev_fd != -1)
 	{
 		if (dup2(prev_fd, STDIN_FILENO) < 0)
-			error_and_free("Error duplicating STDIN", env_mat);
+			error_and_free("Error duplicating STDIN",
+				env_mat, __DBL_MAX_10_EXP__);
 		close(prev_fd);
 	}
 	if (process->next)
 	{
 		if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
-			error_and_free("Error duplicating STDOUT", env_mat);
+			error_and_free("Error duplicating STDOUT", env_mat, 1);
 	}
 	if (pipe_fd[0] != -1)
 		close(pipe_fd[0]);
@@ -52,11 +53,20 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 	else if (ft_strncmp(process->command, "exit", 5) == 0)
 		ft_exit(NULL, &*env_list, &process, env_mat);
 }
+
 void	execute_not_b(t_process_list *process,
 		char **env_mat)
 {
-	execve(ft_strjoin_lib("/bin/", process->argument[0]), 
-		process->argument, env_mat);
+	char	*tmp;
+
+	if (ft_strncmp("/bin/", process->argument[0], 5) == 0)
+	{
+		tmp = process->argument[0];
+	}
+	else
+		tmp = ft_strjoin_lib("/bin/", process->argument[0]);
+	execve(tmp, process->argument, env_mat);
+	free(tmp);
 	perror("Error executing command with execve");
 	exit(EXIT_FAILURE);
 }
@@ -73,10 +83,10 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 		if (g_status == 130)
 			break; ;
 		if (process->next && pipe(pipe_fd) == -1)
-			error_and_free("Error creating pipe", env_mat);
+			error_and_free("Error creating pipe", env_mat, 1);
 		pid = fork();
 		if (pid == -1)
-			error_and_free("Error during fork", env_mat);
+			error_and_free("Error during fork", env_mat, 1);
 		if (pid == 0)
 			exec_child_process(process, env, prev_fd, pipe_fd);
 		else
@@ -98,23 +108,23 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 {
 	char	**env_mat;
 	int		pipe_fd[2];
-	
-	if (!process->argument)
-		process = process->next;
+  
 	pipe_fd[0] = -1;
 	pipe_fd[1] = -1;
 	env_mat = ft_list_to_arr(*env);
 	if (process->next == NULL && is_builtins(process->command) != 0)
-		{
-			handle_redirection(process);
-			execute_command(process, env, env_mat);
-			if (dup2(process->in_file, STDIN_FILENO) < 0)
-				error_and_free("Error duplicating output file descriptor", env_mat);
-			if (dup2(process->out_file, STDOUT_FILENO) < 0)
-				error_and_free("Error duplicating output file descriptor", env_mat);
-			process->in_file = 0;
-			process->out_file = 1;
-		}
+	{
+		handle_redirection(process);
+		execute_command(process, env, env_mat);
+		if (dup2(process->in_file, STDIN_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor",
+				env_mat, 1);
+		if (dup2(process->out_file, STDOUT_FILENO) < 0)
+			error_and_free("Error duplicating output file descriptor",
+				env_mat, 1);
+		process->in_file = 0;
+		process->out_file = 1;
+	}
 	else
 		exec_pipe_loop(env, process, env_mat, pipe_fd);
 	free_matrix((void **)env_mat);

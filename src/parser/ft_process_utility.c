@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_utility.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 16:06:43 by micongiu          #+#    #+#             */
-/*   Updated: 2024/12/27 16:06:45 by micongiu         ###   ########.fr       */
+/*   Created: 2024/12/27 16:11:39 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/27 16:11:43 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// Helper function to check if a token is an operator
 int	is_operator(char *token)
 {
 	return (ft_strncmp(token, ">", 2) == 0

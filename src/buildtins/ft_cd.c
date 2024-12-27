@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:06:29 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/27 16:06:31 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-// This function updates the PWD variable with the new directory path.
 void	update_pwd(t_env_var *env, char *new_pwd)
 {
 	free(env->value);
@@ -8,6 +19,7 @@ void	update_pwd(t_env_var *env, char *new_pwd)
 	if (!env->value)
 		error_and_free("Error updating PWD\n", NULL, 1);
 }
+
 
 // This function returns the HOME directory from
 // the list of environment variables.
@@ -37,8 +49,8 @@ void	cd_parent_directory(t_env_var *env)
 		len = 1;
 	parent = ft_substr_lib(env->value, 0, len);
 	if (!parent || chdir(parent) != 0)
-		return (free(parent),
-			error_and_free("Error changing to parent directory\n", NULL, 1));
+		return (free(parent), error_and_free
+			("Error changing to parent directory\n", NULL, 1));
 	update_pwd(env, parent);
 	free(parent);
 }

@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal_handle.c                                 :+:      :+:    :+:   */
+/*   ft_utility_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: micongiu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 16:06:05 by micongiu          #+#    #+#             */
-/*   Updated: 2024/12/27 16:06:06 by micongiu         ###   ########.fr       */
+/*   Created: 2024/12/27 16:33:23 by micongiu          #+#    #+#             */
+/*   Updated: 2024/12/27 16:33:25 by micongiu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-int	g_status;
-
-void	ft_signal_handle(int signal)
+void	close_and_update_fd(int *prev_fd, int *pipe_fd)
 {
-	if (signal == SIGINT)
-	{
-		g_status = 130;
-		rl_replace_line("", 1);
-		ft_putendl_fd("", 1);
-		if (rl_on_new_line() == -1)
-			exit (EXIT_FAILURE);
-		rl_redisplay();
-	}
-}
-
-void	ft_signal_heredoc(int signal)
-{
-	if (signal == SIGINT)
-		g_status = 130;
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
+	*prev_fd = pipe_fd[0];
 }

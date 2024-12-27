@@ -1,8 +1,13 @@
 #include "../../minishell.h"
 
+extern int	g_status;
+
 void	exec_child_process(t_process_list *process, t_env_var **env,
-							char **env_mat, int prev_fd, int *pipe_fd)
+							int prev_fd, int *pipe_fd)
 {
+	char	**env_mat;
+
+	env_mat = ft_list_to_arr(*env);
 	if (prev_fd != -1)
 	{
 		if (dup2(prev_fd, STDIN_FILENO) < 0)
@@ -47,7 +52,7 @@ void	execute_command(t_process_list *process, t_env_var **env_list,
 	else if (ft_strncmp(process->command, "exit", 5) == 0)
 		ft_exit(NULL, &*env_list, &process, env_mat);
 }
-void	execute_not_b(t_process_list *process, 
+void	execute_not_b(t_process_list *process,
 		char **env_mat)
 {
 	execve(ft_strjoin_lib("/bin/", process->argument[0]), 
@@ -65,13 +70,15 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 	prev_fd = -1;
 	while (process)
 	{
+		if (g_status == 130)
+			break; ;
 		if (process->next && pipe(pipe_fd) == -1)
 			error_and_free("Error creating pipe", env_mat);
 		pid = fork();
 		if (pid == -1)
 			error_and_free("Error during fork", env_mat);
 		if (pid == 0)
-			exec_child_process(process, env, env_mat, prev_fd, pipe_fd);
+			exec_child_process(process, env, prev_fd, pipe_fd);
 		else
 		{
 			if (prev_fd != -1)
@@ -82,6 +89,7 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 		}
 		process = process->next;
 	}
+	g_status = 0;
 	while (wait(NULL) > 0)
 		;
 }
@@ -91,6 +99,8 @@ void	ft_execute_pipe_line(t_env_var **env, t_process_list *process)
 	char	**env_mat;
 	int		pipe_fd[2];
 	
+	if (!process->argument)
+		process = process->next;
 	pipe_fd[0] = -1;
 	pipe_fd[1] = -1;
 	env_mat = ft_list_to_arr(*env);

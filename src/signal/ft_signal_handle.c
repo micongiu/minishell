@@ -6,13 +6,11 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:12:22 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:12:25 by anmedyns         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:12:52 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	g_status;
 
 void	ft_signal_handle(int signal)
 {

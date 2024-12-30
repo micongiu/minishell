@@ -1,6 +1,16 @@
-#include "../../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_handle_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 16:37:44 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/30 17:12:03 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern int	g_status;
+#include "../../minishell.h"
 
 void	handle_input_redirection(t_process_list *process)
 {

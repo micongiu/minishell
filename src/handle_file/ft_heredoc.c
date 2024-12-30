@@ -1,6 +1,16 @@
-#include "../../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 16:36:48 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/30 17:12:26 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern int	g_status;
+#include "../../minishell.h"
 
 static size_t	keyword_len(char *keyword)
 {

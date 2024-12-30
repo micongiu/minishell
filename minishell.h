@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:59:22 by micongiu          #+#    #+#             */
-/*   Updated: 2024/12/27 16:16:44 by micongiu         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:08:38 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int	g_status;
+extern int		g_status;
 
 // Structures
 typedef struct s_env_var
@@ -173,7 +173,7 @@ int				ft_count_token(char *input);
 
 int				process_special_tokens(char *input, int *i, int *count_i);
 int				handle_special_characters(char *input, int *i);
-t_var_count		handleT_special_tokens(char *token, char *line,
+t_var_count		handlett_special_tokens(char *token, char *line,
 					t_var_count count);
 int				is_special_token_after_quotes(char *line, int i);
 

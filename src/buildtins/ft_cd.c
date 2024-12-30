@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:06:29 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:06:31 by anmedyns         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:50:01 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	update_pwd(t_env_var *env, char *new_pwd)
 	if (!env->value)
 		error_and_free("Error updating PWD\n", NULL, 1);
 }
-
 
 // This function returns the HOME directory from
 // the list of environment variables.

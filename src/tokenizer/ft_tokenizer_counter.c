@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tokenizer_counter.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 16:40:02 by anmedyns          #+#    #+#             */
+/*   Updated: 2024/12/30 16:40:06 by anmedyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 t_var_count	ft_count_dollar(char *input, t_env_var *env)
@@ -108,29 +120,29 @@ int	ft_count(char *input, int i, t_env_var *env)
 	return (i - tmp + count.i - count.j);
 }
 
-int	ft_count_token(char *input)
+int	ft_count_token(char *in)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (input[i] != '\0')
+	while (in[i] != '\0')
 	{
-		while (is_space (input[i]))
+		while (is_space (in[i]))
 			i++;
-		if (input[i] == '"' || input[i] == '\'')
+		if (in[i] == '"' || in[i] == '\'')
 		{
-			while (input[i] != '"' && input[i] != '\'')
+			while (in[i] != '"' && in[i] != '\'')
 				i++;
 			j++;
 			i++;
 		}
-		j += handle_special_characters(input, &i);
-		if (!is_space (input[i]))
+		j += handle_special_characters(in, &i);
+		if (!is_space (in[i]))
 		{
 			j++;
-			while (!is_space(input[i]) && input[i] != '\0' && !(input[i] == '|' || input[i] == '<' || input[i] == '>'))
+			while (!is_space(in[i]) && in[i] != '\0' && !(in[i] == '|' || in[i] == '<' || in[i] == '>'))
 				i++;
 		}
 	}

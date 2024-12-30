@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <micongiu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:48 by micongiu          #+#    #+#             */
-/*   Updated: 2024/12/27 16:33:02 by micongiu         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:57:04 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 	t_env_var *env, t_var_count count)
 {
 	int	j;
-	int	k;
 	int	tmp;
 
-	k = (ft_strchr(line, '$') - line);
 	while (line && *line != '$')
 		line++;
 	line++;
@@ -72,13 +70,13 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 		{
 			while (env->value[j])
 				token[tmp++] = env->value[j++];
-			count.i += k + ft_strlen_lib(env->name) + 1;
+			count.i += ft_strlen_lib(line) + 1;
 			count.j += tmp;
 			break ;
 		}
 		env = env->next;
 	}
-	if (count.i == 0)
+	if (env == NULL)
 		count.i++;
 	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:14:16 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:34:52 by anmedyns         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:44:02 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_var_count	token_separation(char *token, char *line,
 		{
 			if (co.j > 0)
 				break ;
-			co = handleT_special_tokens(token, line, co);
+			co = handlett_special_tokens(token, line, co);
 			break ;
 		}
 		else

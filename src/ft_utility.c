@@ -12,6 +12,8 @@
 
 #include "../minishell.h"
 
+extern int	g_status;
+
 void	free_matrix(void **matrix)
 {
 	size_t	i;

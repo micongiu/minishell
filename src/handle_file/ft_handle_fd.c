@@ -12,6 +12,15 @@
 
 #include "../../minishell.h"
 
+void	close_and_update_fd(int *prev_fd, int *pipe_fd)
+{
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
+	*prev_fd = pipe_fd[0];
+}
+
 void	handle_input_redirection(t_process_list *process)
 {
 	int	fd;

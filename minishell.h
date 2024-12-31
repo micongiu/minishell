@@ -63,6 +63,7 @@ typedef struct s_var_count
 	int			i;
 	int			j;
 	int			k;
+	int			quote_type;
 }	t_var_count;
 
 // Enums
@@ -76,10 +77,7 @@ enum e_redirection
 };
 
 // main.c
-char			*remove_quotes(char *str);
 int				main(int argc, char **argv, char **env);
-t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,
-					t_var_count count);
 
 // Builtins
 
@@ -130,6 +128,7 @@ void			execute_command(t_process_list *process, t_env_var **env_list,
 char			*ft_heredoc(char *keyword);
 
 // ft_handle_fd.c
+void			close_and_update_fd(int *prev_fd, int *pipe_fd);
 void			handle_input_redirection(t_process_list *process);
 void			handle_output_redirection(t_process_list *process);
 void			handle_append_redirection(t_process_list *process);
@@ -187,6 +186,9 @@ char			**ft_list_to_arr(t_env_var *env_h);
 int				is_builtins(char *str);
 
 // ft_utility_2.c
-void			close_and_update_fd(int *prev_fd, int *pipe_fd);
+int				ft_is_pipe_or_red(char c);
+char			*remove_quotes(char *str);
+t_var_count		ft_ex_dollar(char *line, char *token, t_env_var *env,
+					t_var_count count);
 
 #endif

@@ -12,6 +12,8 @@
 
 #include "../../minishell.h"
 
+extern int	g_status;
+
 void	ft_signal_handle(int signal)
 {
 	if (signal == SIGINT)

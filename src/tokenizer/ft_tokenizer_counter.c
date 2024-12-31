@@ -32,7 +32,10 @@ t_var_count	ft_count_dollar(char *input, t_env_var *env)
 		env = env->next;
 	}
 	if (count.j == 0)
+	{
+		count.i += 2;
 		count.j++;
+	}
 	return (count);
 }
 
@@ -142,7 +145,7 @@ int	ft_count_token(char *in)
 		if (!is_space (in[i]))
 		{
 			j++;
-			while (!is_space(in[i]) && in[i] != '\0' && !(in[i] == '|' || in[i] == '<' || in[i] == '>'))
+			while (!is_space(in[i]) && ft_is_pipe_or_red(in[i]))
 				i++;
 		}
 	}

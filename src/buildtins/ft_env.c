@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:06:16 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:06:18 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/02 20:32:39 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_env(t_env_var *env, char *str)
 	t_env_var	*current;
 
 	if (str)
-		error_and_free("minishell: Not a directory: ", NULL, 1);
+	{
+		error_and_free("minishell: Not a directory: ", NULL, 127);
+		return ;
+	}
 	current = env;
 	while (current != NULL)
 	{
@@ -27,4 +30,5 @@ void	ft_env(t_env_var *env, char *str)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		current = current->next;
 	}
+	g_status = 0;
 }

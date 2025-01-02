@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:05:42 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:05:44 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/02 20:46:50 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	ft_pwd(t_env_var **env_list)
 	env = *env_list;
 	env = get_node_of(env_list, "PWD");
 	ft_putendl_fd(env->value, STDOUT_FILENO);
+	g_status = 0;
 }

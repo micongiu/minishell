@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:04:58 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:05:01 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/02 19:55:30 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,5 @@ void	ft_echo(t_process_list *info_process)
 	}
 	if (newline == 1)
 		write(STDOUT_FILENO, "\n", 1);
+	g_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:49:23 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/30 17:10:57 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/02 21:19:21 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	execute_not_b(t_process_list *process,
 	execve(tmp, process->argument, env_mat);
 	free(tmp);
 	perror("Error executing command with execve");
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
 void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
@@ -101,7 +101,6 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 			close_and_update_fd(&prev_fd, pipe_fd);
 		process = process->next;
 	}
-	g_status = 0;
 	while (wait(NULL) > 0)
 		;
 }

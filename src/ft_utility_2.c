@@ -91,7 +91,7 @@ t_var_count	ft_ex_dollar(char *line, char *token,
 		{
 			while (env->value[j])
 				token[tmp++] = env->value[j++];
-			count.i += ft_strlen_lib(line) + 1;
+			count.i += ft_strlen(line, ' ') + 1;
 			count.j += tmp;
 			break ;
 		}

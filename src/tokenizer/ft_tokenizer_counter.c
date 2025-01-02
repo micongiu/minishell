@@ -26,7 +26,7 @@ t_var_count	ft_count_dollar(char *input, t_env_var *env)
 		if (ft_strncmp(input, env->name, ft_strlen_lib(env->name)) == 0)
 		{
 			count.i = ((int)ft_strlen_lib(env->value));
-			count.j = ((int)ft_strlen_lib(env->name)) + 1;
+			count.j = ((int)ft_strlen_lib(env->name));
 			return (count);
 		}
 		env = env->next;
@@ -132,7 +132,7 @@ int	ft_count_token(char *in)
 	j = 0;
 	while (in[i] != '\0')
 	{
-		while (is_space (in[i]))
+		while (is_space(in[i]))
 			i++;
 		if (in[i] == '"' || in[i] == '\'')
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: micongiu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:37 by micongiu          #+#    #+#             */
-/*   Updated: 2024/12/27 16:01:39 by micongiu         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:00:23 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	error_and_free(char *str, char **env_mat, int status)
 	g_status = status;
 	if (env_mat)
 		free_matrix((void **)env_mat);
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
 }

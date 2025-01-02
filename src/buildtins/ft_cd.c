@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:06:29 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/30 16:50:01 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/02 19:27:48 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_home_directory(t_env_var **env_list)
 
 	env = get_node_of(env_list, "HOME");
 	if (!env || !env->value)
-		return (error_and_free("cd: HOME not set\n", NULL, 1), NULL);
+		return (error_and_free("cd: HOME not set", NULL, 1), NULL);
 	return (ft_strdup(env->value));
 }
 
@@ -63,8 +63,10 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 
 	path = process->argument[1];
 	if (chdir(path) != 0)
-		return (error_and_free
-			("minishell: No such file or directory", NULL, 1));
+	{
+		error_and_free ("minishell", NULL, 1);
+		return ;
+	}
 	if (path[0] == '/')
 		new_pwd = ft_strdup(path);
 	else if (env->value[ft_strlen_lib (env->value) - 1] != '/')
@@ -73,6 +75,7 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 		new_pwd = ft_strjoin_lib (env->value, path);
 	update_pwd(env, new_pwd);
 	free(new_pwd);
+	g_status = 0;
 }
 
 // This function handles the "cd" command,

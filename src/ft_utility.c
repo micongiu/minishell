@@ -76,11 +76,15 @@ int	is_builtins(char *str)
 		|| (ft_strncmp(str, "$?", 3) == 0));
 }
 
-void	error_and_free(char *str, char **env_mat, int status)
+void	error_and_free(char *str, char **env_mat, int status, int child)
 {
-	perror(str);
+	if (str)
+		perror(str);
 	g_status = status;
 	if (env_mat)
 		free_matrix((void **)env_mat);
-	//exit(EXIT_FAILURE);
+	if (child == 1)
+		exit(g_status);
+	else
+		return ;
 }

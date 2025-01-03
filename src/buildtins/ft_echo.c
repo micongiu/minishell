@@ -105,7 +105,7 @@ void	ft_echo(t_process_list *info_process)
 				ft_putstr_fd(tmp, STDOUT_FILENO);
 			free(tmp);
 		}
-		if (info_process->argument[i + 1])
+		if (info_process->argument[i + 1] && info_process->argument[i + 1][0])
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}

@@ -44,6 +44,8 @@ t_process_list	*ft_create_process_node(char **tokens)
 	node->full_process = NULL;
 	node->argument = ft_calloc(sizeof(char *), i + 2);
 	node->next = NULL;
+	node->child = 0;
+	node->heredoc = 0;
 	return (node);
 }
 

@@ -12,13 +12,13 @@
 
 #include "../../minishell.h"
 
-void	ft_env(t_env_var *env, char *str)
+void	ft_env(t_env_var *env, char *str, int child)
 {
 	t_env_var	*current;
 
 	if (str)
 	{
-		error_and_free("minishell: Not a directory: ", NULL, 127);
+		error_and_free("minishell: Not a directory: ", NULL, 127, child);
 		return ;
 	}
 	current = env;

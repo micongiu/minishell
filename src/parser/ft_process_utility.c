@@ -33,7 +33,7 @@ void	checking_redirection(char ***tokens, t_process_list	*current_node)
 	if (current_node->redirection == HERDOC)
 	{
 		(*tokens)++;
-		current_node->file_fd = ft_strdup(ft_heredoc(**tokens));
+		current_node->file_fd = ft_strdup(ft_heredoc(**tokens, current_node));
 	}
 	else if (current_node->redirection)
 	{

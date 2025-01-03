@@ -49,6 +49,8 @@ typedef struct s_process_list
 	char					**argument;
 	int						in_file;
 	int						out_file;
+	int						child;
+	int						heredoc;
 	struct s_process_list	*next;
 }	t_process_list;
 
@@ -90,10 +92,10 @@ void			ft_echo(t_process_list *info_process);
 // Builtins
 
 // ft_env.c
-void			ft_env(t_env_var *env, char *str);
+void			ft_env(t_env_var *env, char *str, int child);
 
 // ft_unset.c
-void			ft_unset(t_env_var **env, char *str);
+void			ft_unset(t_env_var **env, char *str, int child);
 
 // ft_export.c
 void			ft_export(t_process_list **info_process, t_env_var **env);
@@ -125,7 +127,7 @@ void			execute_command(t_process_list *process, t_env_var **env_list,
 
 // ft_heredoc.c
 
-char			*ft_heredoc(char *keyword);
+char			*ft_heredoc(char *keyword, t_process_list *process);
 
 // ft_handle_fd.c
 void			close_and_update_fd(int *prev_fd, int *pipe_fd);
@@ -179,7 +181,7 @@ int				is_special_token_after_quotes(char *line, int i);
 // Utilities
 
 // ft_utility.c
-void			error_and_free(char *str, char **env, int status);
+void			error_and_free(char *str, char **env, int status, int child);
 void			free_matrix(void **matrix);
 int				ft_count_node(t_env_var *env);
 char			**ft_list_to_arr(t_env_var *env_h);

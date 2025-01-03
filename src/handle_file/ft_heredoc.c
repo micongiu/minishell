@@ -12,6 +12,8 @@
 
 #include "../../minishell.h"
 
+extern int	g_status;
+
 static size_t	keyword_len(char *keyword)
 {
 	return (ft_strlen_lib(keyword));
@@ -59,13 +61,20 @@ char	*get_heredoc(char *keyword)
 	return (heredoc_content);
 }
 
-char	*ft_heredoc(char *keyword)
+char	*ft_heredoc(char *keyword, t_process_list *process)
 {
 	char	*line;
 	int		fd;
 
 	line = NULL;
 	signal(SIGINT, ft_signal_heredoc);
+	if (!keyword[0])
+	{
+		process->heredoc = 1;
+		g_status = 2;
+		printf("Syntax error near unexpected token `<<'\n");
+		return (NULL);
+	}
 	line = get_heredoc(keyword);
 	fd = open("tmp_heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (line)
@@ -76,9 +85,6 @@ char	*ft_heredoc(char *keyword)
 	close(fd);
 	signal(SIGINT, ft_signal_handle);
 	if (g_status == 130)
-	{
-		unlink("tmp_heredoc.txt");
-		return (NULL);
-	}
+		return(unlink("tmp_heredoc.txt"), NULL);
 	return ("tmp_heredoc.txt");
 }

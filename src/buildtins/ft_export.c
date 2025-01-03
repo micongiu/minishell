@@ -20,8 +20,6 @@ void	ft_export_utility(t_env_var *tmp, char *str_name, char *str_value,
 
 	new_str_name = NULL;
 	new_str_value = NULL;
-	if (ft_strchr(str_name, '-') != NULL || str_name[0] == '=')
-		return (error_and_free(NULL, NULL, 1));
 	while (tmp)
 	{
 		if (ft_strncmp(str_name, (tmp)->name, ft_strlen_lib((tmp)->name)) == 0)
@@ -56,7 +54,7 @@ void	ft_export_null(t_env_var *env)
 	}
 }
 
-void	ft_export(t_process_list **info_process, t_env_var **env)
+void	ft_export(t_process_list **process, t_env_var **env)
 {
 	int			i;
 	char		*str_name;
@@ -67,20 +65,22 @@ void	ft_export(t_process_list **info_process, t_env_var **env)
 	str_name = NULL;
 	str_value = NULL;
 	tmp = *env;
-	if ((*info_process)->argument[1] == NULL)
+	if ((*process)->argument[1] == NULL)
 		return (ft_export_null((*env)));
-	if (ft_strchr((*info_process)->argument[1], '-') != NULL)
-		return (error_and_free(NULL, NULL, 1));
-	while ((*info_process)->argument[1][i]
-			&& (*info_process)->argument[1][i] != '=')
+	while ((*process)->argument[1][i] && (*process)->argument[1][i] != '=')
 		i++;
 	if (i == 0)
-		return (error_and_free(NULL, NULL, 1));
-	if ((*info_process)->argument[1][i] != '=')
-		return (error_and_free(NULL, NULL, 0));
-	str_name = ft_substr_lib((*info_process)->argument[1], 0, i);
-	str_value = ft_substr_lib((*info_process)->argument[1], i + 1,
-			ft_strlen_lib((*info_process)->argument[1]) - i + 1);
+		return (error_and_free(NULL, NULL, 1,(*process)->child));
+	if (ft_isalpha((*process)->argument[1][0]) == 0)
+		return (error_and_free(NULL, NULL, 1, (*process)->child));
+	if ((*process)->argument[1][i] != '='
+		&& ft_isalpha((*process)->argument[1][0]) == 0)
+		return (error_and_free(NULL, NULL, 0, (*process)->child));
+	str_name = ft_substr_lib((*process)->argument[1], 0, i);
+	str_value = ft_substr_lib((*process)->argument[1], i + 1,
+			ft_strlen_lib((*process)->argument[1]) - i + 1);
+	if (ft_strchr(str_name, '-') != NULL || ft_isalpha(str_name[0]) == 0)
+		return (error_and_free(NULL, NULL, 1,(*process)->child));
 	ft_export_utility(tmp, str_name, str_value, env);
 	g_status = 0;
 }

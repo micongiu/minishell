@@ -33,7 +33,7 @@ t_var_count	token_double_quote(char *token, char *line,
 			&& !is_space(line[count.i]) && in_quotes == 0)
 			break ;
 		else if (line[count.i] == '$' && line[count.i + 1])
-			count = ft_ex_dollar(line, token, env, count);
+			count = ft_ex_dollar(line + count.i, token, env, count);
 		else
 			token[count.j++] = line[count.i++];
 	}
@@ -58,8 +58,8 @@ t_var_count	token_single_quote(char *token, char *line,
 		else if (is_special_token_after_quotes(line, count.i)
 			&& !is_space(line[count.i]) && in_quotes == 0)
 			break ;
-		else if (line[count.i] == '$' && line[count.i + 1])
-			count = ft_ex_dollar(line, token, env, count);
+		else if (line[count.i] == '$' && line[count.i + 1] && in_quotes == 0)
+			count = ft_ex_dollar(line + count.i, token, env, count);
 		else
 			token[count.j++] = line[count.i];
 		count.i++;
@@ -84,7 +84,7 @@ t_var_count	token_separation(char *token, char *line,
 			break ;
 		}
 		else if (line[co.i] == '$' && line[co.i + 1])
-			co = ft_ex_dollar((line + co.i), token, env, co);
+			co = ft_ex_dollar(line + co.i, token, env, co);
 		else if (line[co.i] == '|' || line[co.i] == '<' || line[co.i] == '>')
 		{
 			if (co.j > 0)
@@ -111,7 +111,7 @@ char	**ft_tokenizer(char *input, t_env_var *env)
 	if (ft_check_quote(input) == -1)
 		return (ft_putendl_fd("minishell->Error: Unclosed quotes", 1), NULL);
 	tokens = ft_calloc(ft_count_token(input) + 2, sizeof (char **));
-	count.k = ft_count_token(input) + 1;
+	count.k = ft_count_token(input);
 	while (t_count < count.k)
 	{
 		while (is_space(input[count.i]))

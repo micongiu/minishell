@@ -18,14 +18,13 @@ t_var_count	ft_count_dollar(char *input, t_env_var *env)
 
 	count.i = 0;
 	count.j = 0;
-	while (input && *input != '$')
+	if (ft_strlen(input, '$') == 0)
 		input++;
-	input++;
 	while (env)
 	{
 		if (ft_strncmp(input, env->name, ft_strlen_lib(env->name)) == 0)
 		{
-			count.i = ((int)ft_strlen_lib(env->value));
+			count.i = ((int)ft_strlen_lib(env->value)) + 2;
 			count.j = ((int)ft_strlen_lib(env->name));
 			return (count);
 		}
@@ -57,7 +56,7 @@ int	ft_count_len_sqoute(char *input, int i, t_env_var *env)
 			if (input[i] != '\'' && input[i] != '\0')
 			{
 				if (input[i] == '$')
-					count = ft_count_dollar(input, env);
+					count = ft_count_dollar(input + i, env);
 				i++;
 			}
 			if (input[i] == '\0' || input[i] == ' ')
@@ -78,7 +77,7 @@ int	ft_count_len_dqoute(char *input, int i, t_env_var *env)
 	while (input[i] != '\"' && input[i] != '\0')
 	{
 		if (input[i] == '$')
-			count = ft_count_dollar(input, env);
+			count = ft_count_dollar(input + i, env);
 		if (input[i++] == '\0')
 			return (i + count.i - count.j);
 	}
@@ -88,7 +87,7 @@ int	ft_count_len_dqoute(char *input, int i, t_env_var *env)
 		{
 			if (input[i] != '\"' && input[i] != '\0')
 				if (input[i++] == '$')
-					count = ft_count_dollar(input, env);
+					count = ft_count_dollar(input + i, env);
 			if (input[i] == '\0' || input[i] == ' ')
 				break ;
 			i++;
@@ -113,7 +112,7 @@ int	ft_count(char *input, int i, t_env_var *env)
 			return ((ft_count_len_sqoute(input, i, env)) - tmp - 1);
 		else if (input[i] == '$' && input[i + 1])
 		{
-			count = ft_count_dollar(input, env);
+			count = ft_count_dollar(input + i, env);
 			i += count.j;
 		}
 		else

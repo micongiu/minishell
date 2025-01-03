@@ -20,6 +20,8 @@ void	ft_export_utility(t_env_var *tmp, char *str_name, char *str_value,
 
 	new_str_name = NULL;
 	new_str_value = NULL;
+	if (ft_strchr(str_name, '-') != NULL || str_name[0] == '=')
+		return (error_and_free(NULL, NULL, 1));
 	while (tmp)
 	{
 		if (ft_strncmp(str_name, (tmp)->name, ft_strlen_lib((tmp)->name)) == 0)
@@ -66,15 +68,16 @@ void	ft_export(t_process_list **info_process, t_env_var **env)
 	str_value = NULL;
 	tmp = *env;
 	if ((*info_process)->argument[1] == NULL)
-	{
-		ft_export_null((*env));
-		return ;
-	}
+		return (ft_export_null((*env)));
+	if (ft_strchr((*info_process)->argument[1], '-') != NULL)
+		return (error_and_free(NULL, NULL, 1));
 	while ((*info_process)->argument[1][i]
 			&& (*info_process)->argument[1][i] != '=')
 		i++;
+	if (i == 0)
+		return (error_and_free(NULL, NULL, 1));
 	if ((*info_process)->argument[1][i] != '=')
-		return ;
+		return (error_and_free(NULL, NULL, 0));
 	str_name = ft_substr_lib((*info_process)->argument[1], 0, i);
 	str_value = ft_substr_lib((*info_process)->argument[1], i + 1,
 			ft_strlen_lib((*info_process)->argument[1]) - i + 1);

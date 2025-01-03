@@ -54,6 +54,18 @@ void	ft_export_null(t_env_var *env)
 	}
 }
 
+int	ft_find_equal(t_process_list **process)
+{
+	int	i;
+
+	i = 0;
+	while ((*process)->argument[1][i] && (*process)->argument[1][i] != '=')
+		i++;
+	if (i == 0)
+		return (error_and_free(NULL, NULL, 1,(*process)->child), i);
+	return (i);
+}
+
 void	ft_export(t_process_list **process, t_env_var **env)
 {
 	int			i;
@@ -67,10 +79,7 @@ void	ft_export(t_process_list **process, t_env_var **env)
 	tmp = *env;
 	if ((*process)->argument[1] == NULL)
 		return (ft_export_null((*env)));
-	while ((*process)->argument[1][i] && (*process)->argument[1][i] != '=')
-		i++;
-	if (i == 0)
-		return (error_and_free(NULL, NULL, 1,(*process)->child));
+	i = ft_find_equal(process);
 	if (ft_isalpha((*process)->argument[1][0]) == 0)
 		return (error_and_free(NULL, NULL, 1, (*process)->child));
 	if ((*process)->argument[1][i] != '='

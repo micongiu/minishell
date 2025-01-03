@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:06:29 by anmedyns          #+#    #+#             */
-/*   Updated: 2025/01/02 19:27:48 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:49:26 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,31 @@ void	cd_specific_directory(t_process_list *process, t_env_var *env)
 
 // This function handles the "cd" command,
 // managing arguments and special cases like HOME or "..".
-void	ft_cd(t_process_list *process, t_env_var **env_list)
+void	ft_cd(t_process_list *p, t_env_var **env_list)
 {
 	t_env_var	*pwd_env;
 	char		*home;
 	t_env_var	*env;
 
-	if (process->argument[2])
-		return (error_and_free("minishell: too many arguments\n", NULL, 1, process->child));
+	if (p->argument[2])
+		return (error_and_free("cd: Too many arguments\n", NULL, 1, p->child));
 	pwd_env = get_node_of(env_list, "PWD");
 	if (!pwd_env)
-		return (error_and_free("envPWD not found\n", NULL, 1, process->child));
-	if (!process->argument[1])
+		return (error_and_free("envPWD not found\n", NULL, 1, p->child));
+	if (!p->argument[1])
 	{
 		env = get_node_of(env_list, "HOME");
 		if (!env || !env->value)
-			return (error_and_free("cd: HOME not set\n", NULL, 1, process->child));
+			return (error_and_free("cd: HOME not set\n", NULL, 1, p->child));
 		home = (ft_strdup(env->value));
 		if (!home || chdir(home) != 0)
-			return (free(home), error_and_free("cd: HOME not set\n", NULL, 1, process->child));
-		update_pwd(pwd_env, home, process->child);
+			return (free(home),
+				error_and_free("cd: HOME not set\n", NULL, 1, p->child));
+		update_pwd(pwd_env, home, p->child);
 		free(home);
 	}
-	else if (ft_strncmp(process->argument[1], "..", 3) == 0)
-		cd_parent_directory(pwd_env, process->child);
-	else if (ft_strncmp(process->argument[1], ".", 2) != 0)
-		cd_specific_directory(process, pwd_env);
+	else if (ft_strncmp(p->argument[1], "..", 3) == 0)
+		cd_parent_directory(pwd_env, p->child);
+	else if (ft_strncmp(p->argument[1], ".", 2) != 0)
+		cd_specific_directory(p, pwd_env);
 }

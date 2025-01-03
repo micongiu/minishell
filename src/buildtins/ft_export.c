@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:05:22 by anmedyns          #+#    #+#             */
-/*   Updated: 2025/01/02 20:47:27 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:53:58 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_export(t_process_list **process, t_env_var **env)
 	str_value = ft_substr_lib((*process)->argument[1], i + 1,
 			ft_strlen_lib((*process)->argument[1]) - i + 1);
 	if (ft_strchr(str_name, '-') != NULL || ft_isalpha(str_name[0]) == 0)
-		return (error_and_free(NULL, NULL, 1,(*process)->child));
+		return (error_and_free(NULL, NULL, 1, (*process)->child));
 	ft_export_utility(tmp, str_name, str_value, env);
 	g_status = 0;
 }

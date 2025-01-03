@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:14:16 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/30 16:44:02 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:34:56 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_var_count	token_double_quote(char *token, char *line,
 		else if (is_special_token_after_quotes(line, count.i)
 			&& !is_space(line[count.i]) && in_quotes == 0)
 			break ;
-		else if (line[count.i] == '$' && line[count.i + 1] 
+		else if (line[count.i] == '$' && line[count.i + 1]
 			&& line[count.i + 1] != '"')
 			count = ft_ex_dollar(line + count.i, token, env, count);
 		else

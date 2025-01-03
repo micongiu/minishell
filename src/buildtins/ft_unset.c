@@ -6,13 +6,13 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:05:51 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/27 16:05:54 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:39:21 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void remove_env_node(t_env_var **env, t_env_var *prev, t_env_var *curr)
+void	remove_env_node(t_env_var **env, t_env_var *prev, t_env_var *curr)
 {
 	if (prev)
 		prev->next = curr->next;
@@ -23,7 +23,7 @@ void remove_env_node(t_env_var **env, t_env_var *prev, t_env_var *curr)
 	free(curr);
 }
 
-void ft_unset(t_env_var **env, char *str, int child)
+void	ft_unset(t_env_var **env, char *str, int child)
 {
 	t_env_var	*prev;
 	t_env_var	*curr;

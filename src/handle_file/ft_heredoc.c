@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:36:48 by anmedyns          #+#    #+#             */
-/*   Updated: 2024/12/30 17:12:26 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:34:30 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ char	*ft_heredoc(char *keyword, t_process_list *process)
 	close(fd);
 	signal(SIGINT, ft_signal_handle);
 	if (g_status == 130)
-		return(unlink("tmp_heredoc.txt"), NULL);
+		return (unlink ("tmp_heredoc.txt"), NULL);
 	return ("tmp_heredoc.txt");
 }

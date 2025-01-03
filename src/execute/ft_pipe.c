@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:49:23 by anmedyns          #+#    #+#             */
-/*   Updated: 2025/01/02 21:19:21 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:10:04 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 			error_and_free("Error during fork", env_mat, 1);
 		if (pid == 0)
 			exec_child_process(process, env, prev_fd, pipe_fd);
+
 		else
 			close_and_update_fd(&prev_fd, pipe_fd);
 		process = process->next;

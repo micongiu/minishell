@@ -6,7 +6,7 @@
 /*   By: anmedyns <anmedyns@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:49:23 by anmedyns          #+#    #+#             */
-/*   Updated: 2025/01/03 13:10:04 by anmedyns         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:35:58 by anmedyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	exec_child_process(t_process_list *process, t_env_var **env,
 	if (prev_fd != -1)
 	{
 		if (dup2(prev_fd, STDIN_FILENO) < 0)
-			error_and_free("Error duplicating STDIN", env_mat, 1, process->child);
+			error_and_free("Error duplicating", env_mat, 1, process->child);
 		close(prev_fd);
 	}
 	if (process->next)
 		if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
-			error_and_free("Error duplicating STDOUT", env_mat, 1, process->child);
+			error_and_free("Error duplicating", env_mat, 1, process->child);
 	if (pipe_fd[0] != -1)
 		close(pipe_fd[0]);
 	if (pipe_fd[1] != -1)
@@ -109,7 +109,6 @@ void	exec_pipe_loop(t_env_var **env, t_process_list *process, char **env_mat,
 			error_and_free("Error during fork", env_mat, 1, process->child);
 		if (pid == 0)
 			exec_child_process(process, env, prev_fd, pipe_fd);
-
 		else
 			close_and_update_fd(&prev_fd, pipe_fd);
 		process = process->next;

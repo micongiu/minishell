@@ -61,6 +61,6 @@ git:
 	make fclean
 	git add .
 	git commit -m "update"
-	git push
+
 
 .PHONY: all clean fclean re
